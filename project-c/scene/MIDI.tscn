@@ -1,0 +1,98 @@
+[gd_scene format=3 uid="uid://ddusllkul0qg0"]
+
+[ext_resource type="PackedScene" uid="uid://bq5m71ybsvn25" path="res://scene/ban_phim_piano.tscn" id="1_5ppsf"]
+[ext_resource type="Script" uid="uid://bxebxikvayiia" path="res://gd/option_button.gd" id="2_ljpak"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m45t8"]
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MIDI" type="Control" unique_id=1744579116]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 1.024
+offset_bottom = -23.920044
+
+[node name="BanPhimPiano" parent="." unique_id=1032322886 instance=ExtResource("1_5ppsf")]
+layout_mode = 1
+anchor_top = 0.896
+anchor_right = 0.9620001
+anchor_bottom = 1.0
+offset_top = 0.5279541
+offset_right = 616.95984
+offset_bottom = 40.0
+scale = Vector2(0.75, 0.75)
+size_flags_vertical = 8
+theme_override_constants/separation = 352
+
+[node name="pedal" type="Label" parent="." unique_id=2126609349]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.90300006
+anchor_top = 0.87200004
+anchor_right = 0.9620001
+anchor_bottom = 0.89400005
+offset_left = 0.23986816
+offset_top = 0.49597168
+offset_right = 0.95983887
+offset_bottom = -0.30804443
+label_settings = SubResource("LabelSettings_m45t8")
+horizontal_alignment = 1
+
+[node name="midi" type="Label" parent="." unique_id=1770474756]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.062000003
+anchor_top = 0.87200004
+anchor_right = 0.287
+anchor_bottom = 0.89400005
+offset_left = -6.0400085
+offset_top = 0.49597168
+offset_right = 1.960022
+offset_bottom = -0.30804443
+text = "Midi:"
+label_settings = SubResource("LabelSettings_m45t8")
+
+[node name="OptionButton" type="OptionButton" parent="." unique_id=1698766112]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.758
+anchor_top = 0.85800004
+anchor_right = 0.896
+anchor_bottom = 0.89100003
+offset_left = 0.64001465
+offset_top = -0.35601807
+offset_right = -0.32006836
+offset_bottom = -0.06201172
+clip_text = true
+fit_to_longest_item = false
+allow_reselect = true
+script = ExtResource("2_ljpak")
+
+[node name="Button" type="Button" parent="." unique_id=1612706032]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.86300004
+anchor_right = 0.05
+anchor_bottom = 0.892
+offset_top = 0.23394775
+offset_bottom = -0.14404297
+text = "Check MIDI"
+
+[node name="cac_phim" type="Label" parent="." unique_id=1518631191]
+layout_mode = 0
+offset_left = 176.0
+offset_top = 904.0
+offset_right = 631.0
+offset_bottom = 959.4544
+
+[node name="hop_am" type="Label" parent="." unique_id=26693843]
+layout_mode = 0
+offset_left = 1281.0
+offset_top = 920.0
+offset_right = 1425.0
+offset_bottom = 959.4544
+
+[connection signal="button_down" from="OptionButton" to="OptionButton" method="_on_button_down"]
+[connection signal="item_selected" from="OptionButton" to="OptionButton" method="_on_item_selected"]
+[connection signal="button_down" from="Button" to="OptionButton" method="_on_button_button_down"]

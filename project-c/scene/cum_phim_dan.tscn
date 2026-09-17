@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://cpbwynxrj324v"]
+
+[ext_resource type="PackedScene" uid="uid://ba8s10f3shthn" path="res://scene/phim_dan.tscn" id="1_thw8e"]
+[ext_resource type="Texture2D" uid="uid://cd6eoyvfyjweu" path="res://asset/phim_trang.png" id="2_ln04q"]
+[ext_resource type="Texture2D" uid="uid://espkdhyrt3e6" path="res://asset/phim_den.png" id="3_12bpw"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_thw8e"]
+font_color = Color(0, 0, 0, 1)
+
+[node name="cum_phim" type="CumPhimDan" unique_id=1052476577]
+
+[node name="1" parent="." unique_id=1370602249 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 3.0517578e-05
+offset_right = 74.00003
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="3" parent="." unique_id=56781528 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 49.999992
+offset_right = 123.99999
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="5" parent="." unique_id=604186716 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 100.0
+offset_right = 174.0
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="6" parent="." unique_id=1736795912 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 150.0
+offset_right = 224.0
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="8" parent="." unique_id=282370675 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 200.0
+offset_right = 274.0
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="10" parent="." unique_id=785926282 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 250.00002
+offset_right = 324.0
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="12" parent="." unique_id=1193145905 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 300.00003
+offset_right = 374.00003
+offset_bottom = 214.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_ln04q")
+
+[node name="2" parent="." unique_id=418213654 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 41.428574
+offset_top = 1.0
+offset_right = 71.42857
+offset_bottom = 123.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_12bpw")
+
+[node name="4" parent="." unique_id=928997669 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 91.42857
+offset_right = 121.42857
+offset_bottom = 122.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_12bpw")
+
+[node name="7" parent="." unique_id=1643584363 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 191.42856
+offset_right = 221.42856
+offset_bottom = 122.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_12bpw")
+
+[node name="9" parent="." unique_id=1571747214 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 241.42859
+offset_right = 271.4286
+offset_bottom = 122.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_12bpw")
+
+[node name="11" parent="." unique_id=1275941464 instance=ExtResource("1_thw8e")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 290.00003
+offset_right = 320.00003
+offset_bottom = 122.0
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("3_12bpw")
+
+[node name="Label" type="Label" parent="." unique_id=1638694673]
+layout_mode = 0
+offset_top = 119.0
+offset_right = 51.0
+offset_bottom = 142.0
+text = "C99"
+label_settings = SubResource("LabelSettings_thw8e")
+horizontal_alignment = 1

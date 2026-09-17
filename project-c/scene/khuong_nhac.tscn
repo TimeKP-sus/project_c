@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://sanbbsfl62ra"]
+
+[ext_resource type="Texture2D" uid="uid://t23atienpuw1" path="res://asset/khuong nhac.png" id="1_p5ytt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tdxtm"]
+size = Vector2(32, 229)
+
+[node name="Khuong" type="KhuongNhac" unique_id=1621573840]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.20700002
+offset_bottom = -1.5600128
+grow_vertical = 0
+
+[node name="Khuong" type="TextureRect" parent="." unique_id=1716682237]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_p5ytt")
+expand_mode = 1
+
+[node name="NhanDien" type="Area2D" parent="." unique_id=738272269]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NhanDien" unique_id=1170487441]
+position = Vector2(130, 110.5)
+shape = SubResource("RectangleShape2D_tdxtm")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=797989304]
+layout_mode = 0
+offset_left = 127.0
+offset_right = 133.0
+offset_bottom = 225.0
+color = Color(0.23921569, 0.23921569, 0.23921569, 0.36078432)
+
+[connection signal="area_entered" from="NhanDien" to="." method="kiem_tra_not_vao"]
+[connection signal="area_exited" from="NhanDien" to="." method="kiem_tra_not_ra"]

@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bq5m71ybsvn25"]
+
+[ext_resource type="PackedScene" uid="uid://cpbwynxrj324v" path="res://scene/cum_phim_dan.tscn" id="1_6g41o"]
+
+[node name="BanPhimMidi" type="BanPhimMidi" unique_id=951802953]
+anchors_preset = -1
+anchor_right = 0.92
+anchor_bottom = 0.63100004
+offset_top = 0.99999994
+offset_right = 757.7748
+offset_bottom = 44.991974
+scale = Vector2(0.7, 0.7)
+theme_override_constants/separation = 350
+
+[node name="1" parent="." unique_id=216915729 instance=ExtResource("1_6g41o")]
+cum_so = 1
+layout_mode = 2
+
+[node name="2" parent="." unique_id=1052476577 instance=ExtResource("1_6g41o")]
+cum_so = 2
+layout_mode = 2
+
+[node name="3" parent="." unique_id=499580001 instance=ExtResource("1_6g41o")]
+cum_so = 3
+layout_mode = 2
+
+[node name="4" parent="." unique_id=1560655102 instance=ExtResource("1_6g41o")]
+cum_so = 4
+layout_mode = 2
+
+[node name="5" parent="." unique_id=1318879455 instance=ExtResource("1_6g41o")]
+cum_so = 5
+layout_mode = 2
+
+[node name="6" parent="." unique_id=757544438 instance=ExtResource("1_6g41o")]
+cum_so = 6
+layout_mode = 2
+
+[node name="7" parent="." unique_id=1279154743 instance=ExtResource("1_6g41o")]
+cum_so = 7
+layout_mode = 2

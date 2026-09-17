@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://ba8s10f3shthn"]
+
+[node name="PhimDan" type="TextureRect" unique_id=1370602249]
+anchors_preset = -1
+anchor_right = 0.021000002
+anchor_bottom = 0.106000006
+offset_right = -0.3200035
+offset_bottom = -0.48000336
+stretch_mode = 2

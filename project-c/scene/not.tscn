@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://b5hris7ai8bom"]
+
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_8fp46"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8fp46"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7742184, 0.7742185, 0.77421796, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+anti_aliasing = false
+
+[sub_resource type="LabelSettings" id="LabelSettings_2o2pn"]
+line_spacing = 0.0
+font = ExtResource("1_8fp46")
+font_size = 20
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f281m"]
+size = Vector2(10, 26)
+
+[node name="Notnhac" type="NotNhac" unique_id=672420905]
+
+[node name="nen" type="Panel" parent="." unique_id=1714193262]
+offset_top = 2.0
+offset_right = 35.0
+offset_bottom = 21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8fp46")
+
+[node name="Label" type="Label" parent="." unique_id=1192582000]
+texture_filter = 2
+offset_left = 3.0
+offset_right = 33.0
+offset_bottom = 24.0
+text = "C#"
+label_settings = SubResource("LabelSettings_2o2pn")
+vertical_alignment = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=286682726]
+position = Vector2(5, 11)
+shape = SubResource("RectangleShape2D_f281m")

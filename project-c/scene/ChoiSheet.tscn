@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://okkufgawrf0i"]
+
+[ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_vt317"]
+[ext_resource type="PackedScene" uid="uid://bc60vic3bfv5a" path="res://scene/quan_ly_nhac.tscn" id="2_0iuma"]
+
+[node name="ChoiSheet" type="ChoiSheet" unique_id=1216311425]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="QuanLySheet" parent="." unique_id=1515061911 instance=ExtResource("2_0iuma")]
+toc_do = 80.0
+bpm = 80.0
+layout_mode = 1
+
+[node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_vt317")]
+layout_mode = 1
