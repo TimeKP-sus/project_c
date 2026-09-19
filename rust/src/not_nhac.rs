@@ -46,11 +46,10 @@ impl NotNhac {
     }
     pub fn ket_thuc_giu(&mut self) {
         self.dang_giu = false;
-        self.base_mut().set_modulate(Color::from_rgba(1.0, 1.0, 1.0, 1.0)); 
+        self.base_mut().set_modulate(Color::from_rgba(0.4, 0.4, 0.4, 1.0));
     }
 
     pub fn set_mau_not(&mut self, mau: &str) {
-        // Dùng match để so sánh chuỗi (cần thêm .as_str() để mượn chuỗi)
         let mau_sac: Color = match mau {
             "1" => Color::from_rgba(0.85, 0.25, 0.25, 1.0),
             "2" => Color::from_rgba(0.20, 0.75, 0.35, 1.0),

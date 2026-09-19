@@ -1,16 +1,13 @@
-use godot::classes::{Control, IControl, Label};
-use godot::obj::{Gd, WithBaseField};
-use godot::{
-    obj::Base,
-    prelude::{GodotClass, godot_api},
-};
+use godot::classes::{ Control, IControl, Label };
+use godot::obj::{ Gd, WithBaseField };
+use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::check_ten_not::chuyen_id_thanh_ten;
 use crate::khuong_nhac::KhuongNhac;
 use crate::not_nhac::NotNhac;
 
 #[derive(GodotClass)]
-#[class(init, base=Control)]
+#[class(init, base = Control)]
 pub struct QuanLySheet {
     #[base]
     base: Base<Control>,
@@ -33,7 +30,6 @@ pub struct QuanLySheet {
 
 #[godot_api]
 impl QuanLySheet {
-
     // #[func]
     // pub fn nhan_tin_hieu_bam_phim(&mut self, id_not: i32) {
     //     if let Some(khuong) = self.khuong_1.as_mut() {
@@ -55,7 +51,17 @@ impl QuanLySheet {
     //     }
     // }
 
-
+    #[func]
+    pub fn get_tat_ca_not_tren_sheet(&mut self) -> Vec<Gd<NotNhac>> {
+        let mut ds_not = Vec::new();
+        if let Some(khuong) = self.khuong_1.as_mut() {
+            ds_not.extend(khuong.bind_mut().get_tat_ca_not());
+        }
+        if let Some(khuong) = self.khuong_2.as_mut() {
+            ds_not.extend(khuong.bind_mut().get_tat_ca_not());
+        }
+        ds_not
+    }
     #[func]
     pub fn get_thoi_gian(&self) -> f32 {
         self.thoi_gian
@@ -114,8 +120,10 @@ impl IControl for QuanLySheet {
                     (38, chuyen_id_thanh_ten(38, false), "1", 14, 12.0, 1.0), // D4
                     (38, chuyen_id_thanh_ten(38, false), "1", 14, 13.0, 1.0), // D4
                     (36, chuyen_id_thanh_ten(36, false), "3", 15, 14.0, 2.0), // C4 (Ngân dài 2 phách)
+                    (37, chuyen_id_thanh_ten(37, false), "3", 15, 14.0, 2.0),
+                    (36, chuyen_id_thanh_ten(36, false), "3", 15, 16.0, 0.0)
                 ],
-                khoang_cach_nhip,
+                khoang_cach_nhip
             )
         });
 
@@ -127,9 +135,9 @@ impl IControl for QuanLySheet {
                     (24, chuyen_id_thanh_ten(24, false), "3", 8, 0.0, 4.0), // C3
                     (29, chuyen_id_thanh_ten(29, false), "2", 5, 4.0, 4.0), // F3
                     (24, chuyen_id_thanh_ten(24, false), "3", 8, 8.0, 4.0), // C3
-                    (19, chuyen_id_thanh_ten(19, false), "1", 12, 12.0, 4.0), // G2
+                    (19, chuyen_id_thanh_ten(19, false), "1", 12, 12.0, 4.0) // G2
                 ],
-                khoang_cach_nhip,
+                khoang_cach_nhip
             )
         });
     }
@@ -147,15 +155,11 @@ impl IControl for QuanLySheet {
         let khoang_cach_nhip: f32 = self.toc_do;
         let nhip_hien_tai: f32 = (self.thoi_gian * self.bpm) / 60.0;
         if let Some(khuong) = self.khuong_1.as_mut() {
-            khuong
-                .bind_mut()
-                .xu_ly_di_chuyen_not(nhip_hien_tai, khoang_cach_nhip);
+            khuong.bind_mut().xu_ly_di_chuyen_not(nhip_hien_tai, khoang_cach_nhip);
         }
 
         if let Some(khuong) = self.khuong_2.as_mut() {
-            khuong
-                .bind_mut()
-                .xu_ly_di_chuyen_not(nhip_hien_tai, khoang_cach_nhip);
+            khuong.bind_mut().xu_ly_di_chuyen_not(nhip_hien_tai, khoang_cach_nhip);
         }
     }
 }

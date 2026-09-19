@@ -1,16 +1,13 @@
 use godot::builtin::Vector2;
 
-use godot::classes::{Area2D, Control, IControl, PackedScene};
+use godot::classes::{ Area2D, Control, IControl, PackedScene };
 
 use godot::global::godot_print;
-use godot::obj::{Gd, WithBaseField};
+use godot::obj::{ Gd, WithBaseField };
 
 use godot::tools::try_load;
 
-use godot::{
-    obj::Base,
-    prelude::{GodotClass, godot_api},
-};
+use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::not_nhac::NotNhac;
 
@@ -21,7 +18,7 @@ pub struct DuLieuNot {
 }
 
 #[derive(GodotClass)]
-#[class(init, base=Control)]
+#[class(init, base = Control)]
 pub struct KhuongNhac {
     #[base]
     base: Base<Control>,
@@ -34,7 +31,6 @@ pub struct KhuongNhac {
 }
 
 #[godot_api]
-
 impl KhuongNhac {
     // pub fn get_cac_not_trong_area(&self) -> HashSet<i32> {
     //     self.cac_not_trong_area
@@ -43,10 +39,16 @@ impl KhuongNhac {
     //         .collect()
     // }
     pub fn get_cac_not_trong_area(&mut self) -> Vec<Gd<NotNhac>> {
-        self.cac_not_trong_area
-            .retain(|not| not.is_instance_valid());
+        self.cac_not_trong_area.retain(|not| not.is_instance_valid());
 
         self.cac_not_trong_area.clone()
+    }
+    pub fn get_tat_ca_not(&mut self) -> Vec<Gd<NotNhac>> {
+        // Lấy tất cả node NotNhac từ cac_not_trong_khuong
+        self.cac_not_trong_khuong
+            .iter()
+            .map(|du_lieu| du_lieu.not_node.clone())
+            .collect()
     }
     pub fn tao_not(
         &mut self,
@@ -57,7 +59,7 @@ impl KhuongNhac {
         vi_tri_so: i32,
         nhip_dich: f32,
         nhip_giu: f32,
-        toc_do_chung: f32,
+        toc_do_chung: f32
     ) {
         let Some(scene) = &self.nut_scene else {
             return;
@@ -70,23 +72,25 @@ impl KhuongNhac {
         let vt: Vector2 = match vi_tri_so {
             // Mỗi vị trí cách nhau chính xác 14 pixel
             0 => Vector2::new(2040.0, -10.0),
-            1 => Vector2::new(2040.0, 1.0),    // +14
-            2 => Vector2::new(2040.0, 14.0),    // +14
-            3 => Vector2::new(2040.0, 27.0),   // +14
-            4 => Vector2::new(2040.0, 40.0),   // +14
-            5 => Vector2::new(2040.0, 53.0),   // +14
-            6 => Vector2::new(2040.0, 65.0),   // +14 (Dòng kẻ trên cùng)
-            7 => Vector2::new(2040.0, 79.0),   // +14
-            8 => Vector2::new(2040.0, 90.0),   // +14
-            9 => Vector2::new(2040.0, 105.0),   // +14
-            10 => Vector2::new(2040.0, 117.0),  // +14
+            1 => Vector2::new(2040.0, 1.0), // +14
+            2 => Vector2::new(2040.0, 14.0), // +14
+            3 => Vector2::new(2040.0, 27.0), // +14
+            4 => Vector2::new(2040.0, 40.0), // +14
+            5 => Vector2::new(2040.0, 53.0), // +14
+            6 => Vector2::new(2040.0, 65.0), // +14 (Dòng kẻ trên cùng)
+            7 => Vector2::new(2040.0, 79.0), // +14
+            8 => Vector2::new(2040.0, 90.0), // +14
+            9 => Vector2::new(2040.0, 105.0), // +14
+            10 => Vector2::new(2040.0, 117.0), // +14
             11 => Vector2::new(2040.0, 131.0), // +14
             12 => Vector2::new(2040.0, 142.0), // +14 (Dòng kẻ thứ hai)
             13 => Vector2::new(2040.0, 157.0), // +14
             14 => Vector2::new(2040.0, 169.0),
             15 => Vector2::new(2040.0, 184.0),
-            16 => Vector2::new(2040.0, 196.0), 
-            _ => return,
+            16 => Vector2::new(2040.0, 196.0),
+            _ => {
+                return;
+            }
         };
 
         {
@@ -117,7 +121,7 @@ impl KhuongNhac {
     pub fn tao_nhieu_not(
         &mut self,
         danh_sach_not: Vec<(i32, &str, &str, i32, f32, f32)>,
-        khoang_cach_nhip: f32, // toc do
+        khoang_cach_nhip: f32 // toc do
     ) {
         for (id_not, ten_not, mau_not, vi_tri_so, thoi_gian_dich, thoi_gian_giu) in danh_sach_not {
             self.tao_not(
@@ -127,7 +131,7 @@ impl KhuongNhac {
                 vi_tri_so,
                 thoi_gian_dich,
                 thoi_gian_giu,
-                khoang_cach_nhip,
+                khoang_cach_nhip
             );
         }
     }
@@ -137,12 +141,10 @@ impl KhuongNhac {
         const TOA_DO_X_DICH: f32 = 115.0;
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
             let tg_dich: f32 = du_lieu.nhip_dich;
-            let vi_tri_x: f32 = TOA_DO_X_DICH + ((tg_dich - thoi_gian_hien_tai) * toc_do_chung);
+            let vi_tri_x: f32 = TOA_DO_X_DICH + (tg_dich - thoi_gian_hien_tai) * toc_do_chung;
             let toa_do_y: f32 = du_lieu.not_node.get_position().y;
 
-            du_lieu
-                .not_node
-                .set_position(Vector2::new(vi_tri_x, toa_do_y));
+            du_lieu.not_node.set_position(Vector2::new(vi_tri_x, toa_do_y));
 
             // nếu không nốt hold dài sẽ biến mất khi đang lướt qua vạch
             let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
@@ -179,16 +181,11 @@ impl KhuongNhac {
             // Gắn logic trừ máu hoặc reset combo ở đây
         }
 
-        if let Some(index) = self
-            .cac_not_trong_area
-            .iter()
-            .position(|node| node == &not_nhac)
-        {
+        if let Some(index) = self.cac_not_trong_area.iter().position(|node| node == &not_nhac) {
             self.cac_not_trong_area.swap_remove(index);
         }
     }
     //test
-    
 }
 
 #[godot_api]

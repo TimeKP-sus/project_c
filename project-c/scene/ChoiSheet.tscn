@@ -2,6 +2,13 @@
 
 [ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_vt317"]
 [ext_resource type="PackedScene" uid="uid://bc60vic3bfv5a" path="res://scene/quan_ly_nhac.tscn" id="2_0iuma"]
+[ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="3_4c48n"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
+font = ExtResource("3_4c48n")
+font_size = 24
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
 
 [node name="ChoiSheet" type="ChoiSheet" unique_id=1216311425]
 anchors_preset = 15
@@ -18,3 +25,14 @@ layout_mode = 1
 
 [node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_vt317")]
 layout_mode = 1
+
+[node name="diem" type="Label" parent="." unique_id=342717818]
+layout_mode = 0
+offset_left = 1571.0
+offset_top = 119.0
+offset_right = 1921.0
+offset_bottom = 180.0
+text = "0"
+label_settings = SubResource("LabelSettings_0iuma")
+horizontal_alignment = 2
+vertical_alignment = 1
