@@ -94,7 +94,9 @@ impl KhuongNhac {
             not_bind.set_id_not(id_not);
             not_bind.set_ten_not(ten_not.into());
             not_bind.set_mau_not(mau_not.into());
-            not_bind.set_chieu_dai_duoi(nhip_giu * toc_do_chung);
+            if nhip_giu > 0.0 {
+                not_bind.set_chieu_dai_duoi(nhip_giu * toc_do_chung);
+            }
         }
         if nhip_giu > 0.0 {
             if let Some(mut panel) = not_nhac.try_get_node_as::<godot::classes::Panel>("nen") {
@@ -134,7 +136,7 @@ impl KhuongNhac {
     pub fn xu_ly_di_chuyen_not(&mut self, thoi_gian_hien_tai: f32, toc_do_chung: f32) {
         const TOA_DO_X_DICH: f32 = 115.0;
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
-            let tg_dich = du_lieu.nhip_dich;
+            let tg_dich: f32 = du_lieu.nhip_dich;
             let vi_tri_x: f32 = TOA_DO_X_DICH + ((tg_dich - thoi_gian_hien_tai) * toc_do_chung);
             let toa_do_y: f32 = du_lieu.not_node.get_position().y;
 
@@ -142,9 +144,9 @@ impl KhuongNhac {
                 .not_node
                 .set_position(Vector2::new(vi_tri_x, toa_do_y));
 
-            // nếu không nốt Hold dài sẽ biến mất khi đang lướt qua vạch
-            let chieu_dai = du_lieu.not_node.bind().get_chieu_dai_duoi();
-            let toa_do_xoa = vi_tri_x + chieu_dai;
+            // nếu không nốt hold dài sẽ biến mất khi đang lướt qua vạch
+            let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
+            let toa_do_xoa: f32 = vi_tri_x + chieu_dai;
 
             if toa_do_xoa < -50.0 {
                 du_lieu.not_node.queue_free();

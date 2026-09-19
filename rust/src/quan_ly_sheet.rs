@@ -36,7 +36,6 @@ impl QuanLySheet {
 
     // #[func]
     // pub fn nhan_tin_hieu_bam_phim(&mut self, id_not: i32) {
-    //     // Truyền lệnh bấm phím xuống cho cả 2 khuông nhạc
     //     if let Some(khuong) = self.khuong_1.as_mut() {
     //         khuong.bind_mut().xu_ly_bam_phim(id_not);
     //     }
@@ -72,13 +71,13 @@ impl QuanLySheet {
             let ds_phim_khuong_2 = khuong.bind_mut().get_cac_not_trong_area();
             danh_sach_phim_trong_area.extend(ds_phim_khuong_2);
         }
-        godot::global::godot_print!(
-            "Danh sách nốt trong vùng: {:?}",
-            danh_sach_phim_trong_area
-                .iter()
-                .map(|not| not.bind().get_id_not())
-                .collect::<Vec<i32>>()
-        );
+        // godot::global::godot_print!(
+        //     "Danh sách nốt trong vùng: {:?}",
+        //     danh_sach_phim_trong_area
+        //         .iter()
+        //         .map(|not| not.bind().get_id_not())
+        //         .collect::<Vec<i32>>()
+        // );
         danh_sach_phim_trong_area
     }
 }

@@ -18,55 +18,63 @@ pub struct ChoiSheet {
     ban_phim_midi_node: Option<Gd<BanPhimMidi>>,
     quan_ly_sheet_node: Option<Gd<QuanLySheet>>,
 }
+
 #[godot_api]
 impl ChoiSheet {
-    // pub fn kiem_tra_phim(&mut self) {
-    //     let danh_sach_phim_bam: HashSet<i32> = self
-    //         .ban_phim_midi_node
-    //         .as_ref()
-    //         .unwrap()
-    //         .bind()
-    //         .get_danh_sach_phim_bam();
-    //     let cac_not_trong_vung: Vec<Gd<crate::not_nhac::NotNhac>> = self
-    //         .quan_ly_sheet_node
-    //         .as_ref()
-    //         .unwrap()
-    //         .bind()
-    //         .get_danh_sach_not_trong_area();
-    //     for mut not_node in cac_not_trong_vung {
-    //         let id_cua_not: i32 = not_node.bind().get_id_not();
-    //         if danh_sach_phim_bam.contains(&id_cua_not) {
-    //             not_node.bind_mut().da_duoc_danh();
-    //             self.diem += 100;
-    //             break;
-    //         }
-    //     }
-    // }
     #[func]
     pub fn kiem_tra_phim(&mut self, so_phim: i32) {
-        let cac_not_trong_area: Vec<Gd<crate::not_nhac::NotNhac>> = self
+        let cac_not_trong_area = self
             .quan_ly_sheet_node
             .as_mut()
             .unwrap()
             .bind_mut()
             .get_danh_sach_not_trong_area();
-        // godot_print!("Các nốt trong vùng: ");
+
         for mut not_node in cac_not_trong_area {
-            print!("{} ", not_node.bind().get_id_not());
-            let id_not: i32 = not_node.bind().get_id_not();
-            let da_danh: bool = not_node.bind().get_da_duoc_danh();
+            let id_not = not_node.bind().get_id_not();
+            let da_danh = not_node.bind().get_da_duoc_danh();
 
             if id_not == so_phim && !da_danh {
-                not_node.bind_mut().da_duoc_danh();
-                self.diem += 100;
-                godot_print!("Điểm: {}", self.diem);
+                // Chỉ đánh dấu nốt đã được bấm và bật trạng thái đổi màu
+                not_node.bind_mut().bat_dau_giu(); 
                 break;
             }
         }
     }
-    // pub fn get_diem(&self) -> i32 {
-    //     self.diem
-    // }
+
+    #[func]
+    pub fn xu_ly_nha_phim(&mut self, so_phim: i32) {
+        let cac_not_trong_area = self
+            .quan_ly_sheet_node
+            .as_mut()
+            .unwrap()
+            .bind_mut()
+            .get_danh_sach_not_trong_area();
+
+        for mut not_node in cac_not_trong_area {
+            let id_not = not_node.bind().get_id_not();
+            let dang_giu = not_node.bind().get_dang_giu();
+
+            // Nếu người chơi nhả đúng phím đang được giữ
+            if id_not == so_phim && dang_giu {
+                not_node.bind_mut().ket_thuc_giu();
+                
+                // TÍNH ĐIỂM 1 LẦN KHI NHẢ PHÍM TẠI ĐÂY
+                let chieu_dai_duoi = not_node.bind().get_chieu_dai_duoi();
+                
+                if chieu_dai_duoi > 0.0 {
+                    // Nếu là nốt dài (có đuôi), thưởng điểm cao hơn khi nhả phím
+                    self.diem += 200; 
+                    godot_print!("Hoàn thành nốt ngân! Điểm: {}", self.diem);
+                } else {
+                    // Nếu là nốt bình thường không đuôi
+                    self.diem += 100;
+                    godot_print!("Hoàn thành nốt ngắn! Điểm: {}", self.diem);
+                }
+                break;
+            }
+        }
+    }
 }
 
 #[godot_api]
@@ -77,13 +85,13 @@ impl IControl for ChoiSheet {
             .try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
         self.quan_ly_sheet_node = self.base().try_get_node_as::<QuanLySheet>("QuanLySheet");
 
-        let check_phim_midi: godot::prelude::Callable = self.base().callable("kiem_tra_phim");
+        let check_phim_midi = self.base().callable("kiem_tra_phim");
+        let nha_phim_midi = self.base().callable("xu_ly_nha_phim");
 
         if let Some(mut midi_node) = self.ban_phim_midi_node.clone() {
+            // Lắng nghe cả sự kiện nhấn và nhả[cite: 3]
             midi_node.connect("phim_vua_duoc_bam", &check_phim_midi);
-            godot_print!("da ket noi signal phim_vua_duoc_bam voi kiem_tra_phim");
-        } else {
-            godot_print!("loi tim node BanPhimMidi");
+            midi_node.connect("phim_vua_duoc_nha", &nha_phim_midi); 
         }
     }
 }

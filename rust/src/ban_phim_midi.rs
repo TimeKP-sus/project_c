@@ -109,7 +109,6 @@ impl BanPhimMidi {
         // godot_print!("Nhan phim MIDI: {}, Luc: {}", so_phim, 100);
         self.danh_sach_phim_bam.insert(so_phim);
 
-        //co the gay loi ??
         self.base_mut().emit_signal("phim_vua_duoc_bam", &[so_phim.to_variant()]);
 
         self.cat_nhat_danh_sach_phim_bam();
