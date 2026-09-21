@@ -1,8 +1,10 @@
 use godot::classes::{ Control, IControl, Label };
+use godot::global::godot_print;
 use godot::obj::{ Gd, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::check_ten_not::chuyen_id_thanh_ten;
+use crate::doc_sheet_json::doc_file_json;
 use crate::khuong_nhac::KhuongNhac;
 use crate::not_nhac::NotNhac;
 
@@ -96,50 +98,26 @@ impl IControl for QuanLySheet {
         // cai dat
         self.thoi_gian_cho = 10.0;
         self.thoi_gian = 0.0 - self.thoi_gian_cho;
-
-        let khoang_cach_nhip: f32 = self.toc_do; // Lấy biến toc_do đã export ở QuanLySheet
         // ♭
-        // Tay phải (Khuông 1): Giai điệu chính
-        self.khuong_1.as_mut().map(|khuong| {
-            khuong.bind_mut().tao_nhieu_not(
-                vec![
-                    // Câu 1: "Twinkle twinkle little star"
-                    // (id, tên nốt, màu, vị trí Y, nhịp đích, nhịp giữ)
-                    (36, chuyen_id_thanh_ten(36, false), "1", 15, 0.0, 1.0), // C4
-                    (36, chuyen_id_thanh_ten(36, false), "1", 15, 1.0, 1.0), // C4
-                    (43, chuyen_id_thanh_ten(43, false), "3", 11, 2.0, 1.0), // G4
-                    (43, chuyen_id_thanh_ten(43, false), "3", 11, 3.0, 1.0), // G4
-                    (45, chuyen_id_thanh_ten(45, false), "5", 10, 4.0, 1.0), // A4
-                    (45, chuyen_id_thanh_ten(45, false), "5", 10, 5.0, 1.0), // A4
-                    (43, chuyen_id_thanh_ten(43, false), "4", 11, 6.0, 2.0), // G4 (Ngân dài 2 phách)
-                    // Câu 2: "How I wonder what you are"
-                    (41, chuyen_id_thanh_ten(41, false), "2", 12, 8.0, 1.0), // F4
-                    (41, chuyen_id_thanh_ten(41, false), "2", 12, 9.0, 1.0), // F4
-                    (40, chuyen_id_thanh_ten(40, false), "4", 13, 10.0, 1.0), // E4
-                    (40, chuyen_id_thanh_ten(40, false), "4", 13, 11.0, 1.0), // E4
-                    (38, chuyen_id_thanh_ten(38, false), "1", 14, 12.0, 1.0), // D4
-                    (38, chuyen_id_thanh_ten(38, false), "1", 14, 13.0, 1.0), // D4
-                    (36, chuyen_id_thanh_ten(36, false), "3", 15, 14.0, 2.0), // C4 (Ngân dài 2 phách)
-                    (37, chuyen_id_thanh_ten(37, false), "3", 15, 14.0, 2.0),
-                    (36, chuyen_id_thanh_ten(36, false), "3", 15, 16.0, 0.0)
-                ],
-                khoang_cach_nhip
-            )
-        });
+        if let Some(bai_hat) = doc_file_json("res://bai_hoc/choi_sheet/test.json") {
+            self.bpm = bai_hat.bpm;
+            self.toc_do = bai_hat.toc_do;
+            let khoang_cach_nhip: f32 = self.toc_do;
 
-        // Tay trái (Khuông 2): Đệm Bass đơn giản
-        self.khuong_2.as_mut().map(|khuong| {
-            khuong.bind_mut().tao_nhieu_not(
-                vec![
-                    // Tay trái sẽ đánh các nốt trầm, mỗi nốt ngân dài hẳn 4 phách (1 ô nhịp)
-                    (24, chuyen_id_thanh_ten(24, false), "3", 8, 0.0, 4.0), // C3
-                    (29, chuyen_id_thanh_ten(29, false), "2", 5, 4.0, 4.0), // F3
-                    (24, chuyen_id_thanh_ten(24, false), "3", 8, 8.0, 4.0), // C3
-                    (19, chuyen_id_thanh_ten(19, false), "1", 12, 12.0, 4.0) // G2
-                ],
-                khoang_cach_nhip
-            )
-        });
+            if let Some(mut khuong) = self.khuong_1.clone() {
+                let mut k_bind = khuong.bind_mut();
+                for not in bai_hat.khuong_1 {
+                    k_bind.tao_not(not.id_not, &not.ten_not, &not.mau_not, not.vi_tri_so, not.nhip_dich, not.nhip_giu, khoang_cach_nhip);
+                }
+            }
+
+            if let Some(mut khuong) = self.khuong_2.clone() {
+                let mut k_bind = khuong.bind_mut();
+                for not in bai_hat.khuong_2 {
+                    k_bind.tao_not(not.id_not, &not.ten_not, &not.mau_not, not.vi_tri_so, not.nhip_dich, not.nhip_giu, khoang_cach_nhip);
+                }
+            }
+        }
     }
     fn process(&mut self, delta: f64) {
         if self.da_dung {

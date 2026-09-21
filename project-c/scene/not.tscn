@@ -21,7 +21,7 @@ font = ExtResource("1_8fp46")
 font_size = 20
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f281m"]
-size = Vector2(10, 26)
+size = Vector2(18, 26)
 
 [node name="Notnhac" type="NotNhac" unique_id=672420905]
 
@@ -41,5 +41,5 @@ label_settings = SubResource("LabelSettings_2o2pn")
 vertical_alignment = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=286682726]
-position = Vector2(5, 11)
+position = Vector2(9, 11)
 shape = SubResource("RectangleShape2D_f281m")

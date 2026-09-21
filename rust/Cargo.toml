@@ -13,5 +13,7 @@ crate-type = ["cdylib", "staticlib"]
 
 [dependencies]
 godot = { git = "https://github.com/godot-rust/gdext.git", rev = "4c7db4833a932c1ff647ac841036f3e631ec2877" }
-cpal = "0.18.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+cpal = "0.18.2"
 rustysynth = "1.3"

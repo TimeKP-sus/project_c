@@ -10,6 +10,8 @@ mod not_nhac;
 mod hop_am;
 mod choi_sheet;
 mod check_ten_not;
+mod doc_sheet_json;
+mod du_lieu_nguoi_dung;
 // mod phim_dan;
 
 use godot::prelude::*;

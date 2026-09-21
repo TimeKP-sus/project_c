@@ -162,7 +162,7 @@ impl KhuongNhac {
     #[func]
     pub fn kiem_tra_not_vao(&mut self, area: Gd<Area2D>) {
         let Some(not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
-            godot_print!("khong tim thay area");
+            // godot_print!("khong tim thay area khuong_nhac.rs: kiem_tra_not_vao");
             return;
         };
 
@@ -172,11 +172,12 @@ impl KhuongNhac {
 
     #[func]
     pub fn kiem_tra_not_ra(&mut self, area: Gd<Area2D>) {
-        let Some(not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
+        let Some(mut not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
             return;
         };
-        // Kiểm tra Miss trước khi xóa khỏi mảng
+
         if !not_nhac.bind().get_da_duoc_danh() {
+            not_nhac.bind_mut().da_danh_trat();
             godot_print!("Người chơi đã bỏ lỡ nốt.");
             // Gắn logic trừ máu hoặc reset combo ở đây
         }

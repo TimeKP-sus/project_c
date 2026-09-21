@@ -67,6 +67,10 @@ impl NotNhac {
     pub fn get_da_duoc_danh(&self) -> bool {
         self.da_duoc_danh
     }
+    pub fn da_danh_trat(&mut self) {
+        self.base_mut()
+            .set_modulate(Color::from_rgba(0.5, 0.5, 0.5, 0.5));
+    }
 
     #[func]
     pub fn da_duoc_danh(&mut self) {

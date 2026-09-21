@@ -1,0 +1,12 @@
+{
+  "bpm": 120.0,
+  "toc_do": 50.0,
+  "khuong_1": [
+	{ "id_not": 36, "ten_not": "C4", "mau_not": "1", "vi_tri_so": 15, "nhip_dich": 0.0, "nhip_giu": 0.0 },
+	{ "id_not": 36, "ten_not": "C4", "mau_not": "1", "vi_tri_so": 15, "nhip_dich": 1.0, "nhip_giu": 1.0 },
+	{ "id_not": 43, "ten_not": "G4", "mau_not": "3", "vi_tri_so": 11, "nhip_dich": 2.0, "nhip_giu": 1.0 }
+  ],
+  "khuong_2": [
+	{ "id_not": 24, "ten_not": "C3", "mau_not": "3", "vi_tri_so": 8, "nhip_dich": 0.0, "nhip_giu": 4.0 }
+  ]
+}
