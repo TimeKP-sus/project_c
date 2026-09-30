@@ -7,6 +7,7 @@ pub struct BaiHatJson {
     pub ten_bai_hat: String,
     pub tac_gia: String,
     pub nguoi_tao_sheet: String,
+    pub loai_vach_nhip: String,
     pub bpm: f32,
     pub toc_do: f32,
     pub khuong_1: Vec<NotNhacJson>,

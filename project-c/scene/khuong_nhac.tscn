@@ -13,6 +13,7 @@ offset_bottom = -1.5600128
 grow_vertical = 0
 
 [node name="Khuong" type="TextureRect" parent="." unique_id=1716682237]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

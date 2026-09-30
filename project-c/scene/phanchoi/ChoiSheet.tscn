@@ -6,6 +6,7 @@
 [ext_resource type="FontFile" uid="uid://c56hg45h2eink" path="res://asset/font/arial.ttf" id="4_1i2qx"]
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="4_cirep"]
 [ext_resource type="Script" uid="uid://blsrxxtumc42u" path="res://scene/phanchoi/tong_ket_choi_sheet.gd" id="4_wryo6"]
+[ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="7_7d2hr"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
 font = ExtResource("3_4c48n")
@@ -103,6 +104,7 @@ label_settings = SubResource("LabelSettings_0iuma")
 vertical_alignment = 1
 
 [node name="nen_tong_ket" type="Panel" parent="." unique_id=922925555]
+visible = false
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1082.0
@@ -258,5 +260,12 @@ offset_right = 1610.0
 offset_bottom = 671.322
 theme_override_font_sizes/font_size = 24
 text = "Về menu"
+
+[node name="fps" type="Label" parent="." unique_id=322025247]
+layout_mode = 0
+offset_right = 252.0
+offset_bottom = 23.0
+script = ExtResource("7_7d2hr")
+hien_fps = true
 
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="." method="tong_ket"]
