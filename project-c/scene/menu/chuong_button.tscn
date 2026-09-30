@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://budykwkj1gl4p"]
+
+[ext_resource type="Script" uid="uid://bctcnxv6u54b4" path="res://gd/chuong_button.gd" id="1_smvnb"]
+
+[node name="1" type="Button" unique_id=365704622]
+theme_override_font_sizes/font_size = 30
+text = "1"
+script = ExtResource("1_smvnb")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

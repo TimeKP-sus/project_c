@@ -7,9 +7,8 @@ var dang_giu_chuot:bool = false
 var drag_offset: Vector2i
 
 var file_sf2:Array[String] = []
-# Called when the node enters the scene tree for the first time.
+
 func _ready() -> void:
-	
 	var dir = DirAccess.open("res://sf2")
 	if dir:
 		dir.list_dir_begin()

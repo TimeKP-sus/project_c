@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://tlomyfbvm53t"]
+
+[ext_resource type="Script" uid="uid://dy51oyniurnd" path="res://gd/nut_menu.gd" id="1_3f87a"]
+[ext_resource type="StyleBox" uid="uid://cupeudjvy5wcv" path="res://asset/theme/nut_menu_normal.tres" id="2_c2jco"]
+[ext_resource type="PackedScene" uid="uid://0gn6uhig7bu0" path="res://scene/button/button_1.tscn" id="2_hmcvd"]
+[ext_resource type="PackedScene" uid="uid://okkufgawrf0i" path="res://scene/phanchoi/ChoiSheet.tscn" id="3_ak0k5"]
+[ext_resource type="StyleBox" uid="uid://cv7fv8dvpspt0" path="res://asset/theme/button_press_1.tres" id="3_uoxu4"]
+[ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="4_sxbar"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="5_qitb7"]
+
+[node name="NutMenu" type="Control" unique_id=52198437]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3f87a")
+metadata/_edit_lock_ = true
+
+[node name="Menu" type="Control" parent="." unique_id=1964604858]
+anchors_preset = 0
+offset_top = -80.0
+offset_right = 1920.0
+
+[node name="bat_dau" parent="Menu" unique_id=1368048531 instance=ExtResource("2_hmcvd")]
+layout_mode = 1
+anchor_top = 0.90000004
+anchor_right = 0.0
+anchor_bottom = 0.90000004
+offset_left = 88.0
+offset_top = -56.0
+offset_right = 288.0
+offset_bottom = -4.0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/pressed = ExtResource("3_uoxu4")
+path_scene_den = ExtResource("3_ak0k5")
+loai_nut = "them moi xoa cu"
+metadata/_edit_pinned_properties_ = [&"loai_nut"]
+
+[node name="quay_lai" parent="Menu" unique_id=1391915915 instance=ExtResource("2_hmcvd")]
+layout_mode = 1
+anchor_top = 0.90000004
+anchor_right = 0.0
+anchor_bottom = 0.90000004
+offset_left = 320.0
+offset_top = -56.0
+offset_right = 520.0
+offset_bottom = -4.0
+theme_override_font_sizes/font_size = 25
+theme_override_styles/pressed = ExtResource("3_uoxu4")
+text = "Quay lai danh sach"
+loai_nut = "them moi"
+metadata/_edit_pinned_properties_ = [&"loai_nut"]
+
+[node name="nut_menu" type="Button" parent="." unique_id=680074442]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = -1864.0
+offset_bottom = -1024.0
+theme_override_colors/font_color = Color(0.875, 0.875, 0.875, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("5_qitb7")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = ExtResource("2_c2jco")
+text = "|||"
+
+[node name="fps" type="Label" parent="." unique_id=1403853146]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.896
+anchor_right = 0.99200004
+anchor_bottom = 0.022000002
+offset_left = -0.32006836
+offset_right = -0.6401367
+offset_bottom = 0.23999786
+horizontal_alignment = 2
+script = ExtResource("4_sxbar")
+hien_fps = true
+
+[connection signal="button_down" from="nut_menu" to="." method="_on_nut_menu_button_down"]

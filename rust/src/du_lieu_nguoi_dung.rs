@@ -7,7 +7,7 @@ use std::collections::HashMap;
 pub struct ThongTinBaiHat {
     pub diem_cao_nhat: i32,
     pub so_lan_choi: i32,
-    pub da_hoan_thanh: bool, // Tùy chọn: Đánh dấu bài đã qua bàn
+    pub da_hoan_thanh: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -18,6 +18,12 @@ pub struct DuLieuNguoiDung {
 }
 
 impl DuLieuNguoiDung {
+    pub fn doc_thong_tin_nguoi_choi(ten_nguoi_choi: &str) -> Option<Self> {
+        let duong_dan: String = format!("res://du_lieu_nguoi_dung/{}.json", ten_nguoi_choi);
+        let file = std::fs::File::open(&duong_dan).ok()?;
+        let du_lieu: DuLieuNguoiDung = serde_json::from_reader(file).ok()?;
+        Some(du_lieu)
+    }
     pub fn khoi_tao(ten_nguoi_choi: String) -> Self {
         Self {
             ten_nguoi_choi,
@@ -31,16 +37,10 @@ impl DuLieuNguoiDung {
             so_lan_choi: 0,
             da_hoan_thanh,
         });
-
-        // Cập nhật điểm cao nhất nếu điểm mới cao hơn
+        thong_tin.so_lan_choi += 1;
         if diem > thong_tin.diem_cao_nhat {
             thong_tin.diem_cao_nhat = diem;
         }
-
-        // Tăng số lần chơi
-        thong_tin.so_lan_choi += 1;
-
-        // Cập nhật trạng thái hoàn thành nếu cần
         if da_hoan_thanh {
             thong_tin.da_hoan_thanh = true;
         }
@@ -51,7 +51,6 @@ impl DuLieuNguoiDung {
     pub fn set_do_tre_phim(&mut self, do_tre: f32) {
         self.do_tre_phim = do_tre;
     }
-    /// Lấy độ trễ của người chơi
     pub fn get_do_tre_phim(&self) -> f32 {
         self.do_tre_phim
     }

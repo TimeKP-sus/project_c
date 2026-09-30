@@ -1,0 +1,20 @@
+{
+	"ten_chuong": "Chuong 1",
+	"bai_hoc": [
+		{
+			"ten_bai_hoc": "test",
+			"loai_bai_hoc": "choi_sheet",
+			"duong_dan": "res://bai_hoc/choi_sheet/test.json"
+		},
+		{
+			"ten_bai_hoc": "test",
+			"loai_bai_hoc": "nghe_va_doan_not",
+			"duong_dan": "res://bai_hoc/nghe_va_doan_not/test.json"
+		},
+		{
+			"ten_bai_hoc": "test",
+			"loai_bai_hoc": "tim_not",
+			"duong_dan": "res://bai_hoc/tim_not/test.json"
+		}
+	]
+}

@@ -1,0 +1,185 @@
+[gd_scene format=3 uid="uid://mre47t220lg4"]
+
+[ext_resource type="Script" uid="uid://yw6v86xh2avk" path="res://gd/danh_sach_bai_hoc.gd" id="1_irrk0"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_irrk0"]
+[ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="3_purpp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_purpp"]
+bg_color = Color(0.41291764, 0.4129177, 0.41291758, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01teo"]
+content_margin_left = 10.0
+content_margin_top = 16.0
+bg_color = Color(0.33735362, 0.33735362, 0.3373535, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj3hg"]
+content_margin_left = 10.0
+content_margin_top = 10.0
+content_margin_right = 10.0
+content_margin_bottom = 10.0
+bg_color = Color(0, 0, 0, 1)
+border_color = Color(0.35831767, 0.3583177, 0.35831743, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 20
+
+[node name="DanhSachBaiHoc" type="DanhSachBaiHoc" unique_id=788736684]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_irrk0")
+
+[node name="khung" type="Control" parent="." unique_id=1486567539]
+visible = false
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="ColorRect" type="ColorRect" parent="khung" unique_id=2108535038]
+layout_mode = 0
+offset_right = 378.0
+offset_bottom = 1080.0
+
+[node name="ColorRect2" type="ColorRect" parent="khung" unique_id=1243967967]
+layout_mode = 0
+offset_left = 378.0
+offset_right = 1920.0
+offset_bottom = 112.0
+color = Color(0.44368353, 0.44368356, 0.44368353, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="khung" unique_id=1128069531]
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 112.0
+offset_right = 1920.0
+offset_bottom = 1079.0
+color = Color(0.1281006, 0.12810066, 0.1281006, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="khung" unique_id=919494733]
+layout_mode = 0
+offset_left = 378.0
+offset_top = 112.0
+offset_right = 1400.0
+offset_bottom = 1080.0
+color = Color(0.740546, 0.7405459, 0.7405459, 1)
+
+[node name="menu_trai" type="Panel" parent="." unique_id=677898717]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.104
+anchor_right = 0.19700001
+anchor_bottom = 1.006
+offset_top = -0.3199997
+offset_right = -0.24002075
+offset_bottom = -7.4801025
+theme_override_styles/panel = SubResource("StyleBoxFlat_purpp")
+
+[node name="VScrollBar" type="VScrollBar" parent="menu_trai" unique_id=1625892632]
+layout_mode = 0
+offset_top = 112.0
+offset_right = 8.0
+offset_bottom = 120.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="menu_trai" unique_id=920174276]
+layout_mode = 0
+offset_top = 24.0
+offset_right = 378.0
+offset_bottom = 967.0
+theme_override_constants/scrollbar_h_separation = 1
+theme_override_constants/scrollbar_v_separation = 1
+
+[node name="DanhSachChuong" type="VBoxContainer" parent="menu_trai/ScrollContainer" unique_id=950426875]
+custom_minimum_size = Vector2(378, 966)
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="quay_lai" type="Button" parent="." unique_id=2082852234]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.007
+anchor_top = 0.013
+anchor_right = 0.051000003
+anchor_bottom = 0.091000006
+offset_left = 0.55999947
+offset_top = -0.03999996
+offset_right = 0.0799942
+offset_bottom = -0.2800064
+theme_override_fonts/font = ExtResource("3_purpp")
+theme_override_font_sizes/font_size = 50
+text = "<"
+
+[node name="menu_tren" type="Panel" parent="." unique_id=628778533]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.19700001
+anchor_right = 0.9990001
+anchor_bottom = 0.104
+offset_left = -0.24002075
+offset_right = 1.9199219
+offset_bottom = -0.3199997
+
+[node name="tim_kiem" type="TextEdit" parent="menu_tren" unique_id=1642749798]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.045
+anchor_top = 0.25
+anchor_right = 0.48100004
+anchor_bottom = 0.87500006
+offset_left = 0.6100006
+offset_top = -3.0
+offset_right = 0.29797363
+offset_bottom = -5.698036
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_01teo")
+text = "dsadasddddd"
+
+[node name="menu_phai" type="Panel" parent="." unique_id=2100984069]
+layout_mode = 0
+offset_left = 1400.0
+offset_top = 112.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="thong_tin" type="RichTextLabel" parent="menu_phai" unique_id=1977675641]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.027
+anchor_top = 0.008
+anchor_right = 0.96900004
+anchor_bottom = 0.98300004
+offset_left = -0.03999996
+offset_top = 0.25599957
+offset_right = 0.1199646
+offset_bottom = 0.45593262
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_irrk0")
+theme_override_font_sizes/normal_font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_cj3hg")
+bbcode_enabled = true
+text = "Dsadasd"
+
+[node name="menu_giua" type="Panel" parent="." unique_id=1141818910]
+layout_mode = 0
+offset_left = 392.0
+offset_top = 120.0
+offset_right = 1400.0
+offset_bottom = 1078.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="menu_giua" unique_id=1176077096]
+propagate_maximum_size = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DanhSachBaiHoc" type="VBoxContainer" parent="menu_giua/ScrollContainer" unique_id=440594186]
+custom_minimum_size = Vector2(1000, 966)
+layout_mode = 2
+theme_override_constants/separation = 5

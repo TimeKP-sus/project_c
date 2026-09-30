@@ -4,12 +4,15 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Debug)]
 pub struct BaiHatJson {
+    pub ten_bai_hat: String,
+    pub tac_gia: String,
+    pub nguoi_tao_sheet: String,
     pub bpm: f32,
     pub toc_do: f32,
     pub khuong_1: Vec<NotNhacJson>,
     pub khuong_2: Vec<NotNhacJson>,
 }
-
+    
 #[derive(Deserialize, Debug)]
 pub struct NotNhacJson {
     pub id_not: i32,
@@ -20,7 +23,6 @@ pub struct NotNhacJson {
     pub nhip_giu: f32,
 }
 
-// Hàm này trả về Option<BaiHatJson>, nếu lỗi sẽ trả về None
 pub fn doc_file_json(duong_dan: &str) -> Option<BaiHatJson> {
     let file_text = FileAccess::get_file_as_string(duong_dan);
 

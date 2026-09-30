@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://7e3w2txydrge"]
+
+[ext_resource type="PackedScene" uid="uid://0gn6uhig7bu0" path="res://scene/button/button_1.tscn" id="1_t2k7j"]
+[ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="1_vmede"]
+[ext_resource type="Texture2D" uid="uid://db0hgdh16ym0t" path="res://asset/piano.png" id="2_nejbb"]
+[ext_resource type="StyleBox" uid="uid://cv7fv8dvpspt0" path="res://asset/theme/button_press_1.tres" id="2_um4pu"]
+[ext_resource type="PackedScene" uid="uid://okkufgawrf0i" path="res://scene/phanchoi/ChoiSheet.tscn" id="3_um4pu"]
+[ext_resource type="FontFile" uid="uid://d3nlqn62vfu1r" path="res://asset/font/ARLRDBD.TTF" id="5_weqhr"]
+[ext_resource type="PackedScene" uid="uid://tlomyfbvm53t" path="res://scene/menu/nut_menu.tscn" id="7_prnif"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f281m"]
+line_spacing = 10.0
+paragraph_spacing = 40.0
+font = ExtResource("1_vmede")
+font_size = 100
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_prnif"]
+font = ExtResource("5_weqhr")
+font_size = 40
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="MenuChinh" type="Control" unique_id=15579019]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="bat_dau" parent="." unique_id=1368048531 instance=ExtResource("1_t2k7j")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 162.0
+offset_top = 384.0
+offset_right = 562.0
+offset_bottom = 496.0
+theme_override_styles/pressed = ExtResource("2_um4pu")
+path_scene_den = ExtResource("3_um4pu")
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="lich_su" parent="." unique_id=907769662 instance=ExtResource("1_t2k7j")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 162.0
+offset_top = 576.0
+offset_right = 562.0
+offset_bottom = 688.0
+theme_override_styles/pressed = ExtResource("2_um4pu")
+text = "Lịch sử"
+path_scene_den = ExtResource("3_um4pu")
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="cai_datt" parent="." unique_id=304146953 instance=ExtResource("1_t2k7j")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 162.0
+offset_top = 768.0
+offset_right = 562.0
+offset_bottom = 880.0
+theme_override_styles/pressed = ExtResource("2_um4pu")
+text = "Cài đặt"
+path_scene_den = ExtResource("3_um4pu")
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="tieu_de" type="Label" parent="." unique_id=1825215812]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 1856.0
+offset_bottom = 320.0
+text = "PROJECT-C"
+label_settings = SubResource("LabelSettings_f281m")
+vertical_alignment = 1
+
+[node name="gioi_thieu" type="Label" parent="." unique_id=1996472345]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 960.0
+offset_right = 864.0
+offset_bottom = 1079.0
+text = "Ver 0.1 | TimeKP"
+label_settings = SubResource("LabelSettings_prnif")
+vertical_alignment = 1
+
+[node name="anh" type="TextureRect" parent="." unique_id=1226762362]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.007
+anchor_bottom = -0.007
+offset_left = 992.0
+offset_top = 415.56
+offset_right = 1744.0
+offset_bottom = 919.56
+texture = ExtResource("2_nejbb")
+
+[node name="NutMenu" parent="." unique_id=52198437 instance=ExtResource("7_prnif")]
+layout_mode = 1

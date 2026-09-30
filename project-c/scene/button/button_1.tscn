@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://0gn6uhig7bu0"]
+
+[ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="1_388li"]
+[ext_resource type="StyleBox" uid="uid://b1ke542xrkxxr" path="res://asset/theme/button_normal_1.tres" id="2_a8cuf"]
+[ext_resource type="StyleBox" uid="uid://cgokj6154shki" path="res://asset/theme/button_hover_1.tres" id="3_wy478"]
+[ext_resource type="Script" uid="uid://dlkpr8p1supdq" path="res://button_1.gd" id="4_a8cuf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t2k7j"]
+bg_color = Color(0.1541858, 0.82907444, 0.89716345, 1)
+border_width_left = 6
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 15
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+anti_aliasing = false
+
+[node name="button1" type="Button" unique_id=1368048531]
+anchors_preset = -1
+anchor_right = 0.23700002
+anchor_bottom = 0.096
+offset_right = 0.95996094
+offset_bottom = -7.6800003
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0.21628195, 0.2819009, 0.61537534, 1)
+theme_override_fonts/font = ExtResource("1_388li")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = ExtResource("2_a8cuf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_t2k7j")
+theme_override_styles/hover = ExtResource("3_wy478")
+text = "Bắt đầu"
+script = ExtResource("4_a8cuf")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

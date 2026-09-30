@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bc60vic3bfv5a"]
 
 [ext_resource type="PackedScene" uid="uid://sanbbsfl62ra" path="res://scene/khuong_nhac.tscn" id="1_4oah5"]
-[ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://scene/fps.gd" id="2_23p65"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4oah5"]
 font_size = 27
@@ -48,12 +47,5 @@ offset_bottom = -0.4400177
 text = "00:00"
 label_settings = SubResource("LabelSettings_4oah5")
 
-[node name="fps" type="Label" parent="." unique_id=1502478345]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.102000006
-anchor_bottom = 0.043
-offset_right = 0.1599884
-offset_bottom = -0.44000244
-text = "fps"
-script = ExtResource("2_23p65")
+[connection signal="khuong_da_het_not" from="K1" to="." method="kiem_tra_ket_thuc" flags=3]
+[connection signal="khuong_da_het_not" from="K2" to="." method="kiem_tra_ket_thuc" flags=3]

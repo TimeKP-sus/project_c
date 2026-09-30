@@ -12,6 +12,7 @@ mod choi_sheet;
 mod check_ten_not;
 mod doc_sheet_json;
 mod du_lieu_nguoi_dung;
+mod danh_sach_bai_hoc;
 // mod phim_dan;
 
 use godot::prelude::*;

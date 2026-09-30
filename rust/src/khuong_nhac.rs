@@ -1,4 +1,4 @@
-use godot::builtin::Vector2;
+use godot::builtin::{ GString, Vector2 };
 
 use godot::classes::{ Area2D, Control, IControl, PackedScene };
 
@@ -28,6 +28,8 @@ pub struct KhuongNhac {
     //Vec
     cac_not_trong_area: Vec<Gd<NotNhac>>,
     cac_not_trong_khuong: Vec<DuLieuNot>,
+    #[export]
+    giu_lai_not: bool,
 }
 
 #[godot_api]
@@ -38,6 +40,12 @@ impl KhuongNhac {
     //         .map(|not| not.bind().get_id_not())
     //         .collect()
     // }
+    #[signal]
+    fn khuong_da_het_not();
+    #[func]
+    pub fn da_het_not(&self) -> bool {
+        self.cac_not_trong_khuong.is_empty()
+    }
     pub fn get_cac_not_trong_area(&mut self) -> Vec<Gd<NotNhac>> {
         self.cac_not_trong_area.retain(|not| not.is_instance_valid());
 
@@ -49,6 +57,10 @@ impl KhuongNhac {
             .iter()
             .map(|du_lieu| du_lieu.not_node.clone())
             .collect()
+    }
+    #[func]
+    pub fn get_tong_so_not(&self) -> i32 {
+        self.cac_not_trong_khuong.len() as i32
     }
     pub fn tao_not(
         &mut self,
@@ -70,21 +82,21 @@ impl KhuongNhac {
         };
 
         let vt: Vector2 = match vi_tri_so {
-            // Mỗi vị trí cách nhau chính xác 14 pixel
+            // tu tren xuong
             0 => Vector2::new(2040.0, -10.0),
-            1 => Vector2::new(2040.0, 1.0), // +14
-            2 => Vector2::new(2040.0, 14.0), // +14
-            3 => Vector2::new(2040.0, 27.0), // +14
-            4 => Vector2::new(2040.0, 40.0), // +14
-            5 => Vector2::new(2040.0, 53.0), // +14
-            6 => Vector2::new(2040.0, 65.0), // +14 (Dòng kẻ trên cùng)
-            7 => Vector2::new(2040.0, 79.0), // +14
-            8 => Vector2::new(2040.0, 90.0), // +14
-            9 => Vector2::new(2040.0, 105.0), // +14
-            10 => Vector2::new(2040.0, 117.0), // +14
-            11 => Vector2::new(2040.0, 131.0), // +14
-            12 => Vector2::new(2040.0, 142.0), // +14 (Dòng kẻ thứ hai)
-            13 => Vector2::new(2040.0, 157.0), // +14
+            1 => Vector2::new(2040.0, 1.0),
+            2 => Vector2::new(2040.0, 14.0),
+            3 => Vector2::new(2040.0, 27.0),
+            4 => Vector2::new(2040.0, 40.0),
+            5 => Vector2::new(2040.0, 53.0),
+            6 => Vector2::new(2040.0, 65.0),
+            7 => Vector2::new(2040.0, 79.0),
+            8 => Vector2::new(2040.0, 90.0),
+            9 => Vector2::new(2040.0, 105.0),
+            10 => Vector2::new(2040.0, 117.0),
+            11 => Vector2::new(2040.0, 131.0),
+            12 => Vector2::new(2040.0, 142.0),
+            13 => Vector2::new(2040.0, 157.0),
             14 => Vector2::new(2040.0, 169.0),
             15 => Vector2::new(2040.0, 184.0),
             16 => Vector2::new(2040.0, 196.0),
@@ -118,27 +130,32 @@ impl KhuongNhac {
         });
     }
     /// id_not, ten_not, vi_tri_so, thoi_gian_dich, thoi_gian_giu
-    pub fn tao_nhieu_not(
-        &mut self,
-        danh_sach_not: Vec<(i32, &str, &str, i32, f32, f32)>,
-        khoang_cach_nhip: f32 // toc do
-    ) {
-        for (id_not, ten_not, mau_not, vi_tri_so, thoi_gian_dich, thoi_gian_giu) in danh_sach_not {
-            self.tao_not(
-                id_not,
-                ten_not,
-                mau_not,
-                vi_tri_so,
-                thoi_gian_dich,
-                thoi_gian_giu,
-                khoang_cach_nhip
-            );
-        }
-    }
+    // pub fn tao_nhieu_not(
+    //     &mut self,
+    //     danh_sach_not: Vec<(i32, &str, &str, i32, f32, f32)>,
+    //     khoang_cach_nhip: f32 // toc do
+    // ) {
+    //     for (id_not, ten_not, mau_not, vi_tri_so, thoi_gian_dich, thoi_gian_giu) in danh_sach_not {
+    //         self.tao_not(
+    //             id_not,
+    //             ten_not,
+    //             mau_not,
+    //             vi_tri_so,
+    //             thoi_gian_dich,
+    //             thoi_gian_giu,
+    //             khoang_cach_nhip
+    //         );
+    //     }
+    // }
 
     #[func]
     pub fn xu_ly_di_chuyen_not(&mut self, thoi_gian_hien_tai: f32, toc_do_chung: f32) {
         const TOA_DO_X_DICH: f32 = 115.0;
+
+        // 1. Lưu lại số lượng nốt hiện tại trước khi vòng lặp bắt đầu
+        let so_luong_truoc = self.cac_not_trong_khuong.len();
+
+        // 2. Cập nhật vị trí và quyết định giữ/xóa nốt
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
             let tg_dich: f32 = du_lieu.nhip_dich;
             let vi_tri_x: f32 = TOA_DO_X_DICH + (tg_dich - thoi_gian_hien_tai) * toc_do_chung;
@@ -146,17 +163,22 @@ impl KhuongNhac {
 
             du_lieu.not_node.set_position(Vector2::new(vi_tri_x, toa_do_y));
 
-            // nếu không nốt hold dài sẽ biến mất khi đang lướt qua vạch
             let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
             let toa_do_xoa: f32 = vi_tri_x + chieu_dai;
 
             if toa_do_xoa < -50.0 {
                 du_lieu.not_node.queue_free();
-                false
+                false // false nghĩa là nốt này sẽ bị loại bỏ khỏi Vector
             } else {
                 true
             }
         });
+
+        // 3. Kiểm tra xem mảng vừa chuyển từ "có nốt" sang "trống rỗng" hay không
+        if so_luong_truoc > 0 && self.cac_not_trong_khuong.is_empty() {
+            godot::global::godot_print!("Khuông nhạc đã hết nốt!");
+            self.base_mut().emit_signal("khuong_da_het_not", &[]);
+        }
     }
 
     #[func]
@@ -178,12 +200,13 @@ impl KhuongNhac {
 
         if !not_nhac.bind().get_da_duoc_danh() {
             not_nhac.bind_mut().da_danh_trat();
-            godot_print!("Người chơi đã bỏ lỡ nốt.");
-            // Gắn logic trừ máu hoặc reset combo ở đây
         }
 
-        if let Some(index) = self.cac_not_trong_area.iter().position(|node| node == &not_nhac) {
-            self.cac_not_trong_area.swap_remove(index);
+        // xoa not
+        if !self.giu_lai_not {
+            if let Some(index) = self.cac_not_trong_area.iter().position(|node| node == &not_nhac) {
+                self.cac_not_trong_area.swap_remove(index);
+            }
         }
     }
     //test
