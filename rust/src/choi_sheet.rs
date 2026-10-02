@@ -1,3 +1,4 @@
+use godot::builtin::{Callable, GString};
 use godot::classes::{ Control, IControl, Label };
 
 use godot::global::godot_print;
@@ -5,6 +6,7 @@ use godot::obj::{ Gd, GdRef, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::ban_phim_midi::BanPhimMidi;
+use crate::khuong_nhac::KhuongNhac;
 use crate::quan_ly_sheet::QuanLySheet;
 
 #[derive(GodotClass)]
@@ -22,6 +24,9 @@ pub struct ChoiSheet {
     #[export]
     nguoi_tao_label: Option<Gd<Label>>,
 
+    #[export]
+    duong_dan_bai_hoc: GString,
+
     so_phim_tot: i32,
     so_phim_kha: i32,
     so_phim_truot: i32,
@@ -29,6 +34,23 @@ pub struct ChoiSheet {
 
 #[godot_api]
 impl ChoiSheet {
+    #[func]
+    pub fn get_diem(&self) -> i32 {
+        self.diem
+    }
+    #[func]
+    pub fn get_so_phim_tot(&self) -> i32 {
+        self.so_phim_tot
+    }
+    #[func]
+    pub fn get_so_phim_kha(&self) -> i32 {
+        self.so_phim_kha
+    }
+    #[func]
+    pub fn get_so_phim_truot(&self) -> i32 {
+        self.so_phim_truot
+    }
+
     #[func]
     pub fn bat_tat_che_do_cho(&mut self, bat: bool) {
         if let Some(mut node) = self.quan_ly_sheet_node.clone() {
@@ -38,18 +60,18 @@ impl ChoiSheet {
     pub fn set_thong_tin_bai_hat(&mut self) {
         if let Some(node) = &self.quan_ly_sheet_node {
             let sheet_bind: GdRef<'_, QuanLySheet> = node.bind();
-            let ten_bai_hat = sheet_bind.get_ten_bai_hat();
+            let ten_bai_hat: GString = sheet_bind.get_ten_bai_hat();
             let tac_gia = sheet_bind.get_tac_gia();
             let nguoi_tao_sheet = sheet_bind.get_nguoi_tao_sheet();
 
             if let Some(mut label) = self.ten_bai_hat_label.clone() {
-                label.set_text(ten_bai_hat);
+                label.set_text(&ten_bai_hat);
             }
             if let Some(mut label) = self.tac_gia_label.clone() {
-                label.set_text(tac_gia);
+                label.set_text(&tac_gia);
             }
             if let Some(mut label) = self.nguoi_tao_label.clone() {
-                label.set_text(nguoi_tao_sheet);
+                label.set_text(&nguoi_tao_sheet);
             }
         }
     }
@@ -87,8 +109,6 @@ impl ChoiSheet {
                     } else if do_lech <= 40.0 {
                         self.diem += 50;
                         self.so_phim_kha += 1;
-                    } else {
-                        self.so_phim_truot += 1;
                     }
                     self.cat_nhat_diem_label(self.diem);
                 }
@@ -124,13 +144,9 @@ impl ChoiSheet {
                     } else if toa_do_ket_thuc <= 250.0 {
                         self.diem += 50;
                         self.so_phim_kha += 1;
-                    } else {
-                        self.so_phim_truot += 1;
                     }
                     self.cat_nhat_diem_label(self.diem);
                 }
-                // Xóa phần else cộng điểm mặc định cho nốt ngắn ở đây
-
                 break;
             }
         }
@@ -138,6 +154,20 @@ impl ChoiSheet {
     #[func]
     pub fn tong_ket(&mut self) {
         godot_print!("Điểm cuối cùng: {}", self.diem);
+    }
+    #[func]
+    pub fn xu_ly_not_bi_truot(&mut self) {
+        self.so_phim_truot += 1;
+        godot_print!("Bỏ lỡ nốt! Tổng trượt: {}", self.so_phim_truot);
+        self.cat_nhat_diem_label(self.diem);
+    }
+    #[func]
+    pub fn reset_diem(&mut self) {
+        self.diem = 0;
+        self.so_phim_tot = 0;
+        self.so_phim_kha = 0;
+        self.so_phim_truot = 0;
+        self.cat_nhat_diem_label(self.diem);
     }
 }
 
@@ -147,14 +177,37 @@ impl IControl for ChoiSheet {
         self.ban_phim_midi_node = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
         self.quan_ly_sheet_node = self.base().try_get_node_as::<QuanLySheet>("QuanLySheet");
 
-        let check_phim_midi: godot::prelude::Callable = self.base().callable("kiem_tra_phim");
-        let nha_phim_midi: godot::prelude::Callable = self.base().callable("xu_ly_nha_phim");
+        let check_phim_midi: Callable = self.base().callable("kiem_tra_phim");
+        let nha_phim_midi: Callable = self.base().callable("xu_ly_nha_phim");
 
         if let Some(mut midi_node) = self.ban_phim_midi_node.clone() {
             // Lắng nghe cả sự kiện nhấn và nhả
             midi_node.connect("phim_vua_duoc_bam", &check_phim_midi);
             midi_node.connect("phim_vua_duoc_nha", &nha_phim_midi);
         }
-        self.set_thong_tin_bai_hat();
+
+        let callable_truot = self.base().callable("xu_ly_not_bi_truot");
+        
+        // Trỏ thẳng đường dẫn xuyên qua QuanLySheet để lấy K1 và K2
+        let khuong_1 = self.base().try_get_node_as::<KhuongNhac>("QuanLySheet/K1");
+        let khuong_2 = self.base().try_get_node_as::<KhuongNhac>("QuanLySheet/K2");
+
+        if let Some(mut k1) = khuong_1 {
+            k1.connect("not_bi_truot", &callable_truot);
+        }
+        if let Some(mut k2) = khuong_2 {
+            k2.connect("not_bi_truot", &callable_truot);
+        }
+
+        let duong_dan: GString = self.duong_dan_bai_hoc.clone();
+        if !duong_dan.is_empty() {
+            if let Some(mut quan_ly_sheet) = self.quan_ly_sheet_node.clone() {
+                quan_ly_sheet.bind_mut().khoi_tao_sheet(duong_dan);
+            }
+            // Đắp thông tin lên UI
+            self.set_thong_tin_bai_hat();
+        } else {
+            godot_print!("Cảnh báo: Chưa có đường dẫn bài học được truyền vào!");
+        }
     }
 }

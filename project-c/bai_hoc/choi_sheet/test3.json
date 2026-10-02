@@ -1,0 +1,43 @@
+{
+	"ten_bai_hat": "test",
+	"tac_gia": "test",
+	"nguoi_tao_sheet": "test",
+	"loai_vach_nhip": "4/4",
+	"bpm": 120.0,
+	"khuong_1": [
+		{
+			"id_not": 36,
+			"ten_not": "C4",
+			"mau_not": "1",
+			"vi_tri_so": 16,
+			"nhip_dich": 0.0,
+			"nhip_giu": 1.0
+		},
+        {
+           "id_not": 37,
+			"ten_not": "C4#",
+			"mau_not": "2",
+			"vi_tri_so": 16,
+			"nhip_dich": 0.0,
+			"nhip_giu": 1.0
+        },
+        {
+           "id_not": 38,
+			"ten_not": "D4",
+			"mau_not": "3",
+			"vi_tri_so": 15,
+			"nhip_dich": 0.0,
+			"nhip_giu": 1.0
+        }
+    ],
+    "khuong_2": [
+        {
+            "id_not": 24,
+            "ten_not": "C3",
+            "mau_not": "3",
+            "vi_tri_so": 8,
+            "nhip_dich": 0.0,
+            "nhip_giu": 4.0
+        }
+    ]
+}

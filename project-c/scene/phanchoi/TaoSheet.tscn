@@ -1,5 +1,7 @@
 [gd_scene format=3 uid="uid://vvq83bco70au"]
 
+[ext_resource type="PackedScene" uid="uid://bc60vic3bfv5a" path="res://scene/quan_ly_nhac.tscn" id="1_ms63j"]
+
 [node name="TaoSheet" type="Control" unique_id=585300299]
 layout_mode = 3
 anchors_preset = 15
@@ -7,3 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="QuanLySheet" parent="." unique_id=970813641 instance=ExtResource("1_ms63j")]
+layout_mode = 0
+anchors_preset = 0

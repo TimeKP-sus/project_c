@@ -2,6 +2,7 @@ extends DanhSachBaiHoc
 
 @onready var ds_bai_hoc: VBoxContainer = $menu_giua/ScrollContainer/DanhSachBaiHoc
 @onready var danh_sach_chuong: VBoxContainer = $menu_trai/ScrollContainer/DanhSachChuong
+@onready var thong_tin: RichTextLabel = $menu_phai/thong_tin
 
 var chuong_button: PackedScene = preload("res://scene/menu/chuong_button.tscn")
 var bai_hoc_panel: PackedScene = preload("res://scene/menu/bai_hoc_panel.tscn")

@@ -28,7 +28,6 @@ pub struct KhuongNhac {
     #[export]
     giu_lai_not: bool,
 
-    // CÁC BIẾN PHỤC VỤ VẼ VẠCH NHỊP
     thoi_gian_hien_tai: f32,
     toc_do_chung: f32,
     pub nhip_moi_o: i32,
@@ -38,6 +37,9 @@ pub struct KhuongNhac {
 impl KhuongNhac {
     #[signal]
     fn khuong_da_het_not();
+
+    #[signal]
+    fn not_bi_truot();
 
     #[func]
     pub fn da_het_not(&self) -> bool {
@@ -130,13 +132,15 @@ impl KhuongNhac {
     #[func]
     pub fn xu_ly_di_chuyen_not(&mut self, thoi_gian_hien_tai: f32, toc_do_chung: f32) {
         const TOA_DO_X_DICH: f32 = 130.0;
+        // const NGUONG_TRUOT_X: f32 = 100.0;
 
-        // Lưu thông số và yêu cầu vẽ lại vạch nhịp mỗi frame
         self.thoi_gian_hien_tai = thoi_gian_hien_tai;
         self.toc_do_chung = toc_do_chung;
         self.base_mut().queue_redraw();
 
         let so_luong_truoc = self.cac_not_trong_khuong.len();
+        // let mut so_luong_not_truot = 0;
+        // let mut so_luong_not_dai_hoan_thanh = 0;
 
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
             let tg_dich = du_lieu.nhip_dich;
@@ -169,6 +173,10 @@ impl KhuongNhac {
         };
         self.cac_not_trong_area.push(not_nhac);
     }
+    #[func]
+    pub fn het_not_trong_khuong(&mut self) {
+        self.base_mut().emit_signal("khuong_da_het_not", &[]);
+    }
 
     #[func]
     pub fn kiem_tra_not_ra(&mut self, area: Gd<Area2D>) {
@@ -177,12 +185,32 @@ impl KhuongNhac {
         };
         if !not_nhac.bind().get_da_duoc_danh() {
             not_nhac.bind_mut().da_danh_trat();
+            self.base_mut().emit_signal("not_bi_truot", &[]);
         }
         if !self.giu_lai_not {
             if let Some(index) = self.cac_not_trong_area.iter().position(|node| node == &not_nhac) {
                 self.cac_not_trong_area.swap_remove(index);
             }
         }
+    }
+    ///!chua on
+    #[func]
+    pub fn get_khoang_ten_not_hien_tai(&self) -> godot::builtin::GString {
+        // Nếu khuông nhạc không có nốt nào
+        if self.cac_not_trong_khuong.is_empty() {
+            return "Trống".into();
+        }
+
+        // Lấy nốt đầu tiên (nốt gần vạch đích nhất / sắp đánh)
+        let not_dau = self.cac_not_trong_khuong.first().unwrap();
+        let ten_dau = not_dau.not_node.bind().get_ten_not();
+
+        // Lấy nốt cuối cùng (nốt xa nhất vừa được sinh ra trên khuông)
+        let not_cuoi = self.cac_not_trong_khuong.last().unwrap();
+        let ten_cuoi: GString = not_cuoi.not_node.bind().get_ten_not();
+
+        // Nối thành chuỗi, ví dụ: "C1 -> E2"
+        format!("{} -> {}", ten_dau, ten_cuoi).into()
     }
 }
 
@@ -192,6 +220,8 @@ impl IControl for KhuongNhac {
         self.nut_scene = try_load::<PackedScene>("res://scene/not.tscn").ok();
         self.quan_ly_sheet = self.base().try_get_node_as::<QuanLySheet>("..");
         self.area_nhan_not = self.base().try_get_node_as::<Area2D>("NhanDien");
+
+
     }
 
     fn draw(&mut self) {
@@ -212,12 +242,10 @@ impl IControl for KhuongNhac {
             let vi_tri_x = toa_do_x_dich + (nhip - self.thoi_gian_hien_tai) * self.toc_do_chung;
 
             let diem_bat_dau = Vector2::new(vi_tri_x, -2.0);
-            let diem_ket_thuc = Vector2::new(vi_tri_x, 214.0); 
+            let diem_ket_thuc = Vector2::new(vi_tri_x, 214.0);
             let mau_sac = Color::from_rgba(0.7, 0.7, 0.7, 0.7);
             let do_day = 2.0;
-            self.base_mut()
-            .draw_line_ex(diem_bat_dau, diem_ket_thuc, mau_sac)
-            .width(do_day).done();
+            self.base_mut().draw_line_ex(diem_bat_dau, diem_ket_thuc, mau_sac).width(do_day).done();
         }
     }
 }

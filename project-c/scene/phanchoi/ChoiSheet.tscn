@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://okkufgawrf0i"]
 
+[ext_resource type="Texture2D" uid="uid://bm5pmi4eqammk" path="res://asset/nen1.jpg" id="1_mffsp"]
 [ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_vt317"]
 [ext_resource type="PackedScene" uid="uid://bc60vic3bfv5a" path="res://scene/quan_ly_nhac.tscn" id="2_0iuma"]
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_4c48n"]
@@ -7,6 +8,8 @@
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="4_cirep"]
 [ext_resource type="Script" uid="uid://blsrxxtumc42u" path="res://scene/phanchoi/tong_ket_choi_sheet.gd" id="4_wryo6"]
 [ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="7_7d2hr"]
+[ext_resource type="Texture2D" uid="uid://b52825gm13rr2" path="res://asset/not/g-clef.png" id="9_k3srt"]
+[ext_resource type="Texture2D" uid="uid://d10xp8jwenv5w" path="res://asset/not/f-clef.png" id="10_2qjue"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
 font = ExtResource("3_4c48n")
@@ -55,7 +58,7 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_mffsp"]
 font = ExtResource("4_cirep")
 font_size = 200
-outline_size = 10
+outline_size = 20
 outline_color = Color(0, 0, 0, 1)
 shadow_size = 10
 
@@ -74,13 +77,30 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
 
+[node name="Nen1" type="Sprite2D" parent="." unique_id=1435993582]
+position = Vector2(980, 542)
+scale = Vector2(1.3813334, 1.076)
+texture = ExtResource("1_mffsp")
+
 [node name="QuanLySheet" parent="." unique_id=1515061911 instance=ExtResource("2_0iuma")]
 toc_do = 80.0
-bpm = 80.0
 layout_mode = 1
+
+[node name="GClef" type="Sprite2D" parent="." unique_id=246159974]
+modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
+position = Vector2(82, 372.99997)
+scale = Vector2(0.41015625, 0.41796875)
+texture = ExtResource("9_k3srt")
+
+[node name="GClef2" type="Sprite2D" parent="." unique_id=1953558802]
+modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
+position = Vector2(86.5, 721.5)
+scale = Vector2(0.28320313, 0.35742182)
+texture = ExtResource("10_2qjue")
 
 [node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_vt317")]
 layout_mode = 1
+hien_thi_all = false
 
 [node name="diem" type="Label" parent="." unique_id=342717818]
 layout_mode = 0
@@ -171,7 +191,7 @@ text = "Điểm cũ: 0"
 label_settings = SubResource("LabelSettings_7d2hr")
 vertical_alignment = 1
 
-[node name="tot2" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=722266548]
+[node name="tot" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=722266548]
 layout_mode = 0
 offset_left = 672.0
 offset_top = 450.0
@@ -269,3 +289,6 @@ script = ExtResource("7_7d2hr")
 hien_fps = true
 
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="." method="tong_ket"]
+[connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_quan_ly_sheet_bai_hat_ket_thuc" flags=3]
+[connection signal="button_down" from="nen_tong_ket/tong_ket_choi_sheet/choi_lai" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_choi_lai_button_down"]
+[connection signal="button_down" from="nen_tong_ket/tong_ket_choi_sheet/ve_ds" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_ve_ds_button_down"]

@@ -1,0 +1,147 @@
+{
+	"ten_bai_hat": "test",
+	"tac_gia": "test",
+	"nguoi_tao_sheet": "test",
+	"loai_vach_nhip": "4/4",
+	"bpm": 120.0,
+	"khuong_1": [
+		{
+			"id_not": 36,
+			"ten_not": "C4",
+			"mau_not": "1",
+			"vi_tri_so": 16,
+			"nhip_dich": 0.0,
+			"nhip_giu": 1.0
+		},
+        {
+            "id_not": 37,
+			"ten_not": "C4#",
+			"mau_not": "2",
+			"vi_tri_so": 15,
+			"nhip_dich": 1.0,
+			"nhip_giu": 1.0
+        },
+        {
+            "id_not": 38,
+			"ten_not": "D4",
+			"mau_not": "3",
+			"vi_tri_so": 14,
+			"nhip_dich": 2.0,
+			"nhip_giu": 1.0
+        },
+        {
+            "id_not": 39,
+            "ten_not": "D4#",
+            "mau_not": "4",
+            "vi_tri_so": 13,
+            "nhip_dich": 3.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 40,
+            "ten_not": "E4",
+            "mau_not": "5",
+            "vi_tri_so": 12,
+            "nhip_dich": 4.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 41,
+            "ten_not": "F4",
+            "mau_not": "4",
+            "vi_tri_so": 11,
+            "nhip_dich": 5.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 42,
+            "ten_not": "F4#",
+            "mau_not": "3",
+            "vi_tri_so": 10,
+            "nhip_dich": 6.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 43,
+            "ten_not": "G4",
+            "mau_not": "2",
+            "vi_tri_so": 9,
+            "nhip_dich": 7.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 44,
+            "ten_not": "G4#",
+            "mau_not": "1",
+            "vi_tri_so": 8,
+            "nhip_dich": 8.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 45,
+            "ten_not": "A4",
+            "mau_not": "2",
+            "vi_tri_so": 7,
+            "nhip_dich": 9.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 46,
+            "ten_not": "A4#",
+            "mau_not": "3",
+            "vi_tri_so": 6,
+            "nhip_dich": 10.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 47,
+            "ten_not": "B4",
+            "mau_not": "4",
+            "vi_tri_so": 5,
+            "nhip_dich": 11.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 48,
+            "ten_not": "C5",
+            "mau_not": "5",
+            "vi_tri_so": 4,
+            "nhip_dich": 12.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 49,
+            "ten_not": "C5#",
+            "mau_not": "4",
+            "vi_tri_so": 3,
+            "nhip_dich": 13.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 50,
+            "ten_not": "D5",
+            "mau_not": "3",
+            "vi_tri_so": 2,
+            "nhip_dich": 14.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 51,
+            "ten_not": "D5#",
+            "mau_not": "2",
+            "vi_tri_so": 1,
+            "nhip_dich": 15.0,
+            "nhip_giu": 1.0
+        },
+        {
+            "id_not": 52,
+            "ten_not": "E5",
+            "mau_not": "1",
+            "vi_tri_so": 0,
+            "nhip_dich": 16.0,
+            "nhip_giu": 1.0
+        }
+    ],
+    "khuong_2": [
+    ]
+}

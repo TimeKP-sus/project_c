@@ -4,8 +4,6 @@ use godot::global::godot_print;
 use godot::{ obj::{ Base }, prelude::{ GodotClass, godot_api } };
 use serde::Deserialize;
 
-use crate::choi_sheet::ChoiSheet;
-
 #[derive(Deserialize, Debug)]
 pub struct ChuongJson {
     pub ten_chuong: String,

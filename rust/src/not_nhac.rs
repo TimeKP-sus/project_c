@@ -1,15 +1,12 @@
-use godot::builtin::{Color, GString, Vector2};
-use godot::classes::{Area2D, IArea2D, Label, Panel};
+use godot::builtin::{ Color, GString, NodePath, Variant, Vector2 };
+use godot::classes::{ Area2D, IArea2D, Label, Object, Panel };
 use godot::obj::WithBaseField;
-use godot::{
-    obj::Base,
-    prelude::{GodotClass, godot_api},
-};
+use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::check_ten_not::co_thang_giang;
 
 #[derive(GodotClass)]
-#[class(init, base=Area2D)]
+#[class(init, base = Area2D)]
 pub struct NotNhac {
     #[base]
     base: Base<Area2D>,
@@ -27,6 +24,9 @@ pub struct NotNhac {
 }
 #[godot_api]
 impl NotNhac {
+    pub fn get_ten_not(&self) -> GString {
+        self.ten_not.clone()
+    }
     pub fn set_chieu_dai_duoi(&mut self, chieu_dai: f32) {
         self.chieu_dai_duoi = chieu_dai;
     }
@@ -40,25 +40,74 @@ impl NotNhac {
 
     pub fn bat_dau_giu(&mut self) {
         self.dang_giu = true;
-        self.da_duoc_danh = true; 
+        self.da_duoc_danh = true;
 
-        self.base_mut().set_modulate(Color::from_rgba(0.9, 0.8, 0.7, 0.8)); 
+        self.base_mut().set_modulate(Color::from_rgba(1.0, 0.9, 0.2, 1.0));
+        self.base_mut().set_scale(Vector2::new(1.2, 1.2));
+
+        let doi_tuong = self.base().clone().upcast::<Object>();
+
+        if let Some(mut tween) = self.base_mut().create_tween() {
+            tween.tween_property(
+                &doi_tuong, // 2. Đưa biến độc lập vào đây
+                &NodePath::from("scale"),
+                &Variant::from(Vector2::new(1.05, 1.05)),
+                0.15
+            );
+        }
     }
+
     pub fn ket_thuc_giu(&mut self) {
         self.dang_giu = false;
-        self.base_mut().set_modulate(Color::from_rgba(0.4, 0.4, 0.4, 1.0));
+
+        let doi_tuong = self.base().clone().upcast::<Object>();
+
+        if let Some(mut tween) = self.base_mut().create_tween() {
+            tween.tween_property(
+                &doi_tuong, // 2. Sử dụng biến độc lập
+                &NodePath::from("modulate"),
+                &Variant::from(Color::from_rgba(0.2, 0.8, 1.0, 0.0)),
+                0.2
+            );
+            tween.tween_property(
+                &doi_tuong,
+                &NodePath::from("scale"),
+                &Variant::from(Vector2::new(0.8, 0.8)),
+                0.2
+            );
+        }
     }
 
+    pub fn da_danh_trat(&mut self) {
+        self.base_mut().set_modulate(Color::from_rgba(1.0, 0.2, 0.2, 0.8));
+
+        let doi_tuong = self.base().clone().upcast::<Object>();
+
+        if let Some(mut tween) = self.base_mut().create_tween() {
+            tween.tween_property(
+                &doi_tuong, // 2. Sử dụng biến độc lập
+                &NodePath::from("scale"),
+                &Variant::from(Vector2::new(0.5, 0.5)),
+                0.3
+            );
+            tween.tween_property(
+                &doi_tuong,
+                &NodePath::from("modulate"),
+                &Variant::from(Color::from_rgba(1.0, 0.1, 0.1, 0.0)),
+                0.3
+            );
+        }
+    }
     pub fn set_mau_not(&mut self, mau: &str) {
         let mau_sac: Color = match mau {
             "1" => Color::from_rgba(0.85, 0.25, 0.25, 1.0),
-            "2" => Color::from_rgba(0.20, 0.75, 0.35, 1.0),
-            "3" => Color::from_rgba(0.25, 0.55, 0.90, 1.0),
+            "2" => Color::from_rgba(0.2, 0.75, 0.35, 1.0),
+            "3" => Color::from_rgba(0.25, 0.55, 0.9, 1.0),
             "4" => Color::from_rgba(0.95, 0.75, 0.15, 1.0),
-            "5" => Color::from_rgba(0.60, 0.30, 0.80, 1.0),
+            "5" => Color::from_rgba(0.6, 0.3, 0.8, 1.0),
             _ => Color::from_rgba(0.88, 0.88, 0.88, 1.0),
         };
-    
+
         // Tìm Panel tên "nen" và chỉ đổi màu bản thân nó
         if let Some(mut panel) = self.base_mut().try_get_node_as::<Panel>("nen") {
             panel.set_self_modulate(mau_sac);
@@ -67,17 +116,12 @@ impl NotNhac {
     pub fn get_da_duoc_danh(&self) -> bool {
         self.da_duoc_danh
     }
-    pub fn da_danh_trat(&mut self) {
-        self.base_mut()
-            .set_modulate(Color::from_rgba(0.5, 0.5, 0.5, 0.5));
-    }
 
     #[func]
     pub fn da_duoc_danh(&mut self) {
         // godot::global::godot_print!("Nốt {} đã được đánh!", self.ten_not);
         self.da_duoc_danh = true;
-        self.base_mut()
-            .set_modulate(Color::from_rgba(0.5, 0.5, 0.5, 1.0));
+        self.base_mut().set_modulate(Color::from_rgba(0.5, 0.5, 0.5, 1.0));
     }
     pub fn set_id_not(&mut self, id: i32) {
         self.id_not = id;
