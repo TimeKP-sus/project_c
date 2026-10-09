@@ -13,7 +13,11 @@ mod check_ten_not;
 mod doc_sheet_json;
 mod du_lieu_nguoi_dung;
 mod danh_sach_bai_hoc;
+mod hoc_nghe_not;
+mod hoc_video;
 // mod phim_dan;
+
+
 
 use godot::prelude::*;
 

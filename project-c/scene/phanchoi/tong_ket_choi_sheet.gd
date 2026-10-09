@@ -62,7 +62,7 @@ func _on_quan_ly_sheet_bai_hat_ket_thuc() -> void:
 	do_chinh_xac.text = "%.2f%%" % chinh_xac
 	
 	if chinh_xac >= 100.0:
-		danh_gia.text = "SSS"
+		danh_gia.text = "S+"
 		danh_gia.modulate = Color.GOLD
 	if chinh_xac >= 95.0:
 		danh_gia.text = "S"

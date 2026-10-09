@@ -15,6 +15,11 @@
 			"ten_bai_hoc": "test3",
 			"loai_bai_hoc": "choi_sheet",
 			"duong_dan": "res://bai_hoc/choi_sheet/test3.json"
+		},
+		{
+			"ten_bai_hoc": "test4",
+			"loai_bai_hoc": "xem_video",
+			"duong_dan": "res://bai_hoc/xem_video/test.json"
 		}
 	]
 }

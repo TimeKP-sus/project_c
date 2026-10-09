@@ -12,5 +12,8 @@ func _ready() -> void:
 
 func _on_button_down() -> void:
 	print(ten_file)
-	danh_sach_bai_hoc.call("cat_nhat_danh_sach_bai_hoc", ten_file)
+	if self.name != "all":
+		danh_sach_bai_hoc.call("cat_nhat_danh_sach_bai_hoc", ten_file)
+	else:
+		danh_sach_bai_hoc.call("lay_tat_ca_bai_hoc")
 	pass # Replace with function body.

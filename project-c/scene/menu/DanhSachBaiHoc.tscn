@@ -29,6 +29,7 @@ corner_detail = 20
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 0.00012207031
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_irrk0")
@@ -129,13 +130,22 @@ anchor_left = 0.045
 anchor_top = 0.25
 anchor_right = 0.48100004
 anchor_bottom = 0.87500006
-offset_left = 0.6100006
+offset_left = 0.609993
 offset_top = -3.0
-offset_right = 0.29797363
+offset_right = 0.2979126
 offset_bottom = -5.698036
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_01teo")
 text = "dsadasddddd"
+
+[node name="tu_tao" type="MenuButton" parent="menu_tren" unique_id=1948285041]
+layout_mode = 0
+offset_left = 1288.0
+offset_top = 25.0
+offset_right = 1512.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 30
+text = "Tự tạo"
 
 [node name="menu_phai" type="Panel" parent="." unique_id=2100984069]
 layout_mode = 0
@@ -183,3 +193,5 @@ grow_vertical = 2
 custom_minimum_size = Vector2(1000, 966)
 layout_mode = 2
 theme_override_constants/separation = 5
+
+[connection signal="text_changed" from="menu_tren/tim_kiem" to="." method="_on_tim_kiem_text_changed"]

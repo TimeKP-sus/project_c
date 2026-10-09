@@ -31,10 +31,11 @@ shape = SubResource("RectangleShape2D_tdxtm")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=797989304]
 layout_mode = 0
-offset_left = 127.0
-offset_right = 133.0
-offset_bottom = 225.0
-color = Color(0.23921569, 0.23921569, 0.23921569, 0.36078432)
+offset_left = 128.0
+offset_top = 1.0
+offset_right = 131.0
+offset_bottom = 209.0
+color = Color(0.28118682, 0.28118688, 0.28118682, 1)
 
 [connection signal="area_entered" from="NhanDien" to="." method="kiem_tra_not_vao"]
 [connection signal="area_exited" from="NhanDien" to="." method="kiem_tra_not_ra"]

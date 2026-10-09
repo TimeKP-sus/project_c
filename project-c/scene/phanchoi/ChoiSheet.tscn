@@ -8,8 +8,6 @@
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="4_cirep"]
 [ext_resource type="Script" uid="uid://blsrxxtumc42u" path="res://scene/phanchoi/tong_ket_choi_sheet.gd" id="4_wryo6"]
 [ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="7_7d2hr"]
-[ext_resource type="Texture2D" uid="uid://b52825gm13rr2" path="res://asset/not/g-clef.png" id="9_k3srt"]
-[ext_resource type="Texture2D" uid="uid://d10xp8jwenv5w" path="res://asset/not/f-clef.png" id="10_2qjue"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
 font = ExtResource("3_4c48n")
@@ -86,18 +84,6 @@ texture = ExtResource("1_mffsp")
 toc_do = 80.0
 layout_mode = 1
 
-[node name="GClef" type="Sprite2D" parent="." unique_id=246159974]
-modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
-position = Vector2(82, 372.99997)
-scale = Vector2(0.41015625, 0.41796875)
-texture = ExtResource("9_k3srt")
-
-[node name="GClef2" type="Sprite2D" parent="." unique_id=1953558802]
-modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
-position = Vector2(86.5, 721.5)
-scale = Vector2(0.28320313, 0.35742182)
-texture = ExtResource("10_2qjue")
-
 [node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_vt317")]
 layout_mode = 1
 hien_thi_all = false
@@ -115,10 +101,10 @@ vertical_alignment = 1
 
 [node name="ten_bai_hat" type="Label" parent="." unique_id=1651225093]
 layout_mode = 0
-offset_left = 10.0
-offset_top = 78.0
-offset_right = 360.0
-offset_bottom = 139.0
+offset_left = 8.0
+offset_top = 98.0
+offset_right = 358.0
+offset_bottom = 159.0
 text = "Ten bai hat"
 label_settings = SubResource("LabelSettings_0iuma")
 vertical_alignment = 1

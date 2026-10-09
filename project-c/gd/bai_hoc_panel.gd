@@ -16,6 +16,7 @@ var bai_hoc_path: String
 
 
 var choi_sheet_scene: PackedScene = preload("res://scene/phanchoi/ChoiSheet.tscn")
+var nghe_doan_not_scene: PackedScene = preload("res://scene/phanchoi/HocNgheNot.tscn")
 
 
 func _ready() -> void:
@@ -37,8 +38,17 @@ func _on_hoc_button_down() -> void:
 		get_tree().current_scene = choi_sheet
 		scene_cu.queue_free()
 	elif loai_bai_hoc == "nghe_va_doan_not":
+		var nghe_doan_not: HocNgheNot = nghe_doan_not_scene.instantiate()
+		nghe_doan_not.duong_dan_bai_hoc = bai_hoc_path
+		var root = get_tree().root
+		var scene_cu = get_tree().current_scene
+		root.add_child(nghe_doan_not)
+		get_tree().current_scene = nghe_doan_not
+		scene_cu.queue_free()
 		pass
 	elif loai_bai_hoc == "tim_not":
+		pass
+	elif loai_bai_hoc == "xem_video":
 		pass
 	pass
 

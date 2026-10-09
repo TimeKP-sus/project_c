@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://ncoroeovqvkf"]
+
+[ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="1_g60eg"]
+[ext_resource type="Script" uid="uid://hdnngxy0b2a6" path="res://gd/ten_not_doan.gd" id="2_5awux"]
+
+[node name="ten_not_doan" type="RichTextLabel" unique_id=1780567501]
+custom_minimum_size = Vector2(126, 213)
+clip_contents = false
+anchors_preset = -1
+anchor_right = 0.066
+anchor_bottom = 0.19700001
+offset_right = -0.7200012
+offset_bottom = 0.23999023
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/normal_font = ExtResource("1_g60eg")
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("2_5awux")

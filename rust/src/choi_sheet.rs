@@ -152,10 +152,6 @@ impl ChoiSheet {
         }
     }
     #[func]
-    pub fn tong_ket(&mut self) {
-        godot_print!("Điểm cuối cùng: {}", self.diem);
-    }
-    #[func]
     pub fn xu_ly_not_bi_truot(&mut self) {
         self.so_phim_truot += 1;
         godot_print!("Bỏ lỡ nốt! Tổng trượt: {}", self.so_phim_truot);
@@ -181,7 +177,6 @@ impl IControl for ChoiSheet {
         let nha_phim_midi: Callable = self.base().callable("xu_ly_nha_phim");
 
         if let Some(mut midi_node) = self.ban_phim_midi_node.clone() {
-            // Lắng nghe cả sự kiện nhấn và nhả
             midi_node.connect("phim_vua_duoc_bam", &check_phim_midi);
             midi_node.connect("phim_vua_duoc_nha", &nha_phim_midi);
         }

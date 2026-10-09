@@ -1,0 +1,9 @@
+{
+  "ten_bai_hoc": "Cách rải ngón cho tay trái",
+  "nguoi_tao": "timekp",
+  "duong_dan_video": "res://bai_hoc/video/v1.mp4",
+  "cac_moc_thoi_gian": [
+    { "thoi_gian": 0, "tieu_de": "Giới thiệu" },
+    { "thoi_gian": 30, "tieu_de": "Tư thế đặt tay" }
+  ]
+}

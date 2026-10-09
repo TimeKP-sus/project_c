@@ -1,3 +1,310 @@
 [gd_scene format=3 uid="uid://df3cooglgb18j"]
 
-[node name="HocNgheNot" type="Node2D" unique_id=671516666]
+[ext_resource type="Script" uid="uid://beum368dlit70" path="res://gd/hoc_nghe_not.gd" id="1_25yll"]
+[ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_bwiby"]
+[ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="2_nrsyh"]
+[ext_resource type="StyleBox" uid="uid://didvpteia8p66" path="res://asset/theme/button_normal_2.tres" id="4_0tk1u"]
+[ext_resource type="Script" uid="uid://0ouiwrmji5q6" path="res://scene/phanchoi/tong_ket_nghe_sheet.gd" id="4_xripp"]
+[ext_resource type="StyleBox" uid="uid://b1ke542xrkxxr" path="res://asset/theme/button_normal_1.tres" id="5_00h7s"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="5_0tk1u"]
+[ext_resource type="FontFile" uid="uid://c56hg45h2eink" path="res://asset/font/arial.ttf" id="6_00h7s"]
+[ext_resource type="Texture2D" uid="uid://bm5pmi4eqammk" path="res://asset/nen1.jpg" id="7_xripp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0tk1u"]
+content_margin_left = 30.0
+content_margin_top = 10.0
+content_margin_right = 30.0
+content_margin_bottom = 10.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f281m"]
+bg_color = Color(0.29408503, 0.29408503, 0.29408503, 0.5411765)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gx5h"]
+bg_color = Color(0, 0, 0, 0.5254902)
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_fkudg"]
+font = ExtResource("5_0tk1u")
+font_size = 50
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_wryo6"]
+font = ExtResource("6_00h7s")
+font_size = 25
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_7d2hr"]
+font = ExtResource("5_0tk1u")
+font_size = 30
+font_color = Color(0.7708395, 0.77083945, 0.77083945, 1)
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="FontVariation" id="FontVariation_1i2qx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1i2qx"]
+font = SubResource("FontVariation_1i2qx")
+font_size = 26
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mffsp"]
+font = ExtResource("2_nrsyh")
+font_size = 200
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_78yj5"]
+font = ExtResource("5_0tk1u")
+font_size = 25
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
+font = ExtResource("5_0tk1u")
+font_size = 40
+outline_size = 15
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5cao5"]
+font = ExtResource("5_0tk1u")
+font_size = 50
+outline_size = 7
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HocNgheNot" type="HocNgheNot" unique_id=1706245754]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_25yll")
+
+[node name="Nen1" type="Sprite2D" parent="." unique_id=1108572426]
+position = Vector2(980, 542)
+scale = Vector2(1.3813334, 1.076)
+texture = ExtResource("7_xripp")
+
+[node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_bwiby")]
+layout_mode = 1
+
+[node name="nghe_lai" type="Button" parent="." unique_id=1193449662]
+layout_mode = 0
+offset_left = 798.0
+offset_top = 812.0
+offset_right = 1106.0
+offset_bottom = 896.0
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = ExtResource("4_0tk1u")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0tk1u")
+theme_override_styles/hover = ExtResource("5_00h7s")
+text = "Nghe lại"
+
+[node name="DanhSach" type="HFlowContainer" parent="." unique_id=932896676]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 266.0
+offset_right = 1918.0
+offset_bottom = 756.0
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 30
+alignment = 1
+last_wrap_alignment = 2
+
+[node name="nen_tong_ket" type="Panel" parent="." unique_id=70579161]
+visible = false
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1082.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_f281m")
+
+[node name="tong_ket_nghe_sheet" type="Panel" parent="nen_tong_ket" unique_id=803424492]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.18100001
+anchor_right = 1.0
+anchor_bottom = 0.83000004
+offset_top = 0.1579895
+offset_bottom = -0.7620239
+theme_override_styles/panel = SubResource("StyleBoxFlat_3gx5h")
+script = ExtResource("4_xripp")
+
+[node name="ten" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=380802008]
+layout_mode = 0
+offset_left = 113.0
+offset_top = 84.0
+offset_right = 454.0
+offset_bottom = 145.0
+text = "Ten bai hoc"
+label_settings = SubResource("LabelSettings_fkudg")
+vertical_alignment = 1
+
+[node name="nguoi_tao" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=973343118]
+layout_mode = 0
+offset_left = 114.0
+offset_top = 168.0
+offset_right = 455.0
+offset_bottom = 224.0
+text = "Người tạo"
+label_settings = SubResource("LabelSettings_wryo6")
+vertical_alignment = 1
+
+[node name="diem" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=1930081769]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 355.0
+offset_right = 1013.0
+offset_bottom = 416.0
+text = "Tổng điểm: 0"
+label_settings = SubResource("LabelSettings_fkudg")
+vertical_alignment = 1
+
+[node name="diem_cu" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=4601031]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 280.0
+offset_right = 1013.0
+offset_bottom = 341.0
+text = "Điểm cũ: 0"
+label_settings = SubResource("LabelSettings_7d2hr")
+vertical_alignment = 1
+
+[node name="so_lan_dung" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=194042730]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 450.0
+offset_right = 894.0
+offset_bottom = 505.0
+text = "Số lần đúng: 0"
+label_settings = SubResource("LabelSettings_1i2qx")
+vertical_alignment = 1
+
+[node name="so_lan_sai" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=272656263]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 491.0
+offset_right = 894.0
+offset_bottom = 547.0
+text = "Số lần sai: 0"
+label_settings = SubResource("LabelSettings_1i2qx")
+vertical_alignment = 1
+
+[node name="so_lan_nghe_lai" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=1480239772]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 533.0
+offset_right = 894.0
+offset_bottom = 589.0
+text = "Số lần nghe lại: 0"
+label_settings = SubResource("LabelSettings_1i2qx")
+vertical_alignment = 1
+
+[node name="so_lan_doan" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=427437480]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 602.0
+offset_right = 894.0
+offset_bottom = 658.0
+text = "Số lần đoán:"
+label_settings = SubResource("LabelSettings_1i2qx")
+vertical_alignment = 1
+
+[node name="danh_gia" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=543092222]
+layout_mode = 0
+offset_left = 1456.0
+offset_top = 140.0
+offset_right = 1792.0
+offset_bottom = 569.0
+text = "A"
+label_settings = SubResource("LabelSettings_mffsp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="do_chinh_xac" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=1702513532]
+layout_mode = 0
+offset_left = 1344.0
+offset_top = 476.0
+offset_right = 1904.0
+offset_bottom = 537.0
+text = "Mức độ hoàn thành: 0%"
+label_settings = SubResource("LabelSettings_78yj5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="2" type="Label" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=1275216203]
+layout_mode = 0
+offset_left = 1395.0
+offset_top = 182.0
+offset_right = 1859.0
+offset_bottom = 243.0
+text = "Hạng"
+label_settings = SubResource("LabelSettings_fkudg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="choi_lai" type="Button" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=2136608503]
+layout_mode = 0
+offset_left = 1666.0
+offset_top = 616.0
+offset_right = 1890.0
+offset_bottom = 671.322
+theme_override_font_sizes/font_size = 24
+text = "Chơi lại"
+
+[node name="ve_ds" type="Button" parent="nen_tong_ket/tong_ket_nghe_sheet" unique_id=1582063370]
+layout_mode = 0
+offset_left = 1389.0
+offset_top = 616.0
+offset_right = 1610.0
+offset_bottom = 671.322
+theme_override_font_sizes/font_size = 24
+text = "Về menu"
+
+[node name="ten_bai_hoc" type="Label" parent="." unique_id=1259266276]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 98.0
+offset_right = 358.0
+offset_bottom = 159.0
+text = "Ten bai hoc"
+label_settings = SubResource("LabelSettings_0iuma")
+vertical_alignment = 1
+
+[node name="diem" type="Label" parent="." unique_id=2066492934]
+layout_mode = 0
+offset_left = 1571.0
+offset_top = 119.0
+offset_right = 1912.0
+offset_bottom = 180.0
+text = "0"
+label_settings = SubResource("LabelSettings_5cao5")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[connection signal="xong_het_bai" from="." to="nen_tong_ket/tong_ket_nghe_sheet" method="_on_hoc_nghe_not_xong_het_bai" flags=3]
+[connection signal="phim_vua_duoc_bam" from="MIDI/BanPhimPiano" to="." method="kiem_tra_phim" flags=3]
+[connection signal="button_down" from="nghe_lai" to="." method="_on_nghe_lai_button_down"]
+[connection signal="button_down" from="nen_tong_ket/tong_ket_nghe_sheet/choi_lai" to="nen_tong_ket/tong_ket_nghe_sheet" method="_on_choi_lai_button_down"]
+[connection signal="button_down" from="nen_tong_ket/tong_ket_nghe_sheet/ve_ds" to="nen_tong_ket/tong_ket_nghe_sheet" method="_on_ve_ds_button_down"]
+
+[editable path="MIDI"]

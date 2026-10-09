@@ -241,7 +241,7 @@ impl IControl for KhuongNhac {
             let nhip = (i * self.nhip_moi_o) as f32;
             let vi_tri_x = toa_do_x_dich + (nhip - self.thoi_gian_hien_tai) * self.toc_do_chung;
 
-            let diem_bat_dau = Vector2::new(vi_tri_x, -2.0);
+            let diem_bat_dau = Vector2::new(vi_tri_x, -3.0);
             let diem_ket_thuc = Vector2::new(vi_tri_x, 214.0);
             let mau_sac = Color::from_rgba(0.7, 0.7, 0.7, 0.7);
             let do_day = 2.0;

@@ -1,4 +1,6 @@
 use std::collections::HashSet;
+use std::thread;
+use std::time::Duration;
 
 use crate::{hop_am::HopAm, sf2_read};
 use crate::cum_phim_dan::CumPhimDan;
@@ -67,11 +69,15 @@ impl BanPhimMidi {
             label_hop_am.set_text(&hop_am);
         }
     }
+    ///mili giay
     #[func]
-    fn phat_am_thanh_not(&mut self, so_phim: i32) {
+    pub fn phat_am_thanh_not(&mut self, so_phim: i32, luc:i32, thoi_gian: u64) {
         let nut: i32 = so_phim + 24; 
-        let luc: i32 = 100; 
         sf2_read::bat_not_nhac(nut, luc);
+        thread::spawn( move || {
+            thread::sleep(Duration::from_millis(thoi_gian));
+            sf2_read::tat_not_nhac(nut);
+        });
     }
 
     fn kiem_tra_phim_midi(&mut self, event: Gd<InputEvent>) {
