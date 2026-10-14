@@ -153,3 +153,9 @@ func dinh_dang_thoi_gian(giay: float) -> String:
 
 func _on_menu_button_down() -> void:
 	pass # Replace with function body.
+
+@onready var hoan_thanh: Button = $hoan_thanh
+func _on_video_finished() -> void:
+	hien_thi_panel()
+	hoan_thanh.visible = true
+	pass # Replace with function body.

@@ -66,6 +66,14 @@ font_size = 25
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="FontVariation" id="FontVariation_mffsp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k3srt"]
+font = SubResource("FontVariation_mffsp")
+font_size = 25
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
 [node name="ChoiSheet" type="ChoiSheet" unique_id=1216311425 node_paths=PackedStringArray("ten_bai_hat_label")]
 ten_bai_hat_label = NodePath("ten_bai_hat")
 anchors_preset = 15
@@ -91,9 +99,9 @@ hien_thi_all = false
 [node name="diem" type="Label" parent="." unique_id=342717818]
 layout_mode = 0
 offset_left = 1571.0
-offset_top = 119.0
+offset_top = 101.0
 offset_right = 1912.0
-offset_bottom = 180.0
+offset_bottom = 162.0
 text = "0"
 label_settings = SubResource("LabelSettings_0iuma")
 horizontal_alignment = 2
@@ -102,9 +110,9 @@ vertical_alignment = 1
 [node name="ten_bai_hat" type="Label" parent="." unique_id=1651225093]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 98.0
+offset_top = 80.0
 offset_right = 358.0
-offset_bottom = 159.0
+offset_bottom = 141.0
 text = "Ten bai hat"
 label_settings = SubResource("LabelSettings_0iuma")
 vertical_alignment = 1
@@ -273,6 +281,16 @@ offset_right = 252.0
 offset_bottom = 23.0
 script = ExtResource("7_7d2hr")
 hien_fps = true
+
+[node name="ghi_chu" type="Label" parent="." unique_id=638003538]
+layout_mode = 0
+offset_left = 161.0
+offset_top = 855.0
+offset_right = 1414.0
+offset_bottom = 968.0
+label_settings = SubResource("LabelSettings_k3srt")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="." method="tong_ket"]
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_quan_ly_sheet_bai_hat_ket_thuc" flags=3]

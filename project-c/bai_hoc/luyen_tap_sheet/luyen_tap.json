@@ -1,0 +1,12 @@
+{
+    "ten_bai_hoc": "Luyen tap sheet....",
+    "duong_dan_sheet": "res://project-c/bai_hoc/choi_sheet/test.json",
+    "khuong": "12",
+    "cho_phep_cho": true,
+    "phan_thoi_gian": "1.5-10.0",
+    "cac_ghi_chu": {
+        "0": "Bài học...",
+        "1.5": "cham lai vai nhip",
+        "4": "Bài học này giúp bạn luyện nghe các hợp âm C, Cmaj7, C7, C6, C9, Cadd9, Cdim, Cm, Cm7, Cm6, Cm9, Caug, Csus2, Csus4."
+    }
+}

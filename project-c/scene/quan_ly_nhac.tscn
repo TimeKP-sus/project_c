@@ -5,6 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://b52825gm13rr2" path="res://asset/not/g-clef.png" id="3_1hfxq"]
 [ext_resource type="Texture2D" uid="uid://d10xp8jwenv5w" path="res://asset/not/f-clef.png" id="4_hntyr"]
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="5_hntyr"]
+[ext_resource type="AudioStream" uid="uid://c0omg57x25s2h" path="res://asset/sound/wood_kick_2.wav" id="6_x82fm"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="7_mq2by"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4oah5"]
 font = ExtResource("2_23p65")
@@ -19,8 +21,17 @@ font_size = 65
 font_color = Color(0, 0, 0, 1)
 outline_size = 5
 
-[node name="QuanLySheet" type="QuanLySheet" unique_id=970813641 node_paths=PackedStringArray("thoi_gian_label")]
+[sub_resource type="LabelSettings" id="LabelSettings_gxlb8"]
+font = ExtResource("7_mq2by")
+font_size = 23
+font_color = Color(1, 1, 1, 0.565)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="QuanLySheet" type="QuanLySheet" unique_id=970813641 node_paths=PackedStringArray("thoi_gian_label", "mien_k1_label", "mien_k2_label")]
 thoi_gian_label = NodePath("thoi_gian")
+mien_k1_label = NodePath("mien_not_K1")
+mien_k2_label = NodePath("mien_not_K2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -32,9 +43,9 @@ layout_mode = 1
 anchor_top = 0.21300001
 anchor_right = 1.3980001
 anchor_bottom = 0.485
-offset_top = -0.040008545
+offset_top = -40.039993
 offset_right = -767.16016
-offset_bottom = -83.79999
+offset_bottom = -123.79999
 scale = Vector2(1.4, 1.4)
 
 [node name="K2" parent="." unique_id=1559595971 instance=ExtResource("1_4oah5")]
@@ -50,20 +61,17 @@ metadata/_edit_use_anchors_ = true
 [node name="thoi_gian" type="Label" parent="." unique_id=704376125]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.0050000004
-anchor_top = 0.15400001
-anchor_right = 0.054
-anchor_bottom = 0.18800001
-offset_left = 0.39999962
-offset_top = -0.32002258
-offset_right = 0.3199997
-offset_bottom = -0.040008545
+anchor_left = 0.009895833
+anchor_top = 0.087037034
+anchor_right = 0.058854166
+anchor_bottom = 0.121296294
 text = "00:00"
 label_settings = SubResource("LabelSettings_4oah5")
+metadata/_edit_use_anchors_ = true
 
 [node name="GClef" type="Sprite2D" parent="." unique_id=371704389]
 modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
-position = Vector2(46, 376.50003)
+position = Vector2(46, 347.5)
 scale = Vector2(0.44921875, 0.6113282)
 texture = ExtResource("3_1hfxq")
 
@@ -73,18 +81,18 @@ position = Vector2(48.999996, 717)
 scale = Vector2(0.21484374, 0.48828125)
 texture = ExtResource("4_hntyr")
 
-[node name="nhip" type="Label" parent="." unique_id=762706351]
+[node name="nhipK1" type="Label" parent="." unique_id=762706351]
 layout_mode = 0
 offset_left = 103.0
-offset_top = 300.0
+offset_top = 271.0
 offset_right = 146.0
-offset_bottom = 478.0
+offset_bottom = 449.0
 text = "2
 4"
 label_settings = SubResource("LabelSettings_x82fm")
 vertical_alignment = 1
 
-[node name="nhip2" type="Label" parent="." unique_id=578805271]
+[node name="nhipK2" type="Label" parent="." unique_id=578805271]
 layout_mode = 0
 offset_left = 106.0
 offset_top = 630.0
@@ -95,5 +103,44 @@ text = "2
 label_settings = SubResource("LabelSettings_x82fm")
 vertical_alignment = 1
 
+[node name="nhip_trong" type="AudioStreamPlayer2D" parent="." unique_id=1262709956]
+stream = ExtResource("6_x82fm")
+
+[node name="vocal" type="AudioStreamPlayer2D" parent="." unique_id=1229591179]
+
+[node name="nhac_dao" type="AudioStreamPlayer2D" parent="." unique_id=317273148]
+
+[node name="mien_not_K1" type="Label" parent="." unique_id=2073376600]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009895833
+anchor_top = 0.13611113
+anchor_right = 0.073731996
+anchor_bottom = 0.17058511
+offset_bottom = 1.5258789e-05
+grow_horizontal = 2
+text = "C2 - D3"
+label_settings = SubResource("LabelSettings_gxlb8")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="mien_not_K2" type="Label" parent="." unique_id=656430236]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.009895833
+anchor_top = 0.47592592
+anchor_right = 0.073731996
+anchor_bottom = 0.51039994
+offset_bottom = 1.5258789e-05
+grow_horizontal = 2
+text = "C2 - D3"
+label_settings = SubResource("LabelSettings_gxlb8")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[connection signal="cap_nhat_mien_not" from="K1" to="." method="thay_doi_mien_k1" flags=3]
 [connection signal="khuong_da_het_not" from="K1" to="." method="kiem_tra_ket_thuc" flags=3]
+[connection signal="cap_nhat_mien_not" from="K2" to="." method="thay_doi_mien_k2" flags=3]
 [connection signal="khuong_da_het_not" from="K2" to="." method="kiem_tra_ket_thuc" flags=3]

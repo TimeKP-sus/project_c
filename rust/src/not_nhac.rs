@@ -1,4 +1,4 @@
-use godot::builtin::{ Color, GString, NodePath, Variant, Vector2 };
+use godot::builtin::{ Color, GString, NodePath, Rect2, Variant, Vector2 };
 use godot::classes::{ Area2D, IArea2D, Label, Object, Panel };
 use godot::obj::WithBaseField;
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
@@ -20,6 +20,7 @@ pub struct NotNhac {
     da_duoc_danh: bool,
     dang_giu: bool,
     chieu_dai_duoi: f32,
+    la_vach_canh_bao: bool,
     // nen: Option<Gd<Panel>>,
 }
 #[godot_api]
@@ -85,7 +86,7 @@ impl NotNhac {
 
         if let Some(mut tween) = self.base_mut().create_tween() {
             tween.tween_property(
-                &doi_tuong, // 2. Sử dụng biến độc lập
+                &doi_tuong,
                 &NodePath::from("scale"),
                 &Variant::from(Vector2::new(0.5, 0.5)),
                 0.3
@@ -135,6 +136,23 @@ impl NotNhac {
     // pub fn get_ten_not(&self) -> GString {
     //     self.ten_not.clone()
     // }
+    pub fn bien_thanh_vach_canh_bao(&mut self) {
+        self.da_duoc_danh = true; // Tránh bị tính trượt
+        self.la_vach_canh_bao = true;
+
+        // 1. Ẩn hoàn toàn Panel (nền nốt nhạc) đi
+        if let Some(mut panel) = self.base_mut().try_get_node_as::<Panel>("nen") {
+            panel.queue_free();
+        }
+
+        if let Some(mut label) = self.base_mut().try_get_node_as::<Label>("Label") {
+            label.set_position(Vector2::new(-3.0, -23.0));
+            label.set_modulate(Color::from_rgba(0.6, 0.2, 0.9, 1.0));
+            label.set_scale(Vector2::new(0.8, 0.8));
+        }
+
+        self.base_mut().queue_redraw();
+    }
 }
 
 #[godot_api]
@@ -147,6 +165,19 @@ impl IArea2D for NotNhac {
         }
         if co_thang_giang(self.id_not) {
             self.base_mut().set_scale(Vector2::new(0.8, 0.8));
+        }
+    }
+
+    // THÊM HÀM DRAW VÀO ĐÂY
+    fn draw(&mut self) {
+        if self.la_vach_canh_bao {
+            let hinh_chu_nhat: Rect2 = Rect2::new(
+                Vector2::new(0.0, -2.0),
+                Vector2::new(2.0, 220.0)
+            );
+            let mau_canh_bao: Color = Color::from_rgba(0.6, 0.2, 0.9, 0.6);
+            // Vẽ khối chữ nhật trực tiếp
+            self.base_mut().draw_rect(hinh_chu_nhat, mau_canh_bao);
         }
     }
 }

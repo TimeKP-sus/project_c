@@ -25,6 +25,9 @@ pub struct ChoiSheet {
     nguoi_tao_label: Option<Gd<Label>>,
 
     #[export]
+    phan_luyen_tap: bool,
+
+    #[export]
     duong_dan_bai_hoc: GString,
 
     so_phim_tot: i32,
@@ -196,13 +199,43 @@ impl IControl for ChoiSheet {
 
         let duong_dan: GString = self.duong_dan_bai_hoc.clone();
         if !duong_dan.is_empty() {
-            if let Some(mut quan_ly_sheet) = self.quan_ly_sheet_node.clone() {
-                quan_ly_sheet.bind_mut().khoi_tao_sheet(duong_dan);
+            if self.phan_luyen_tap {
+                if self.quan_ly_sheet_node.as_mut().unwrap().bind().get_cho_phep_cho() == true {
+                    self.quan_ly_sheet_node.as_mut().unwrap().bind_mut().bat_tat_am_thanh_nhip(false);
+                }
+                
+                // Đọc file luyen_tap.json
+                if let Some(du_lieu_lt) = crate::doc_sheet_json::doc_file_luyen_tap(&duong_dan.to_string()) {
+                    if let Some(mut quan_ly_sheet) = self.quan_ly_sheet_node.clone() {
+                        quan_ly_sheet.bind_mut().set_cho_phep_cho(du_lieu_lt.cho_phep_cho);
+                        
+                        quan_ly_sheet.bind_mut().khoi_tao_sheet(
+                            du_lieu_lt.duong_dan_sheet.into(), 
+                            du_lieu_lt.khuong.into(),
+                            du_lieu_lt.phan_thoi_gian.into()
+                        );
+                    }
+
+                    // 1. Lấy thông tin Tác giả, Người tạo sheet từ file test.json gốc
+                    self.set_thong_tin_bai_hat();
+
+                    // 2. GHI ĐÈ tên bài hát trên UI bằng tên bài học luyện tập
+                    if let Some(mut label) = self.ten_bai_hat_label.clone() {
+                        label.set_text(&GString::from(du_lieu_lt.ten_bai_hoc));
+                    }
+                }
+            } else {
+                // Chế độ chơi bình thường
+                if let Some(mut quan_ly_sheet) = self.quan_ly_sheet_node.clone() {
+                    quan_ly_sheet.bind_mut().khoi_tao_sheet(
+                        duong_dan,
+                        "".into(), 
+                        "".into() 
+                    );
+                }
+                // Lấy trọn bộ thông tin từ file test.json gốc
+                self.set_thong_tin_bai_hat();
             }
-            // Đắp thông tin lên UI
-            self.set_thong_tin_bai_hat();
-        } else {
-            godot_print!("Cảnh báo: Chưa có đường dẫn bài học được truyền vào!");
         }
     }
 }

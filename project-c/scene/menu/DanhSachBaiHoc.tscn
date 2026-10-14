@@ -145,7 +145,7 @@ offset_top = 25.0
 offset_right = 1512.0
 offset_bottom = 98.0
 theme_override_font_sizes/font_size = 30
-text = "Tự tạo"
+text = "Tạo bài học"
 
 [node name="menu_phai" type="Panel" parent="." unique_id=2100984069]
 layout_mode = 0

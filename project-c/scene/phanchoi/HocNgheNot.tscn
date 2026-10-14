@@ -91,6 +91,14 @@ font_size = 50
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
+[sub_resource type="FontVariation" id="FontVariation_gxkyd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_00h7s"]
+font = SubResource("FontVariation_gxkyd")
+font_size = 30
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
 [node name="HocNgheNot" type="HocNgheNot" unique_id=1706245754]
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,9 +117,9 @@ layout_mode = 1
 
 [node name="nghe_lai" type="Button" parent="." unique_id=1193449662]
 layout_mode = 0
-offset_left = 798.0
+offset_left = 1425.0
 offset_top = 812.0
-offset_right = 1106.0
+offset_right = 1733.0
 offset_bottom = 896.0
 theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 36
@@ -301,8 +309,26 @@ label_settings = SubResource("LabelSettings_5cao5")
 horizontal_alignment = 2
 vertical_alignment = 1
 
+[node name="ghi_chu" type="Label" parent="." unique_id=1362947458]
+custom_minimum_size = Vector2(1425, 112)
+propagate_maximum_size = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.739
+anchor_right = 0.74200004
+anchor_bottom = 0.83100003
+offset_top = 0.8800049
+offset_right = 0.35986328
+offset_bottom = 13.5199585
+text = "ghi chu"
+label_settings = SubResource("LabelSettings_00h7s")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [connection signal="xong_het_bai" from="." to="nen_tong_ket/tong_ket_nghe_sheet" method="_on_hoc_nghe_not_xong_het_bai" flags=3]
 [connection signal="phim_vua_duoc_bam" from="MIDI/BanPhimPiano" to="." method="kiem_tra_phim" flags=3]
+[connection signal="phim_vua_duoc_nha" from="MIDI/BanPhimPiano" to="." method="xu_ly_phim_nha"]
 [connection signal="button_down" from="nghe_lai" to="." method="_on_nghe_lai_button_down"]
 [connection signal="button_down" from="nen_tong_ket/tong_ket_nghe_sheet/choi_lai" to="nen_tong_ket/tong_ket_nghe_sheet" method="_on_choi_lai_button_down"]
 [connection signal="button_down" from="nen_tong_ket/tong_ket_nghe_sheet/ve_ds" to="nen_tong_ket/tong_ket_nghe_sheet" method="_on_ve_ds_button_down"]

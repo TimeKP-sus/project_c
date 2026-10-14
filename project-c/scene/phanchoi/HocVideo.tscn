@@ -132,6 +132,17 @@ anchor_right = 1.0
 offset_top = 0.2400055
 offset_right = -2.0
 
+[node name="hoan_thanh" type="Button" parent="." unique_id=264234390]
+visible = false
+layout_mode = 0
+offset_left = 1680.0
+offset_top = 840.0
+offset_right = 1904.0
+offset_bottom = 896.0
+theme_override_font_sizes/font_size = 24
+text = "Hoan thanh"
+
+[connection signal="finished" from="video" to="." method="_on_video_finished"]
 [connection signal="gui_input" from="panel" to="." method="_on_video_gui_input"]
 [connection signal="drag_ended" from="panel/thanh_tua" to="." method="_on_thanh_tua_drag_ended"]
 [connection signal="drag_started" from="panel/thanh_tua" to="." method="_on_thanh_tua_drag_started"]

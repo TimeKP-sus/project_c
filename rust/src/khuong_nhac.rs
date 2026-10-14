@@ -1,10 +1,12 @@
 use godot::builtin::{ Color, GString, Vector2 };
-use godot::classes::{ Area2D, Control, IControl, PackedScene };
+use godot::classes::{ Area2D, Control, IControl, PackedScene, Panel };
 use godot::global::godot_print;
-use godot::obj::{ Gd, WithBaseField };
+use godot::meta::ToGodot;
+use godot::obj::{ Gd, GdMut, WithBaseField };
 use godot::tools::try_load;
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
+use crate::check_ten_not;
 use crate::not_nhac::NotNhac;
 use crate::quan_ly_sheet::QuanLySheet;
 
@@ -41,6 +43,9 @@ impl KhuongNhac {
     #[signal]
     fn not_bi_truot();
 
+    #[signal]
+    fn cap_nhat_mien_not(gia_tri_chuyen: i32);
+
     #[func]
     pub fn da_het_not(&self) -> bool {
         self.cac_not_trong_khuong.is_empty()
@@ -60,73 +65,97 @@ impl KhuongNhac {
 
     #[func]
     pub fn get_tong_so_not(&self) -> i32 {
-        self.cac_not_trong_khuong.len() as i32
+        self.cac_not_trong_khuong
+            .iter()
+            .filter(|du_lieu| du_lieu.not_node.bind().get_id_not() != 100) 
+            .count() as i32
     }
 
+    fn phan_tich_not(id_not: i32, mien_bat_dau: i32, chuyen_not: i32) -> (String, f32) {
+        if id_not == 100 {
+            let ten: String = if chuyen_not > 0 {
+                format!("{}⬈", chuyen_not.abs())
+            } else if chuyen_not < 0 {
+                format!("{}⬊", chuyen_not.abs())
+            } else {
+                String::from("") 
+            };
+            return (ten, -6.0);
+        }
+
+        // 2. Xử lý nốt bình thường
+        let ten_not = check_ten_not::chuyen_id_thanh_ten(id_not, false).to_string();
+
+        // 3. Tính toán vị trí và ÉP CHẶT vào khoảng 0 -> 16
+        let vi_tri_so = (16 - (id_not - mien_bat_dau)).clamp(0, 16);
+
+        let toa_do_y = match vi_tri_so {
+            0 => -10.0,
+            1 => 1.0,
+            2 => 14.0,
+            3 => 27.0,
+            4 => 40.0,
+            5 => 53.0,
+            6 => 65.0,
+            7 => 79.0,
+            8 => 90.0,
+            9 => 105.0,
+            10 => 117.0,
+            11 => 131.0,
+            12 => 142.0,
+            13 => 157.0,
+            14 => 169.0,
+            15 => 184.0,
+            16 => 196.0,
+            _ => 210.0,
+        };
+
+        (ten_not, toa_do_y)
+    }
+    #[func]
     pub fn tao_not(
         &mut self,
         id_not: i32,
-        ten_not: &str,
-        mau_not: &str,
-        vi_tri_so: i32,
+        mau_not: String,
         nhip_dich: f32,
         nhip_giu: f32,
+        chuyen_not: i32,    
+        mien_bat_dau: i32,   
         toc_do_chung: f32
     ) {
-        let Some(scene) = &self.nut_scene else {
-            return;
-        };
-        let Some(mut not_nhac) = scene.try_instantiate_as::<NotNhac>() else {
-            return;
-        };
+        let Some(scene) = &self.nut_scene else { return; };
+        let Some(mut not_nhac) = scene.try_instantiate_as::<NotNhac>() else { return; };
 
-        let vt: Vector2 = match vi_tri_so {
-            0 => Vector2::new(2040.0, -10.0),
-            1 => Vector2::new(2040.0, 1.0),
-            2 => Vector2::new(2040.0, 14.0),
-            3 => Vector2::new(2040.0, 27.0),
-            4 => Vector2::new(2040.0, 40.0),
-            5 => Vector2::new(2040.0, 53.0),
-            6 => Vector2::new(2040.0, 65.0),
-            7 => Vector2::new(2040.0, 79.0),
-            8 => Vector2::new(2040.0, 90.0),
-            9 => Vector2::new(2040.0, 105.0),
-            10 => Vector2::new(2040.0, 117.0),
-            11 => Vector2::new(2040.0, 131.0),
-            12 => Vector2::new(2040.0, 142.0),
-            13 => Vector2::new(2040.0, 157.0),
-            14 => Vector2::new(2040.0, 169.0),
-            15 => Vector2::new(2040.0, 184.0),
-            16 => Vector2::new(2040.0, 196.0),
-            _ => {
-                return;
-            }
-        };
+        let (ten_not, toa_do_y) = Self::phan_tich_not(id_not, mien_bat_dau, chuyen_not);
+        let vt: Vector2 = Vector2::new(2040.0, toa_do_y);
 
         {
-            let mut not_bind = not_nhac.bind_mut();
+            let mut not_bind: GdMut<'_, NotNhac> = not_nhac.bind_mut();
             not_bind.set_id_not(id_not);
-            not_bind.set_ten_not(ten_not.into());
-            not_bind.set_mau_not(mau_not.into());
-            if nhip_giu > 0.0 {
-                not_bind.set_chieu_dai_duoi(nhip_giu * toc_do_chung);
+            not_bind.set_ten_not(ten_not.into()); 
+            
+            // XỬ LÝ NỐT CHUYỂN
+            if id_not == 100 {
+                not_bind.bien_thanh_vach_canh_bao();
+            } else {
+                not_bind.set_mau_not(&mau_not);
+                if nhip_giu > 0.0 {
+                    not_bind.set_chieu_dai_duoi(nhip_giu * toc_do_chung);
+                }
             }
         }
-
-        if nhip_giu > 0.0 {
-            if let Some(mut panel) = not_nhac.try_get_node_as::<godot::classes::Panel>("nen") {
-                let mut size = panel.get_size();
+        // Thêm điều kiện id_not != 100 để vạch cảnh báo KHÔNG BỊ kéo dài đuôi nhip_giu
+        if nhip_giu > 0.0 && id_not != 100 {
+            if let Some(mut panel) = not_nhac.try_get_node_as::<Panel>("nen") {
+                let mut size: Vector2 = panel.get_size();
                 size.x += nhip_giu * toc_do_chung;
                 panel.set_size(size);
             }
         }
 
-        not_nhac.set_position(Vector2::new(2040.0, vt.y));
+        not_nhac.set_position(vt);
         self.base_mut().add_child(&not_nhac);
-        self.cac_not_trong_khuong.push(DuLieuNot {
-            nhip_dich,
-            not_node: not_nhac,
-        });
+        self.cac_not_trong_khuong.push(DuLieuNot { nhip_dich, not_node: not_nhac });
     }
 
     #[func]
@@ -143,14 +172,14 @@ impl KhuongNhac {
         // let mut so_luong_not_dai_hoan_thanh = 0;
 
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
-            let tg_dich = du_lieu.nhip_dich;
-            let vi_tri_x = TOA_DO_X_DICH + (tg_dich - thoi_gian_hien_tai) * toc_do_chung;
-            let toa_do_y = du_lieu.not_node.get_position().y;
+            let tg_dich: f32 = du_lieu.nhip_dich;
+            let vi_tri_x: f32 = TOA_DO_X_DICH + (tg_dich - thoi_gian_hien_tai) * toc_do_chung;
+            let toa_do_y: f32 = du_lieu.not_node.get_position().y;
 
-            du_lieu.not_node.set_position(Vector2::new(vi_tri_x, toa_do_y));
+            du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), toa_do_y));
 
-            let chieu_dai = du_lieu.not_node.bind().get_chieu_dai_duoi();
-            let toa_do_xoa = vi_tri_x + chieu_dai;
+            let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
+            let toa_do_xoa: f32 = vi_tri_x + chieu_dai;
 
             if toa_do_xoa < -50.0 {
                 du_lieu.not_node.queue_free();
@@ -166,11 +195,35 @@ impl KhuongNhac {
         }
     }
 
-    #[func]
+   #[func]
     pub fn kiem_tra_not_vao(&mut self, area: Gd<Area2D>) {
         let Some(not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
             return;
         };
+        
+        // KIỂM TRA NẾU LÀ NỐT CHUYỂN (ID 100)
+        let id = not_nhac.bind().get_id_not();
+        if id == 100 {
+            // Lấy tên nốt (VD: "5⬈" hoặc "3⬊")
+            let ten = not_nhac.bind().get_ten_not().to_string();
+            
+            // Lọc ra các ký tự số từ chuỗi
+            let so_str: String = ten.chars().filter(|c| c.is_digit(10)).collect();
+            if let Ok(gia_tri_tuyet_doi) = so_str.parse::<i32>() {
+                // Xác định dấu (lên hay xuống)
+                let gia_tri_chuyen: i32 = if ten.contains('⬈') {
+                    gia_tri_tuyet_doi
+                } else if ten.contains('⬊') {
+                    -gia_tri_tuyet_doi
+                } else {
+                    0
+                };
+                
+                // Phát tín hiệu lên QuanLySheet
+                self.base_mut().emit_signal("cap_nhat_mien_not", &[gia_tri_chuyen.to_variant()]);
+            }
+        }
+        
         self.cac_not_trong_area.push(not_nhac);
     }
     #[func]
@@ -195,21 +248,20 @@ impl KhuongNhac {
     }
     ///!chua on
     #[func]
-    pub fn get_khoang_ten_not_hien_tai(&self) -> godot::builtin::GString {
+    pub fn get_khoang_ten_not_hien_tai(&self) -> GString{
         // Nếu khuông nhạc không có nốt nào
         if self.cac_not_trong_khuong.is_empty() {
             return "Trống".into();
         }
 
-        // Lấy nốt đầu tiên (nốt gần vạch đích nhất / sắp đánh)
-        let not_dau = self.cac_not_trong_khuong.first().unwrap();
-        let ten_dau = not_dau.not_node.bind().get_ten_not();
+        // Lấy nốt đầu tiên
+        let not_dau: &DuLieuNot = self.cac_not_trong_khuong.first().unwrap();
+        let ten_dau: GString = not_dau.not_node.bind().get_ten_not();
 
-        // Lấy nốt cuối cùng (nốt xa nhất vừa được sinh ra trên khuông)
-        let not_cuoi = self.cac_not_trong_khuong.last().unwrap();
+        // Lấy nốt cuối cùng
+        let not_cuoi: &DuLieuNot = self.cac_not_trong_khuong.last().unwrap();
         let ten_cuoi: GString = not_cuoi.not_node.bind().get_ten_not();
 
-        // Nối thành chuỗi, ví dụ: "C1 -> E2"
         format!("{} -> {}", ten_dau, ten_cuoi).into()
     }
 }
@@ -220,16 +272,13 @@ impl IControl for KhuongNhac {
         self.nut_scene = try_load::<PackedScene>("res://scene/not.tscn").ok();
         self.quan_ly_sheet = self.base().try_get_node_as::<QuanLySheet>("..");
         self.area_nhan_not = self.base().try_get_node_as::<Area2D>("NhanDien");
-
-
     }
 
     fn draw(&mut self) {
         if self.toc_do_chung <= 0.0 || self.nhip_moi_o <= 0 {
             return;
         }
-
-        let toa_do_x_dich = 130.0;
+        let toa_do_x_dich: f32 = 130.0;
         let nhip_min: f32 = self.thoi_gian_hien_tai + (-50.0 - toa_do_x_dich) / self.toc_do_chung;
         let nhip_max: f32 = self.thoi_gian_hien_tai + (2040.0 - toa_do_x_dich) / self.toc_do_chung;
 
@@ -241,10 +290,10 @@ impl IControl for KhuongNhac {
             let nhip = (i * self.nhip_moi_o) as f32;
             let vi_tri_x = toa_do_x_dich + (nhip - self.thoi_gian_hien_tai) * self.toc_do_chung;
 
-            let diem_bat_dau = Vector2::new(vi_tri_x, -3.0);
-            let diem_ket_thuc = Vector2::new(vi_tri_x, 214.0);
-            let mau_sac = Color::from_rgba(0.7, 0.7, 0.7, 0.7);
-            let do_day = 2.0;
+            let diem_bat_dau: Vector2 = Vector2::new(vi_tri_x, 0.0);
+            let diem_ket_thuc: Vector2 = Vector2::new(vi_tri_x, 213.0);
+            let mau_sac: Color = Color::from_rgba(0.7, 0.7, 0.7, 0.7);
+            let do_day: f32 = 2.0;
             self.base_mut().draw_line_ex(diem_bat_dau, diem_ket_thuc, mau_sac).width(do_day).done();
         }
     }

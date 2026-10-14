@@ -17,6 +17,8 @@ var bai_hoc_path: String
 
 var choi_sheet_scene: PackedScene = preload("res://scene/phanchoi/ChoiSheet.tscn")
 var nghe_doan_not_scene: PackedScene = preload("res://scene/phanchoi/HocNgheNot.tscn")
+var xem_video: PackedScene = preload("res://scene/phanchoi/HocVideo.tscn")
+var tim_not_scene: PackedScene = preload("res://scene/phanchoi/HocTimNot.tscn")
 
 
 func _ready() -> void:
@@ -29,38 +31,41 @@ func _ready() -> void:
 func _on_hoc_button_down() -> void:
 	print("Đang mở bài: ", ten, " - Loại: ", loai_bai_hoc)
 	print("Đường dẫn file data: ", bai_hoc_path)
-	if loai_bai_hoc == "choi_sheet":
-		var choi_sheet: ChoiSheet = choi_sheet_scene.instantiate()
-		choi_sheet.duong_dan_bai_hoc = bai_hoc_path
-		var root = get_tree().root
-		var scene_cu = get_tree().current_scene
-		root.add_child(choi_sheet)
-		get_tree().current_scene = choi_sheet
-		scene_cu.queue_free()
-	elif loai_bai_hoc == "nghe_va_doan_not":
-		var nghe_doan_not: HocNgheNot = nghe_doan_not_scene.instantiate()
-		nghe_doan_not.duong_dan_bai_hoc = bai_hoc_path
-		var root = get_tree().root
-		var scene_cu = get_tree().current_scene
-		root.add_child(nghe_doan_not)
-		get_tree().current_scene = nghe_doan_not
-		scene_cu.queue_free()
-		pass
-	elif loai_bai_hoc == "tim_not":
-		pass
-	elif loai_bai_hoc == "xem_video":
-		pass
-	pass
+	
+	match loai_bai_hoc:
+		"choi_sheet":
+			chuyen_scene_bai_hoc(choi_sheet_scene, bai_hoc_path)
+		"nghe_va_doan_not":
+			chuyen_scene_bai_hoc(nghe_doan_not_scene, bai_hoc_path)
+		"tim_not":
+			chuyen_scene_bai_hoc(tim_not_scene, bai_hoc_path)
+		"xem_video":
+			chuyen_scene_bai_hoc(xem_video, bai_hoc_path)
+		_:
+			print("Không nhận diện được loại bài học!")
+
+func chuyen_scene_bai_hoc(scene_mau: PackedScene, duong_dan: String):
+	var scene_moi = scene_mau.instantiate()
+	scene_moi.set("duong_dan_bai_hoc", duong_dan)
+	var root = get_tree().root
+	var scene_cu = get_tree().current_scene
+	root.add_child(scene_moi)
+	get_tree().current_scene = scene_moi
+	scene_cu.queue_free()
 
 func _on_mouse_entered() -> void:
 	var ten_loai_bai = ""
 	match loai_bai_hoc:
 		"choi_sheet":
-			ten_loai_bai = "Đọc Bản Nhạc (Sheet)"
+			ten_loai_bai = "Đọc Bản Nhạc"
 		"nghe_va_doan_not":
 			ten_loai_bai = "Nghe & Đoán Nốt"
 		"tim_not":
 			ten_loai_bai = "Tìm và đánh nốt"
+		"xem_video":
+			ten_loai_bai = "Học video"
+		"luyen_tap_sheet":
+			ten_loai_bai = "Luyện tập Bản Nhạc"
 		_:
 			ten_loai_bai = "Khác"
 

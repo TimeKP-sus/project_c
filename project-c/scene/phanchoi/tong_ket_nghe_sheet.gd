@@ -19,11 +19,9 @@ func _ready() -> void:
 	nen_tong_ket.hide()
 
 func _on_ve_ds_button_down() -> void:
-	# Chuyển về màn hình danh sách bài học[cite: 11]
 	get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
 
 func _on_choi_lai_button_down() -> void:
-	# Lấy đường dẫn bài học hiện tại để nạp lại màn chơi[cite: 11]
 	var scene_hien_tai = get_tree().current_scene
 	var duong_dan_da_luu = scene_hien_tai.duong_dan_bai_hoc
 

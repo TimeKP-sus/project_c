@@ -1,0 +1,44 @@
+{
+    "ten_bai_hat": "Bài Tập Chuyển Nốt",
+    "tac_gia": "Hung",
+    "nguoi_tao_sheet": "Hung",
+    "loai_vach_nhip": "4/4",
+    "bpm": 120.0,
+    "mien_not_bat_dau": 30,
+    "khuong_1": [
+        {
+            "id_not": 36,
+            "mau_not": "1",
+            "nhip_dich": 0.0,
+            "nhip_giu": 0.0
+        },
+        {
+            "id_not": 100, 
+            "mau_not": "2",
+            "nhip_dich": 1.0,
+            "nhip_giu": 0.0,
+            "chuyen_not": 3 
+        },
+        {
+            "id_not": 45,
+            "mau_not": "2",
+            "nhip_dich": 2.0,
+            "nhip_giu": 0.0
+        }
+    ],
+    "khuong_2": [
+         {
+            "id_not": 24,
+            "mau_not": "3",
+            "nhip_dich": 0.0,
+            "nhip_giu": 4.0
+        },
+        {
+            "id_not": 100,
+            "mau_not": "2",
+            "nhip_dich": 4.0,
+            "nhip_giu": 0.0,
+            "chuyen_not": -2
+        }
+    ]
+}

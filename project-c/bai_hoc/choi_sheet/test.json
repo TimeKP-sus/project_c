@@ -1,42 +1,75 @@
 {
-	"ten_bai_hat": "test",
-	"tac_gia": "test",
-	"nguoi_tao_sheet": "test",
+	"ten_bai_hat": "Bài Tập Chuyển Nốt Thử Nghiệm",
+	"tac_gia": "Duy Hưng",
+	"nguoi_tao_sheet": "Duy Hưng",
 	"loai_vach_nhip": "4/4",
-	"bpm": 120.0,
+	"bpm": 90.0,
+	"mien_not_bat_dau_k1": 36,
+	"mien_not_bat_dau_k2": 24,
 	"khuong_1": [
 		{
 			"id_not": 36,
-			"ten_not": "C4",
 			"mau_not": "1",
-			"vi_tri_so": 15,
 			"nhip_dich": 0.0,
-			"nhip_giu": 0.0
+			"nhip_giu": 1.0
 		},
 		{
-			"id_not": 36,
-			"ten_not": "C4",
+			"id_not": 52,
 			"mau_not": "1",
-			"vi_tri_so": 15,
+			"nhip_dich": 2.0,
+			"nhip_giu": 1.0
+		},
+		{
+			"id_not": 40,
+			"mau_not": "2",
 			"nhip_dich": 1.0,
 			"nhip_giu": 1.0
 		},
 		{
-			"id_not": 43,
-			"ten_not": "G4",
-			"mau_not": "3",
-			"vi_tri_so": 11,
+			"id_not": 100,
+			"mau_not": "5",
 			"nhip_dich": 2.0,
+			"nhip_giu": 0.0,
+			"chuyen_not": 5
+		},
+		{
+			"id_not": 45,
+			"mau_not": "3",
+			"nhip_dich": 3.0,
 			"nhip_giu": 1.0
+		},
+		{
+			"id_not": 100,
+			"mau_not": "5",
+			"nhip_dich": 4.0,
+			"nhip_giu": 0.0,
+			"chuyen_not": -5
+		},
+		{
+			"id_not": 36,
+			"mau_not": "1",
+			"nhip_dich": 5.0,
+			"nhip_giu": 2.0
 		}
 	],
 	"khuong_2": [
 		{
 			"id_not": 24,
-			"ten_not": "C3",
-			"mau_not": "3",
-			"vi_tri_so": 8,
+			"mau_not": "4",
 			"nhip_dich": 0.0,
+			"nhip_giu": 2.0
+		},
+		{
+			"id_not": 100,
+			"mau_not": "5",
+			"nhip_dich": 2.0,
+			"nhip_giu": 0.0,
+			"chuyen_not": -3
+		},
+		{
+			"id_not": 21,
+			"mau_not": "2",
+			"nhip_dich": 3.0,
 			"nhip_giu": 4.0
 		}
 	]

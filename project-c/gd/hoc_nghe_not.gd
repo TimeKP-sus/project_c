@@ -7,7 +7,6 @@ func _ready() -> void:
 	khoi_dong_bai_hoc()
 	pass
 
-# Đã sửa tham số nhận vào thành String
 func them_not_doan(chuoi_id: String) -> void:
 	var tn = ten_not_scene.instantiate()
 	

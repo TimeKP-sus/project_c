@@ -1,8 +1,5 @@
 use godot::{
-    builtin::{ Color, GString },
-    classes::{ Control, IControl, Label, TextureRect },
-    obj::{ Base, Gd, WithBaseField },
-    register::{ GodotClass, godot_api },
+    builtin::{ Color, GString }, classes::{ Control, IControl, Label, TextureRect }, global::godot_print, obj::{ Base, Gd, WithBaseField }, register::{ GodotClass, godot_api },
 };
 
 use crate::ban_phim_midi::BanPhimMidi;
@@ -18,6 +15,29 @@ pub struct CumPhimDan {
 }
 
 impl CumPhimDan {
+    pub fn to_mau_phim(&mut self, so_phim_trong_cum: i32, mau: Color) {
+        let path: String = format!("{}", so_phim_trong_cum);
+        if let Some(mut phim_thu) = self.base_mut().try_get_node_as::<TextureRect>(&path) {
+            phim_thu.set_modulate(mau);
+        } else {
+            // Sẽ báo lỗi nếu Cụm phím không có con nào tên là "1", "2"... "12"
+            godot_print!("LỖI TÔ MÀU: Không tìm thấy phím số {} trong cụm {}", path, self.cum_so);
+        }
+    }
+
+    pub fn dung_to_mau_phim(&mut self, so_phim_trong_cum: i32) {
+        let path: String = format!("{}", so_phim_trong_cum);
+        if let Some(mut phim_thu) = self.base_mut().try_get_node_as::<TextureRect>(&path) {
+            let mut mau_hien_tai: Color = phim_thu.get_modulate();
+            // Trả về màu trắng gốc
+            mau_hien_tai.r = 1.0; 
+            mau_hien_tai.b = 1.0; 
+            mau_hien_tai.g = 1.0; 
+            mau_hien_tai.a = 1.0;
+            phim_thu.set_modulate(mau_hien_tai);
+        }
+    }
+
     pub fn bam_phim_thu(&mut self, so_phim: i32) {
         let path: String = format!("{}", so_phim);
         if let Some(mut phim_thu) = self.base_mut().try_get_node_as::<TextureRect>(&path) {
