@@ -3,7 +3,6 @@ extends HocTimNot
 @onready var danh_sach: HFlowContainer = $DanhSach
 var tim_not_scene: PackedScene = preload("res://scene/phanchoi/ten_not_tim.tscn")
 
-
 func _ready() -> void:
 	khoi_dong_bai_hoc()
 

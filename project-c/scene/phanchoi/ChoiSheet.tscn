@@ -11,8 +11,8 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
 font = ExtResource("3_4c48n")
-font_size = 30
-outline_size = 7
+font_size = 32
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f281m"]
@@ -84,12 +84,13 @@ grow_vertical = 2
 metadata/_edit_lock_ = true
 
 [node name="Nen1" type="Sprite2D" parent="." unique_id=1435993582]
-position = Vector2(980, 542)
-scale = Vector2(1.3813334, 1.076)
+position = Vector2(980, 546)
+scale = Vector2(1.3813334, 1.12)
 texture = ExtResource("1_mffsp")
 
 [node name="QuanLySheet" parent="." unique_id=1515061911 instance=ExtResource("2_0iuma")]
 toc_do = 80.0
+hien_thi_thoi_gian = true
 layout_mode = 1
 
 [node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_vt317")]
@@ -109,12 +110,13 @@ vertical_alignment = 1
 
 [node name="ten_bai_hat" type="Label" parent="." unique_id=1651225093]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 80.0
-offset_right = 358.0
-offset_bottom = 141.0
+offset_left = 159.0
+offset_top = 90.0
+offset_right = 1805.0
+offset_bottom = 151.0
 text = "Ten bai hat"
 label_settings = SubResource("LabelSettings_0iuma")
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="nen_tong_ket" type="Panel" parent="." unique_id=922925555]

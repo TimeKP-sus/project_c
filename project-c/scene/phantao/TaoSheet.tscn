@@ -1,0 +1,313 @@
+[gd_scene format=3 uid="uid://slmvlp7u7ser"]
+
+[ext_resource type="Script" uid="uid://bfakx7jw57ymo" path="res://scene/phantao/tao_sheet.gd" id="1_jn0q5"]
+[ext_resource type="Texture2D" uid="uid://bm5pmi4eqammk" path="res://asset/nen1.jpg" id="1_mffsp"]
+[ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_vt317"]
+[ext_resource type="PackedScene" uid="uid://bc60vic3bfv5a" path="res://scene/quan_ly_nhac.tscn" id="2_0iuma"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_4c48n"]
+[ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="7_7d2hr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_bar"]
+bg_color = Color(0.12, 0.12, 0.15, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.4, 0.45, 0.8)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_nhan"]
+font = ExtResource("3_4c48n")
+font_size = 20
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TaoSheet" type="TaoSheet" unique_id=671872958]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jn0q5")
+metadata/_edit_lock_ = true
+
+[node name="Nen1" type="Sprite2D" parent="." unique_id=2018243867]
+position = Vector2(980, 546)
+scale = Vector2(1.3813334, 1.12)
+texture = ExtResource("1_mffsp")
+
+[node name="QuanLySheet" parent="." unique_id=101082986 instance=ExtResource("2_0iuma")]
+toc_do = 80.0
+hien_thi_thoi_gian = true
+layout_mode = 1
+
+[node name="MIDI" parent="." unique_id=1084463772 instance=ExtResource("1_vt317")]
+layout_mode = 1
+
+[node name="ThanhThongTin" type="Panel" parent="." unique_id=1484156686]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 25.0
+offset_right = 1900.0
+offset_bottom = 95.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_bar")
+
+[node name="HBox" type="HBoxContainer" parent="ThanhThongTin" unique_id=1734312126]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 10.0
+offset_right = -15.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TenBaiHat_Input" type="LineEdit" parent="ThanhThongTin/HBox" unique_id=943565500]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 2
+placeholder_text = "Tên bài hát..."
+
+[node name="TacGia_Input" type="LineEdit" parent="ThanhThongTin/HBox" unique_id=1229035913]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+placeholder_text = "Tác giả..."
+
+[node name="NguoiTao_Input" type="LineEdit" parent="ThanhThongTin/HBox" unique_id=1428849580]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+placeholder_text = "Người tạo..."
+
+[node name="NhanNhip" type="Label" parent="ThanhThongTin/HBox" unique_id=1164051082]
+layout_mode = 2
+text = "Nhịp:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="LoaiNhip_Option" type="OptionButton" parent="ThanhThongTin/HBox" unique_id=147272576]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "4/4"
+popup/item_0/id = 0
+popup/item_1/text = "3/4"
+popup/item_1/id = 1
+popup/item_2/text = "3/8"
+popup/item_2/id = 2
+popup/item_3/text = "2/4"
+popup/item_3/id = 3
+popup/item_4/text = "6/8"
+popup/item_4/id = 4
+
+[node name="NhanBPM" type="Label" parent="ThanhThongTin/HBox" unique_id=1119231973]
+layout_mode = 2
+text = "BPM:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="BPM_Spin" type="SpinBox" parent="ThanhThongTin/HBox" unique_id=1466765839]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+min_value = 20.0
+max_value = 300.0
+value = 120.0
+
+[node name="NhanMienK1" type="Label" parent="ThanhThongTin/HBox" unique_id=562672307]
+layout_mode = 2
+text = "Miền K1:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="MienK1_Spin" type="SpinBox" parent="ThanhThongTin/HBox" unique_id=1844167448]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+max_value = 67.0
+value = 36.0
+
+[node name="NhanMienK2" type="Label" parent="ThanhThongTin/HBox" unique_id=359611258]
+layout_mode = 2
+text = "Miền K2:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="MienK2_Spin" type="SpinBox" parent="ThanhThongTin/HBox" unique_id=2071948256]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+max_value = 67.0
+value = 24.0
+
+[node name="MoFile_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=1696477269]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Mở JSON"
+
+[node name="NhapMid" type="Button" parent="ThanhThongTin/HBox" unique_id=85084091]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Nhập .mid"
+
+[node name="LuuFile_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=1903919666]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Lưu JSON"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=434962978]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+text = "Về Menu"
+
+[node name="ThanhCongCuSoan" type="Panel" parent="." unique_id=1235392015]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 876.0
+offset_right = 1895.0
+offset_bottom = 958.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_bar")
+
+[node name="VBox" type="VBoxContainer" parent="ThanhCongCuSoan" unique_id=1080467951]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 8.0
+offset_right = -15.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="HangTuaNhip" type="HBoxContainer" parent="ThanhCongCuSoan/VBox" unique_id=878483005]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="NhipHienTai_Label" type="Label" parent="ThanhCongCuSoan/VBox/HangTuaNhip" unique_id=325749588]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Nhịp: 0.00"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="ThanhTuaNhip" type="HSlider" parent="ThanhCongCuSoan/VBox/HangTuaNhip" unique_id=465167994]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 200.0
+step = 0.25
+
+[node name="HangCongCu" type="HBoxContainer" parent="ThanhCongCuSoan/VBox" unique_id=1844596320]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="KhuongChon_Option" type="OptionButton" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1392063981]
+custom_minimum_size = Vector2(180, 0)
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "Khuông 1 (Tay phải)"
+popup/item_0/id = 0
+popup/item_1/text = "Khuông 2 (Tay trái)"
+popup/item_1/id = 1
+
+[node name="NhanBuoc" type="Label" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=883470279]
+layout_mode = 2
+text = "Bước tiến:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="BuocNhip_Option" type="OptionButton" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1381383423]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+selected = 2
+item_count = 4
+popup/item_0/text = "0.25"
+popup/item_0/id = 0
+popup/item_1/text = "0.5"
+popup/item_1/id = 1
+popup/item_2/text = "1.0"
+popup/item_2/id = 2
+popup/item_3/text = "2.0"
+popup/item_3/id = 3
+
+[node name="NhanGiu" type="Label" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=44088638]
+layout_mode = 2
+text = "Nhịp giữ:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="NhipGiu_Spin" type="SpinBox" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1095584332]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+max_value = 32.0
+step = 0.25
+
+[node name="NhanMau" type="Label" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=990540355]
+layout_mode = 2
+text = "Màu nốt:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="MauNot_Option" type="OptionButton" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1911755844]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "1 - Đỏ"
+popup/item_0/id = 0
+popup/item_1/text = "2 - Xanh lá"
+popup/item_1/id = 1
+popup/item_2/text = "3 - Xanh dương"
+popup/item_2/id = 2
+popup/item_3/text = "4 - Vàng"
+popup/item_3/id = 3
+popup/item_4/text = "5 - Tím"
+popup/item_4/id = 4
+
+[node name="TuDongTien_Check" type="CheckButton" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1344401673]
+layout_mode = 2
+button_pressed = true
+text = "Nhập bằng MIDI"
+
+[node name="LuiNhip_Btn" type="Button" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1905716323]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "◀ Lùi"
+
+[node name="TienNhip_Btn" type="Button" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1304554780]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "Tiến ▶"
+
+[node name="XoaNot_Btn" type="Button" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1239023492]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Xóa nốt ở nhịp"
+
+[node name="NgheThu_Btn" type="Button" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=1392594731]
+custom_minimum_size = Vector2(140, 0)
+layout_mode = 2
+text = "▶ Nghe thử"
+
+[node name="HopThoaiLuuFile" type="FileDialog" parent="." unique_id=771689717]
+title = "Lưu file Sheet JSON"
+initial_position = 2
+size = Vector2i(750, 500)
+access = 2
+filters = PackedStringArray("*.json ; Sheet Music JSON")
+
+[node name="HopThoaiMoFile" type="FileDialog" parent="." unique_id=1251177859]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.json ; Sheet Music JSON")
+
+[node name="fps" type="Label" parent="." unique_id=556480627]
+layout_mode = 0
+offset_right = 252.0
+offset_bottom = 23.0
+script = ExtResource("7_7d2hr")
+hien_fps = true

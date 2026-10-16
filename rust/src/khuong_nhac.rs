@@ -28,11 +28,18 @@ pub struct KhuongNhac {
     cac_not_trong_khuong: Vec<DuLieuNot>,
 
     #[export]
+    pub cho_phep_xoa_not: bool,
+
+    #[export]
     giu_lai_not: bool,
 
     thoi_gian_hien_tai: f32,
     toc_do_chung: f32,
     pub nhip_moi_o: i32,
+
+    pub mien_goc: i32,
+    pub mien_hien_tai: i32,
+    cac_moc_chuyen_mien: Vec<(f32, i32)>,
 }
 
 #[godot_api]
@@ -67,7 +74,7 @@ impl KhuongNhac {
     pub fn get_tong_so_not(&self) -> i32 {
         self.cac_not_trong_khuong
             .iter()
-            .filter(|du_lieu| du_lieu.not_node.bind().get_id_not() != 100) 
+            .filter(|du_lieu| du_lieu.not_node.bind().get_id_not() != 100)
             .count() as i32
     }
 
@@ -78,7 +85,7 @@ impl KhuongNhac {
             } else if chuyen_not < 0 {
                 format!("{}⬊", chuyen_not.abs())
             } else {
-                String::from("") 
+                String::from("")
             };
             return (ten, -6.0);
         }
@@ -119,12 +126,16 @@ impl KhuongNhac {
         mau_not: String,
         nhip_dich: f32,
         nhip_giu: f32,
-        chuyen_not: i32,    
-        mien_bat_dau: i32,   
+        chuyen_not: i32,
+        mien_bat_dau: i32,
         toc_do_chung: f32
     ) {
-        let Some(scene) = &self.nut_scene else { return; };
-        let Some(mut not_nhac) = scene.try_instantiate_as::<NotNhac>() else { return; };
+        let Some(scene) = &self.nut_scene else {
+            return;
+        };
+        let Some(mut not_nhac) = scene.try_instantiate_as::<NotNhac>() else {
+            return;
+        };
 
         let (ten_not, toa_do_y) = Self::phan_tich_not(id_not, mien_bat_dau, chuyen_not);
         let vt: Vector2 = Vector2::new(2040.0, toa_do_y);
@@ -132,8 +143,8 @@ impl KhuongNhac {
         {
             let mut not_bind: GdMut<'_, NotNhac> = not_nhac.bind_mut();
             not_bind.set_id_not(id_not);
-            not_bind.set_ten_not(ten_not.into()); 
-            
+            not_bind.set_ten_not(ten_not.into());
+
             // XỬ LÝ NỐT CHUYỂN
             if id_not == 100 {
                 not_bind.bien_thanh_vach_canh_bao();
@@ -161,15 +172,13 @@ impl KhuongNhac {
     #[func]
     pub fn xu_ly_di_chuyen_not(&mut self, thoi_gian_hien_tai: f32, toc_do_chung: f32) {
         const TOA_DO_X_DICH: f32 = 130.0;
-        // const NGUONG_TRUOT_X: f32 = 100.0;
 
         self.thoi_gian_hien_tai = thoi_gian_hien_tai;
         self.toc_do_chung = toc_do_chung;
         self.base_mut().queue_redraw();
 
         let so_luong_truoc = self.cac_not_trong_khuong.len();
-        // let mut so_luong_not_truot = 0;
-        // let mut so_luong_not_dai_hoan_thanh = 0;
+        let cho_phep_xoa = self.cho_phep_xoa_not;
 
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
             let tg_dich: f32 = du_lieu.nhip_dich;
@@ -178,37 +187,42 @@ impl KhuongNhac {
 
             du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), toa_do_y));
 
-            let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
-            let toa_do_xoa: f32 = vi_tri_x + chieu_dai;
+            // CHỈ XÓA NỐT KHI CHẾ ĐỘ XÓA ĐANG BẬT
+            if cho_phep_xoa {
+                let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
+                let toa_do_xoa: f32 = vi_tri_x + chieu_dai;
 
-            if toa_do_xoa < -50.0 {
-                du_lieu.not_node.queue_free();
-                false
-            } else {
-                true
+                if toa_do_xoa < -50.0 {
+                    du_lieu.not_node.queue_free();
+                    return false;
+                }
             }
+            true
         });
 
-        if so_luong_truoc > 0 && self.cac_not_trong_khuong.is_empty() {
+        if cho_phep_xoa && so_luong_truoc > 0 && self.cac_not_trong_khuong.is_empty() {
             godot_print!("Khuông nhạc đã hết nốt!");
             self.base_mut().emit_signal("khuong_da_het_not", &[]);
         }
     }
 
-   #[func]
+    #[func]
     pub fn kiem_tra_not_vao(&mut self, area: Gd<Area2D>) {
         let Some(not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
             return;
         };
-        
+
         // KIỂM TRA NẾU LÀ NỐT CHUYỂN (ID 100)
-        let id = not_nhac.bind().get_id_not();
-        if id == 100 {
+        let id: i32 = not_nhac.bind().get_id_not();
+        if id == 100 && self.cho_phep_xoa_not {
             // Lấy tên nốt (VD: "5⬈" hoặc "3⬊")
             let ten = not_nhac.bind().get_ten_not().to_string();
-            
+
             // Lọc ra các ký tự số từ chuỗi
-            let so_str: String = ten.chars().filter(|c| c.is_digit(10)).collect();
+            let so_str: String = ten
+                .chars()
+                .filter(|c| c.is_digit(10))
+                .collect();
             if let Ok(gia_tri_tuyet_doi) = so_str.parse::<i32>() {
                 // Xác định dấu (lên hay xuống)
                 let gia_tri_chuyen: i32 = if ten.contains('⬈') {
@@ -218,17 +232,13 @@ impl KhuongNhac {
                 } else {
                     0
                 };
-                
+
                 // Phát tín hiệu lên QuanLySheet
                 self.base_mut().emit_signal("cap_nhat_mien_not", &[gia_tri_chuyen.to_variant()]);
             }
         }
-        
+
         self.cac_not_trong_area.push(not_nhac);
-    }
-    #[func]
-    pub fn het_not_trong_khuong(&mut self) {
-        self.base_mut().emit_signal("khuong_da_het_not", &[]);
     }
 
     #[func]
@@ -236,7 +246,7 @@ impl KhuongNhac {
         let Some(mut not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
             return;
         };
-        if !not_nhac.bind().get_da_duoc_danh() {
+        if self.cho_phep_xoa_not && !not_nhac.bind().get_da_duoc_danh() {
             not_nhac.bind_mut().da_danh_trat();
             self.base_mut().emit_signal("not_bi_truot", &[]);
         }
@@ -246,9 +256,39 @@ impl KhuongNhac {
             }
         }
     }
+    // 1. Xóa sạch các node nốt nhạc cũ trên khuông trước khi vẽ lại
+    #[func]
+    pub fn xoa_tat_ca_not(&mut self) {
+        for mut du_lieu in self.cac_not_trong_khuong.drain(..) {
+            if du_lieu.not_node.is_instance_valid() {
+                du_lieu.not_node.queue_free();
+            }
+        }
+        self.cac_not_trong_area.clear();
+        self.base_mut().queue_redraw();
+    }
+
+    // 2. Di chuyển nốt khi tua thanh trượt trong TaoSheet (KHÔNG xóa nốt khi đi qua vạch đích)
+    #[func]
+    pub fn cap_nhat_vi_tri_soan(&mut self, nhip_hien_tai: f32, toc_do_chung: f32) {
+        const TOA_DO_X_DICH: f32 = 130.0;
+        self.thoi_gian_hien_tai = nhip_hien_tai;
+        self.toc_do_chung = toc_do_chung;
+        self.base_mut().queue_redraw();
+
+        for du_lieu in &mut self.cac_not_trong_khuong {
+            let vi_tri_x = TOA_DO_X_DICH + (du_lieu.nhip_dich - nhip_hien_tai) * toc_do_chung;
+            let toa_do_y = du_lieu.not_node.get_position().y;
+            du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), toa_do_y));
+        }
+    }
+    #[func]
+    pub fn het_not_trong_khuong(&mut self) {
+        self.base_mut().emit_signal("khuong_da_het_not", &[]);
+    }
     ///!chua on
     #[func]
-    pub fn get_khoang_ten_not_hien_tai(&self) -> GString{
+    pub fn get_khoang_ten_not_hien_tai(&self) -> GString {
         // Nếu khuông nhạc không có nốt nào
         if self.cac_not_trong_khuong.is_empty() {
             return "Trống".into();

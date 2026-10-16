@@ -41,6 +41,15 @@ func _on_hoc_button_down() -> void:
 			chuyen_scene_bai_hoc(tim_not_scene, bai_hoc_path)
 		"xem_video":
 			chuyen_scene_bai_hoc(xem_video, bai_hoc_path)
+		"tap_luyen_sheet":
+			var scene_moi:ChoiSheet = choi_sheet_scene.instantiate()
+			scene_moi.set("duong_dan_bai_hoc", bai_hoc_path)
+			scene_moi.phan_luyen_tap = true
+			var root = get_tree().root
+			var scene_cu = get_tree().current_scene
+			root.add_child(scene_moi)
+			get_tree().current_scene = scene_moi
+			scene_cu.queue_free()
 		_:
 			print("Không nhận diện được loại bài học!")
 
@@ -78,8 +87,7 @@ func _on_mouse_entered() -> void:
 	bbcode_text += "[b]Bài số:[/b] %s\n" % so
 	bbcode_text += "[b]Chế độ học:[/b] [color=cyan]%s[/color]\n" % ten_loai_bai
 	bbcode_text += "[b]Người tạo:[/b] [color=lightgreen]%s[/color]\n\n" % nguoi_tao
-	
-	# Thông tin hệ thống (Đường dẫn): Chữ nhỏ, in nghiêng, màu xám cho đỡ rối mắt
+
 	bbcode_text += "[color=gray][font_size=14][i]Tệp dữ liệu: %s[/i][/font_size][/color]" % bai_hoc_path
 	
 	# Gắn chuỗi đã định dạng vào RichTextLabel
