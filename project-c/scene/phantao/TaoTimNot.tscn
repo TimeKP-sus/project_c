@@ -1,0 +1,287 @@
+[gd_scene format=3 uid="uid://bo4jnq13h1j6w"]
+
+[ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_f57t8"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0.36, 0.56, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.04, 0.2, 0.34, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("2_font")
+font_size = 28
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+content_margin_left = 14.0
+content_margin_right = 14.0
+bg_color = Color(0.15, 0.58, 0.35, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.95, 0.68, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 14.0
+content_margin_right = 14.0
+bg_color = Color(0.12, 0.46, 0.74, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.55, 0.86, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbl"]
+font = ExtResource("2_font")
+font_size = 19
+font_color = Color(0.88, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TaoTimNot" type="TaoTimNot" unique_id=1777085924]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Nen" type="Panel" parent="." unique_id=1351841103]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="ThanhTren" type="Panel" parent="." unique_id=2133299947]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.1
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="ThanhTren" unique_id=495395710]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_right = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="TieuDe" type="Label" parent="ThanhTren/HBox" unique_id=1642938572]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🎹 TẠO BÀI HỌC TÌM & ĐÁNH NỐT TRÊN ĐÀN"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="NgheThu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=860727110]
+custom_minimum_size = Vector2(210, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "🔊 Nghe & Tô phím thử"
+
+[node name="ChoiThuBai_Btn" type="Button" parent="ThanhTren/HBox" unique_id=674548884]
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "🎮 Chơi thử bài"
+
+[node name="MoJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1717143907]
+custom_minimum_size = Vector2(130, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "📂 Mở JSON"
+
+[node name="LuuJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1920615056]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "💾 Lưu JSON"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=523432937]
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✖ Về Menu"
+
+[node name="KhungSoan" type="Panel" parent="." unique_id=892771445]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.115
+anchor_right = 0.98
+anchor_bottom = 0.835
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="KhungSoan" unique_id=1751845055]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="HangThongTin" type="HBoxContainer" parent="KhungSoan/VBox" unique_id=1429318180]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NhanTen" type="Label" parent="KhungSoan/VBox/HangThongTin" unique_id=1477112468]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Tên bài học:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="TenBai_Input" type="LineEdit" parent="KhungSoan/VBox/HangThongTin" unique_id=550125672]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "VD: Tìm hợp âm Đô trưởng và La thứ..."
+
+[node name="NhanNT" type="Label" parent="KhungSoan/VBox/HangThongTin" unique_id=1935530303]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Người tạo:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="NguoiTao_Input" type="LineEdit" parent="KhungSoan/VBox/HangThongTin" unique_id=149797454]
+custom_minimum_size = Vector2(240, 42)
+layout_mode = 2
+text = "timekp"
+
+[node name="HangSoanCau" type="HBoxContainer" parent="KhungSoan/VBox" unique_id=1446360616]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="NhanChuoi" type="Label" parent="KhungSoan/VBox/HangSoanCau" unique_id=1124711499]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Chuỗi nốt:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="ChuoiNot_Input" type="LineEdit" parent="KhungSoan/VBox/HangSoanCau" unique_id=232315586]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Bấm phím trên đàn MIDI để thêm nốt/hợp âm (VD: 36_40_43 36 38)..."
+
+[node name="GopHopAm_Check" type="CheckButton" parent="KhungSoan/VBox/HangSoanCau" unique_id=358832380]
+layout_mode = 2
+button_pressed = true
+text = "Gộp hợp âm khi giữ phím (_)"
+
+[node name="XoaCuoi_Btn" type="Button" parent="KhungSoan/VBox/HangSoanCau" unique_id=1019375728]
+custom_minimum_size = Vector2(130, 42)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "⌫ Xóa 1 nốt"
+
+[node name="HangGhiChu" type="HBoxContainer" parent="KhungSoan/VBox" unique_id=293758510]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="NhanGC" type="Label" parent="KhungSoan/VBox/HangGhiChu" unique_id=2086396095]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Ghi chú bước:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="GhiChu_Input" type="LineEdit" parent="KhungSoan/VBox/HangGhiChu" unique_id=1454284531]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Hướng dẫn ngón tay hoặc vị trí phím cho bước này..."
+
+[node name="ThemCau_Btn" type="Button" parent="KhungSoan/VBox/HangGhiChu" unique_id=1146286502]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "➕ Thêm bước"
+
+[node name="CapNhatCau_Btn" type="Button" parent="KhungSoan/VBox/HangGhiChu" unique_id=1766206064]
+custom_minimum_size = Vector2(140, 42)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✎ Cập nhật"
+
+[node name="XoaCau_Btn" type="Button" parent="KhungSoan/VBox/HangGhiChu" unique_id=2009502841]
+custom_minimum_size = Vector2(130, 42)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "🗑 Xóa bước"
+
+[node name="DanhSachCau" type="ItemList" parent="KhungSoan/VBox" unique_id=1860925128]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+
+[node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_f57t8")]
+layout_mode = 1
+
+[node name="HopThoaiLuuJson" type="FileDialog" parent="." unique_id=465159961]
+title = "Lưu bài Tìm & Đánh Nốt JSON"
+initial_position = 2
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Find Note Lesson JSON")
+
+[node name="HopThoaiMoJson" type="FileDialog" parent="." unique_id=1849150254]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Find Note Lesson JSON")

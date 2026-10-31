@@ -6,6 +6,8 @@ use godot::{
 };
 use serde::Deserialize;
 
+use crate::du_lieu_lich_su::DuLieuLichSu;
+
 #[derive(Deserialize, Debug)]
 pub struct MocThoiGian {
     pub thoi_gian: f32,
@@ -42,7 +44,7 @@ impl HocVideo {
         let file_access = FileAccess::open(&duong_dan_file.clone(), ModeFlags::READ);
         
         if let Some(file) = file_access {
-            let noi_dung = file.get_as_text().to_string();
+            let noi_dung: String = file.get_as_text().to_string();
             
             match serde_json::from_str::<VideoJson>(&noi_dung) {
                 Ok(data) => {
@@ -88,10 +90,31 @@ impl HocVideo {
         array
     }
     #[func]
+    pub fn cap_nhat_tien_do_video(&mut self, thoi_gian_hien_tai: f32, tong_thoi_gian: f32) {
+        if self.duong_dan_bai_hoc.is_empty() || tong_thoi_gian <= 0.0 {
+            return;
+        }
+        let ti_le = ((thoi_gian_hien_tai / tong_thoi_gian) * 100.0).clamp(0.0, 100.0);
+        let diem: i32 = ti_le.round() as i32;
+        let hang: &str = DuLieuLichSu::tinh_hang(ti_le);
+
+        let mut ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
+        ls.cap_nhat_ket_qua(
+            "xem_video",
+            &self.duong_dan_bai_hoc.to_string(),
+            diem,
+            ti_le,
+            hang,
+        );
+    }
+
+    #[func]
     pub fn khoi_dong_bai_hoc(&mut self) {
         let path: GString = self.duong_dan_bai_hoc.clone();
         if !path.is_empty() {
-            self.doc_file_json(path);
+            if self.doc_file_json(path) {
+                self.cap_nhat_tien_do_video(1.0, 1.0);
+            }
         }
     }
 }

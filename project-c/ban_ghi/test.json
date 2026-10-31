@@ -1,0 +1,209 @@
+{
+  "cac_su_kien": [
+    {
+      "thoi_gian": 0.65611154,
+      "so_phim": 21,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.0561125,
+      "so_phim": 28,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.1005571,
+      "so_phim": 43,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.3783356,
+      "so_phim": 48,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.3783356,
+      "so_phim": 43,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.5894473,
+      "so_phim": 47,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.7672255,
+      "so_phim": 21,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.7672255,
+      "so_phim": 52,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.7894478,
+      "so_phim": 28,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.7894478,
+      "so_phim": 48,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 2.1561136,
+      "so_phim": 52,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 2.2116687,
+      "so_phim": 21,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 2.5449994,
+      "so_phim": 19,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 2.5561104,
+      "so_phim": 43,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 2.889441,
+      "so_phim": 48,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 2.944996,
+      "so_phim": 43,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.3338819,
+      "so_phim": 52,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 3.400548,
+      "so_phim": 48,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.6894345,
+      "so_phim": 52,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.7116566,
+      "so_phim": 19,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 4.089433,
+      "so_phim": 48,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.1116557,
+      "so_phim": 17,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.4677715,
+      "so_phim": 53,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.5122166,
+      "so_phim": 48,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 4.8122206,
+      "so_phim": 57,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.8455544,
+      "so_phim": 53,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 5.212226,
+      "so_phim": 57,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 5.267782,
+      "so_phim": 17,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 5.5900087,
+      "so_phim": 43,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 5.60112,
+      "so_phim": 24,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 5.6566763,
+      "so_phim": 50,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 5.7789,
+      "so_phim": 48,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 5.978903,
+      "so_phim": 50,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.0011253,
+      "so_phim": 43,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.034459,
+      "so_phim": 24,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.3122406,
+      "so_phim": 21,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.334463,
+      "so_phim": 47,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.3566856,
+      "so_phim": 38,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.6455784,
+      "so_phim": 47,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.667801,
+      "so_phim": 38,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.678912,
+      "so_phim": 21,
+      "la_bam": false
+    }
+  ]
+}

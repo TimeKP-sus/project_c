@@ -7,41 +7,79 @@
 [ext_resource type="FontFile" uid="uid://c56hg45h2eink" path="res://asset/font/arial.ttf" id="4_1i2qx"]
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="4_cirep"]
 [ext_resource type="Script" uid="uid://blsrxxtumc42u" path="res://scene/phanchoi/tong_ket_choi_sheet.gd" id="4_wryo6"]
-[ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="7_7d2hr"]
+[ext_resource type="Script" uid="uid://dy51oyniurnd" path="res://gd/nut_menu.gd" id="8_nutmenu_gd"]
+[ext_resource type="PackedScene" uid="uid://0gn6uhig7bu0" path="res://scene/button/button_1.tscn" id="9_btn1"]
+[ext_resource type="PackedScene" uid="uid://mre47t220lg4" path="res://scene/menu/DanhSachBaiHoc.tscn" id="11_2qjue"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge_diem"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.04, 0.2, 0.35, 0.85)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.85)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 6
 
 [sub_resource type="LabelSettings" id="LabelSettings_0iuma"]
 font = ExtResource("3_4c48n")
-font_size = 32
+font_size = 34
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 8
+outline_color = Color(0.02, 0.12, 0.22, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.4)
+
+[sub_resource type="FontVariation" id="FontVariation_mffsp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k3srt"]
+font = SubResource("FontVariation_mffsp")
+font_size = 26
+font_color = Color(1, 0.96, 0.75, 1)
 outline_size = 8
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f281m"]
-bg_color = Color(0.29408503, 0.29408503, 0.29408503, 0.5411765)
+bg_color = Color(0.02, 0.06, 0.12, 0.72)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gx5h"]
-bg_color = Color(0, 0, 0, 0.5254902)
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 15
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-corner_radius_bottom_left = 15
+bg_color = Color(0.05, 0.18, 0.32, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 4
+border_color = Color(0.45, 0.82, 1, 0.9)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_fkudg"]
 font = ExtResource("3_4c48n")
-font_size = 50
-outline_size = 7
-outline_color = Color(0, 0, 0, 1)
+font_size = 48
+font_color = Color(1, 0.92, 0.45, 1)
+outline_size = 8
+outline_color = Color(0.02, 0.1, 0.2, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_wryo6"]
 font = ExtResource("4_1i2qx")
-font_size = 25
+font_size = 26
+font_color = Color(0.85, 0.95, 1, 1)
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_7d2hr"]
 font = ExtResource("3_4c48n")
 font_size = 30
-font_color = Color(0.7708395, 0.77083945, 0.77083945, 1)
+font_color = Color(0.75, 0.88, 0.98, 1)
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
@@ -50,29 +88,151 @@ outline_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_1i2qx"]
 font = SubResource("FontVariation_1i2qx")
 font_size = 26
+font_color = Color(0.95, 0.98, 1, 1)
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_mffsp"]
 font = ExtResource("4_cirep")
-font_size = 200
+font_size = 190
+font_color = Color(1, 0.88, 0.25, 1)
 outline_size = 20
-outline_color = Color(0, 0, 0, 1)
-shadow_size = 10
+outline_color = Color(0.02, 0.12, 0.22, 1)
+shadow_size = 14
+shadow_color = Color(0, 0, 0, 0.5)
 
 [sub_resource type="LabelSettings" id="LabelSettings_78yj5"]
 font = ExtResource("3_4c48n")
 font_size = 25
+font_color = Color(0.7, 0.95, 0.8, 1)
 outline_size = 7
 outline_color = Color(0, 0, 0, 1)
 
-[sub_resource type="FontVariation" id="FontVariation_mffsp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_blue"]
+bg_color = Color(0.14, 0.44, 0.72, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.5, 0.82, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[sub_resource type="LabelSettings" id="LabelSettings_k3srt"]
-font = SubResource("FontVariation_mffsp")
-font_size = 25
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_blue_hover"]
+bg_color = Color(0.2, 0.54, 0.86, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.8, 0.95, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+bg_color = Color(0.15, 0.58, 0.35, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.45, 0.95, 0.65, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green_hover"]
+bg_color = Color(0.2, 0.7, 0.42, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.75, 1, 0.85, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thanh_menu"]
+bg_color = Color(0.05, 0.16, 0.28, 0.94)
+border_width_bottom = 3
+border_color = Color(0.35, 0.75, 1, 0.85)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_normal"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.12, 0.42, 0.68, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.82, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_pressed"]
+content_margin_left = 16.0
+content_margin_top = 3.0
+content_margin_right = 16.0
+bg_color = Color(0.06, 0.25, 0.42, 1)
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.75, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_hover"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.18, 0.54, 0.84, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.85, 0.96, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_mo_normal"]
+bg_color = Color(0.06, 0.22, 0.36, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.45, 0.8, 1, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_mo_hover"]
+bg_color = Color(0.12, 0.38, 0.62, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.8, 0.95, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="ChoiSheet" type="ChoiSheet" unique_id=1216311425 node_paths=PackedStringArray("ten_bai_hat_label")]
 ten_bai_hat_label = NodePath("ten_bai_hat")
@@ -88,6 +248,16 @@ position = Vector2(980, 546)
 scale = Vector2(1.3813334, 1.12)
 texture = ExtResource("1_mffsp")
 
+[node name="CheckFPS" type="CheckFPS" parent="." unique_id=2088040495]
+layout_mode = 1
+offset_left = 85.0
+offset_top = 11.0
+offset_right = 457.0
+offset_bottom = 67.0
+theme_override_font_sizes/font_size = 20
+text = "dsadad"
+vertical_alignment = 1
+
 [node name="QuanLySheet" parent="." unique_id=1515061911 instance=ExtResource("2_0iuma")]
 toc_do = 80.0
 hien_thi_thoi_gian = true
@@ -99,28 +269,39 @@ hien_thi_all = false
 
 [node name="diem" type="Label" parent="." unique_id=342717818]
 layout_mode = 0
-offset_left = 1571.0
-offset_top = 101.0
-offset_right = 1912.0
-offset_bottom = 162.0
-text = "0"
+offset_left = 1580.0
+offset_top = 82.0
+offset_right = 1896.0
+offset_bottom = 148.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge_diem")
+text = "Điểm: 0"
 label_settings = SubResource("LabelSettings_0iuma")
 horizontal_alignment = 2
 vertical_alignment = 1
 
 [node name="ten_bai_hat" type="Label" parent="." unique_id=1651225093]
 layout_mode = 0
-offset_left = 159.0
-offset_top = 90.0
-offset_right = 1805.0
-offset_bottom = 151.0
-text = "Ten bai hat"
+offset_left = 200.0
+offset_top = 82.0
+offset_right = 1560.0
+offset_bottom = 148.0
+text = "Tên bài hát"
 label_settings = SubResource("LabelSettings_0iuma")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ghi_chu" type="Label" parent="." unique_id=638003538]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 858.0
+offset_right = 1760.0
+offset_bottom = 958.0
+label_settings = SubResource("LabelSettings_k3srt")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="nen_tong_ket" type="Panel" parent="." unique_id=922925555]
-visible = false
+z_index = 45
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1082.0
@@ -129,109 +310,119 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_f281m")
 [node name="tong_ket_choi_sheet" type="Panel" parent="nen_tong_ket" unique_id=2121170518]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.18100001
-anchor_right = 1.0
-anchor_bottom = 0.83000004
-offset_top = 0.1579895
-offset_bottom = -0.7620239
+anchor_left = 0.08
+anchor_top = 0.16
+anchor_right = 0.92
+anchor_bottom = 0.84
 theme_override_styles/panel = SubResource("StyleBoxFlat_3gx5h")
 script = ExtResource("4_wryo6")
 
 [node name="ten" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=324165226]
 layout_mode = 0
-offset_left = 113.0
-offset_top = 84.0
-offset_right = 454.0
-offset_bottom = 145.0
-text = "Ten bai hat"
+offset_left = 80.0
+offset_top = 64.0
+offset_right = 680.0
+offset_bottom = 130.0
+text = "Tên bài hát"
 label_settings = SubResource("LabelSettings_fkudg")
 vertical_alignment = 1
 
 [node name="tac_gia" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1313773051]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 168.0
-offset_right = 453.0
-offset_bottom = 215.0
+offset_left = 80.0
+offset_top = 148.0
+offset_right = 560.0
+offset_bottom = 198.0
 text = "Tác giả"
 label_settings = SubResource("LabelSettings_wryo6")
 vertical_alignment = 1
 
 [node name="nguoi_tao" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1019663913]
 layout_mode = 0
-offset_left = 113.0
-offset_top = 224.0
-offset_right = 454.0
-offset_bottom = 280.0
+offset_left = 80.0
+offset_top = 204.0
+offset_right = 560.0
+offset_bottom = 256.0
 text = "Người tạo"
 label_settings = SubResource("LabelSettings_wryo6")
 vertical_alignment = 1
 
+[node name="diem_cu" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=2034454112]
+layout_mode = 0
+offset_left = 580.0
+offset_top = 250.0
+offset_right = 1040.0
+offset_bottom = 310.0
+text = "Điểm kỷ lục: 0"
+label_settings = SubResource("LabelSettings_7d2hr")
+vertical_alignment = 1
+
 [node name="diem" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1434641284]
 layout_mode = 0
-offset_left = 672.0
-offset_top = 355.0
-offset_right = 1013.0
-offset_bottom = 416.0
+offset_left = 580.0
+offset_top = 320.0
+offset_right = 1040.0
+offset_bottom = 385.0
 text = "Tổng điểm: 0"
 label_settings = SubResource("LabelSettings_fkudg")
 vertical_alignment = 1
 
-[node name="diem_cu" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=2034454112]
+[node name="1" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=299193277]
 layout_mode = 0
-offset_left = 672.0
-offset_top = 280.0
-offset_right = 1013.0
-offset_bottom = 341.0
-text = "Điểm cũ: 0"
-label_settings = SubResource("LabelSettings_7d2hr")
+offset_left = 580.0
+offset_top = 395.0
+offset_right = 880.0
+offset_bottom = 445.0
+label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1
 
 [node name="tot" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=722266548]
 layout_mode = 0
-offset_left = 672.0
-offset_top = 450.0
-offset_right = 894.0
-offset_bottom = 505.0
-text = "Tốt: 0"
-label_settings = SubResource("LabelSettings_1i2qx")
-vertical_alignment = 1
-
-[node name="1" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=299193277]
-layout_mode = 0
-offset_left = 672.0
+offset_left = 580.0
 offset_top = 420.0
-offset_right = 894.0
-offset_bottom = 490.0
+offset_right = 880.0
+offset_bottom = 472.0
+text = "Tốt: 0"
 label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1
 
 [node name="kha" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1899844430]
 layout_mode = 0
-offset_left = 672.0
-offset_top = 491.0
-offset_right = 894.0
-offset_bottom = 547.0
+offset_left = 580.0
+offset_top = 468.0
+offset_right = 880.0
+offset_bottom = 520.0
 text = "Khá: 0"
 label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1
 
 [node name="trat" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=421593834]
 layout_mode = 0
-offset_left = 672.0
-offset_top = 533.0
-offset_right = 894.0
-offset_bottom = 589.0
+offset_left = 580.0
+offset_top = 516.0
+offset_right = 880.0
+offset_bottom = 568.0
 text = "Trượt: 0"
 label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1
 
+[node name="2" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1043014066]
+layout_mode = 0
+offset_left = 1140.0
+offset_top = 110.0
+offset_right = 1520.0
+offset_bottom = 175.0
+text = "HẠNG"
+label_settings = SubResource("LabelSettings_fkudg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="danh_gia" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=45959168]
 layout_mode = 0
-offset_left = 1456.0
-offset_top = 140.0
-offset_right = 1792.0
-offset_bottom = 569.0
+offset_left = 1140.0
+offset_top = 150.0
+offset_right = 1520.0
+offset_bottom = 460.0
 text = "A"
 label_settings = SubResource("LabelSettings_mffsp")
 horizontal_alignment = 1
@@ -239,62 +430,156 @@ vertical_alignment = 1
 
 [node name="do_chinh_xac" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1915098588]
 layout_mode = 0
-offset_left = 1344.0
-offset_top = 476.0
-offset_right = 1904.0
-offset_bottom = 537.0
+offset_left = 1060.0
+offset_top = 450.0
+offset_right = 1580.0
+offset_bottom = 510.0
 text = "Mức độ hoàn thành: 0%"
 label_settings = SubResource("LabelSettings_78yj5")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="2" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1043014066]
+[node name="ve_ds" type="Button" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1697525415]
 layout_mode = 0
-offset_left = 1395.0
-offset_top = 182.0
-offset_right = 1859.0
-offset_bottom = 243.0
-text = "Hạng"
-label_settings = SubResource("LabelSettings_fkudg")
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_left = 1060.0
+offset_top = 610.0
+offset_right = 1295.0
+offset_bottom = 672.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_blue")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_blue")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_blue_hover")
+text = "📚 Về danh sách"
 
 [node name="choi_lai" type="Button" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1727917396]
 layout_mode = 0
-offset_left = 1666.0
-offset_top = 616.0
-offset_right = 1890.0
-offset_bottom = 671.322
+offset_left = 1320.0
+offset_top = 610.0
+offset_right = 1555.0
+offset_bottom = 672.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
 theme_override_font_sizes/font_size = 24
-text = "Chơi lại"
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_green")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_green_hover")
+text = "↻ Chơi lại"
 
-[node name="ve_ds" type="Button" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1697525415]
-layout_mode = 0
-offset_left = 1389.0
-offset_top = 616.0
-offset_right = 1610.0
-offset_bottom = 671.322
-theme_override_font_sizes/font_size = 24
-text = "Về menu"
+[node name="NutMenu" type="Control" parent="." unique_id=52198437]
+z_index = 40
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_nutmenu_gd")
+metadata/_edit_lock_ = true
 
-[node name="fps" type="Label" parent="." unique_id=322025247]
-layout_mode = 0
-offset_right = 252.0
-offset_bottom = 23.0
-script = ExtResource("7_7d2hr")
-hien_fps = true
+[node name="Menu" type="Control" parent="NutMenu" unique_id=1964604858]
+anchors_preset = 0
+offset_top = -80.0
+offset_right = 1920.0
+mouse_filter = 2
 
-[node name="ghi_chu" type="Label" parent="." unique_id=638003538]
+[node name="NenThanhMenu" type="Panel" parent="NutMenu/Menu" unique_id=1989353861]
 layout_mode = 0
-offset_left = 161.0
-offset_top = 855.0
-offset_right = 1414.0
-offset_bottom = 968.0
-label_settings = SubResource("LabelSettings_k3srt")
-horizontal_alignment = 1
-vertical_alignment = 1
+offset_left = 72.0
+offset_top = 4.0
+offset_right = 1261.0
+offset_bottom = 74.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_thanh_menu")
+
+[node name="choi_lai_menu" type="Button" parent="NutMenu/Menu" unique_id=1368048531]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 14.0
+offset_right = 290.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
+text = "↻ Chơi lại bài"
+
+[node name="quay_lai" parent="NutMenu/Menu" unique_id=1391915915 instance=ExtResource("9_btn1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 306.0
+offset_top = 14.0
+offset_right = 576.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
+text = "📚 Danh sách bài học"
+path_scene_den = ExtResource("11_2qjue")
+loai_nut = "chuyen scene"
+metadata/_edit_pinned_properties_ = [&"loai_nut"]
+
+[node name="bat_tat_nhip" type="CheckButton" parent="NutMenu/Menu" unique_id=1977084439]
+layout_mode = 0
+offset_left = 595.0
+offset_top = 14.0
+offset_right = 815.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "🥁 Âm thanh nhịp"
+
+[node name="che_do_cho" type="CheckButton" parent="NutMenu/Menu" unique_id=591124188]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 14.0
+offset_right = 1045.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 19
+text = "⏸ Chờ bấm phím"
+
+[node name="hien_ten_khac" type="CheckButton" parent="NutMenu/Menu" unique_id=591124189]
+layout_mode = 0
+offset_left = 1055.0
+offset_top = 14.0
+offset_right = 1240.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 19
+text = "🏷 Tên gợi ý"
+
+[node name="nut_menu" type="Button" parent="NutMenu" unique_id=680074442]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = 64.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nut_mo_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nut_mo_hover")
+text = "☰"
 
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="." method="tong_ket"]
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_quan_ly_sheet_bai_hat_ket_thuc" flags=3]
-[connection signal="button_down" from="nen_tong_ket/tong_ket_choi_sheet/choi_lai" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_choi_lai_button_down"]
 [connection signal="button_down" from="nen_tong_ket/tong_ket_choi_sheet/ve_ds" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_ve_ds_button_down"]
+[connection signal="button_down" from="nen_tong_ket/tong_ket_choi_sheet/choi_lai" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_choi_lai_button_down"]
+[connection signal="button_down" from="NutMenu/Menu/choi_lai_menu" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_choi_lai_button_down"]
+[connection signal="toggled" from="NutMenu/Menu/bat_tat_nhip" to="QuanLySheet" method="bat_tat_am_thanh_nhip"]
+[connection signal="toggled" from="NutMenu/Menu/che_do_cho" to="." method="bat_tat_che_do_cho"]
+[connection signal="toggled" from="NutMenu/Menu/hien_ten_khac" to="QuanLySheet" method="bat_tat_hien_thi_ten_khac"]
+[connection signal="button_down" from="NutMenu/nut_menu" to="NutMenu" method="_on_nut_menu_button_down"]

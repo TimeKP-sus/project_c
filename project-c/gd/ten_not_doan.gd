@@ -39,5 +39,5 @@ func hien_not_dung() -> void:
 
 func thiet_lap_vien_hop_am() -> void:
 	# Đổi màu viền chữ thành Vàng Đồng (hoặc màu bất kỳ bạn thích)
-	self.add_theme_color_override("font_outline_color", Color.DARK_BLUE)
+	self.add_theme_color_override("font_outline_color", Color.DEEP_SKY_BLUE)
 	#self.add_theme_color_override("default_color", Color.BLUE)

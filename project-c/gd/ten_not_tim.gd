@@ -32,4 +32,4 @@ func hien_not_dung() -> void:
 	tween.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE)
 
 func thiet_lap_vien_hop_am() -> void:
-	self.add_theme_color_override("font_outline_color", Color.DARK_BLUE)
+	self.add_theme_color_override("font_outline_color", Color.DEEP_SKY_BLUE)

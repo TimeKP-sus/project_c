@@ -3,125 +3,363 @@
 [ext_resource type="PackedScene" uid="uid://bq5m71ybsvn25" path="res://scene/ban_phim_piano.tscn" id="1_5ppsf"]
 [ext_resource type="Script" uid="uid://cww3x4yt07aai" path="res://gd/midi.gd" id="1_ljpak"]
 [ext_resource type="Script" uid="uid://bxebxikvayiia" path="res://gd/option_button.gd" id="2_ljpak"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_fontbd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nen_dan"]
+bg_color = Color(0.05, 0.1, 0.16, 0.96)
+border_width_top = 3
+border_color = Color(0.3, 0.68, 0.95, 0.85)
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thanh_led"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.02, 0.06, 0.1, 0.92)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.22, 0.5, 0.75, 0.7)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="LabelSettings" id="LabelSettings_m45t8"]
+font = ExtResource("3_fontbd")
+font_color = Color(0.82, 0.94, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hop_am_led"]
+content_margin_left = 12.0
+content_margin_right = 12.0
+bg_color = Color(0.04, 0.16, 0.26, 0.95)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.35, 0.8, 1, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_hop_am"]
+font = ExtResource("3_fontbd")
+font_size = 20
+font_color = Color(1, 0.9, 0.35, 1)
 outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_bar"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(0.12, 0.38, 0.62, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.45, 0.8, 1, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_bar_pressed"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+bg_color = Color(0.06, 0.22, 0.38, 1)
+border_width_left = 1
+border_width_top = 2
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.7, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_bar_hover"]
+content_margin_left = 8.0
+content_margin_right = 8.0
+bg_color = Color(0.18, 0.5, 0.8, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.8, 0.95, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_cai_dat"]
+bg_color = Color(0.06, 0.14, 0.22, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.95)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.55)
+shadow_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_tieu_de_cd"]
+font = ExtResource("3_fontbd")
+font_size = 19
+font_color = Color(0.5, 0.86, 1, 1)
+outline_size = 4
 outline_color = Color(0, 0, 0, 1)
 
 [node name="MIDI" type="Control" unique_id=1744579116]
 layout_mode = 3
-anchor_top = 0.84900004
+anchor_top = 0.84907407
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 0.079956055
 grow_horizontal = 2
 grow_vertical = 0
 script = ExtResource("1_ljpak")
-hien_thi_c = true
 hien_thi_all = true
+metadata/_edit_use_anchors_ = true
+
+[node name="KhungNenDan" type="Panel" parent="." unique_id=149901570]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nen_dan")
 
 [node name="BanPhimPiano" parent="." unique_id=1032322886 instance=ExtResource("1_5ppsf")]
-cho_phep_kiem_tra_hop_am = false
-cho_phep_hien_thi_phim = false
 hien_thi_ten_not_c = true
 hien_thi_ten_not_all = true
+clip_contents = true
 layout_mode = 1
-anchor_top = 0.307
+anchor_top = 0.28
 anchor_right = 0.9620001
 anchor_bottom = 1.0
-offset_top = -0.041000366
-offset_right = 616.95984
-offset_bottom = 33.666626
+offset_left = 10.0
+offset_top = 2.0
+offset_right = 626.95984
+offset_bottom = 35.666626
 scale = Vector2(0.75, 0.75)
 size_flags_vertical = 8
 theme_override_constants/separation = 351
 
-[node name="pedal" type="Label" parent="." unique_id=2126609349]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.91700006
-anchor_right = 0.9620001
-anchor_bottom = 0.209
-offset_left = 0.35986328
-offset_top = 1.5258789e-05
-offset_right = 0.95983887
-offset_bottom = -0.066986084
-label_settings = SubResource("LabelSettings_m45t8")
-horizontal_alignment = 1
-
 [node name="midi" type="Label" parent="." unique_id=1770474756]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.002
-anchor_top = 0.123
-anchor_right = 0.156
-anchor_bottom = 0.264
-offset_left = 0.15999985
-offset_top = -0.04896927
-offset_right = 0.47998047
-offset_bottom = -0.031970978
-text = "Midi:"
+anchor_left = 0.006
+anchor_top = 0.03
+anchor_right = 0.22
+anchor_bottom = 0.25
+theme_override_styles/normal = SubResource("StyleBoxFlat_thanh_led")
+text = "🎹 MIDI: Chưa kết nối"
 label_settings = SubResource("LabelSettings_m45t8")
+vertical_alignment = 1
+clip_text = true
+
+[node name="cac_phim" type="Label" parent="." unique_id=1518631191]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.226
+anchor_top = 0.03
+anchor_right = 0.41
+anchor_bottom = 0.25
+theme_override_styles/normal = SubResource("StyleBoxFlat_thanh_led")
+label_settings = SubResource("LabelSettings_m45t8")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="hop_am" type="Label" parent="." unique_id=26693843]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.416
+anchor_top = 0.02
+anchor_right = 0.62
+anchor_bottom = 0.26
+theme_override_styles/normal = SubResource("StyleBoxFlat_hop_am_led")
+label_settings = SubResource("LabelSettings_hop_am")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
 
 [node name="OptionButton" type="OptionButton" parent="." unique_id=1698766112]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.74200004
-anchor_right = 0.91200006
-anchor_bottom = 0.209
-offset_left = 0.35986328
-offset_top = 1.5258789e-05
-offset_right = -0.040161133
-offset_bottom = -0.066986084
+anchor_left = 0.626
+anchor_top = 0.03
+anchor_right = 0.845
+anchor_bottom = 0.25
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_bar")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_bar_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_bar_hover")
 clip_text = true
 fit_to_longest_item = false
 allow_reselect = true
 script = ExtResource("2_ljpak")
 
-[node name="Button" type="Button" parent="." unique_id=1612706032]
+[node name="pedal" type="Label" parent="." unique_id=2126609349]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.95100003
-anchor_top = 0.77300006
-anchor_right = 0.998
-anchor_bottom = 0.98200005
-offset_left = -0.92004395
-offset_top = 0.0009613037
-offset_right = 0.8399658
-offset_bottom = -0.06604004
-theme_override_font_sizes/font_size = 15
-text = "Reset"
+anchor_left = 0.851
+anchor_top = 0.03
+anchor_right = 0.948
+anchor_bottom = 0.25
+theme_override_styles/normal = SubResource("StyleBoxFlat_thanh_led")
+text = "N, N, N"
+label_settings = SubResource("LabelSettings_m45t8")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="nut_cai_dat" type="Button" parent="." unique_id=106618250]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.954
+anchor_top = 0.03
+anchor_right = 0.974
+anchor_bottom = 0.25
+tooltip_text = "Cài đặt tính năng đàn Piano"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_bar")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_bar_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_bar_hover")
+text = "⚙"
 
 [node name="an_hien" type="Button" parent="." unique_id=2125017469]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.961
-anchor_top = 0.307
-anchor_right = 0.975
-anchor_bottom = 0.46
-offset_left = 0.8800049
-offset_top = -0.041030884
-offset_bottom = 0.019966125
-theme_override_font_sizes/font_size = 15
+anchor_left = 0.977
+anchor_top = 0.03
+anchor_right = 0.997
+anchor_bottom = 0.25
+tooltip_text = "Ẩn / Hiện bàn phím Piano"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_bar")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_bar_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_bar_hover")
+text = "▼"
 
-[node name="cac_phim" type="Label" parent="." unique_id=1518631191]
+[node name="Button" type="Button" parent="." unique_id=1612706032]
+clip_contents = true
 layout_mode = 1
 anchors_preset = -1
-anchor_top = -0.049000002
-anchor_right = 0.11000001
-anchor_bottom = 0.09200001
-offset_left = 1.0
-offset_top = -0.012999535
-offset_right = -0.2000122
-offset_bottom = 0.0039987564
+anchor_left = 0.954
+anchor_top = 0.74
+anchor_right = 0.997
+anchor_bottom = 0.96
+tooltip_text = "Làm mới kết nối MIDI & SoundFont"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_bar")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_bar_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_bar_hover")
+text = "↻ MIDI"
+clip_text = true
 
-[node name="hop_am" type="Label" parent="." unique_id=26693843]
-layout_mode = 0
-offset_left = 790.0
-offset_right = 1043.0
-offset_bottom = 33.0
+[node name="PanelCaiDatDan" type="Panel" parent="." unique_id=992883654]
+visible = false
+z_index = 35
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.74600005
+anchor_top = -1.6810001
+anchor_right = 1.001
+anchor_bottom = -0.04
+offset_left = -0.32006836
+offset_top = 0.0030212402
+offset_right = -0.92004395
+offset_bottom = 1.52
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_cai_dat")
+
+[node name="VBox" type="VBoxContainer" parent="PanelCaiDatDan" unique_id=540914360]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 10.0
+offset_right = -14.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="HangTieuDe" type="HBoxContainer" parent="PanelCaiDatDan/VBox" unique_id=1793033212]
+layout_mode = 2
+
+[node name="TieuDe" type="Label" parent="PanelCaiDatDan/VBox/HangTieuDe" unique_id=1533211869]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⚙ CÀI ĐẶT BÀN PHÍM"
+label_settings = SubResource("LabelSettings_tieu_de_cd")
+
+[node name="DongPanel_Btn" type="Button" parent="PanelCaiDatDan/VBox/HangTieuDe" unique_id=822832691]
+custom_minimum_size = Vector2(30, 26)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_bar")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_bar_hover")
+text = "✖"
+
+[node name="CheckHienNotC" type="CheckButton" parent="PanelCaiDatDan/VBox" unique_id=2014528896]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Hiện tên nốt Đô (C1 - C7)"
+
+[node name="CheckHienTatCaNot" type="CheckButton" parent="PanelCaiDatDan/VBox" unique_id=516963724]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Hiện tất cả tên nốt trên phím"
+
+[node name="CheckKiemTraHopAm" type="CheckButton" parent="PanelCaiDatDan/VBox" unique_id=916891916]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Nhận diện Hợp âm tự động"
+
+[node name="CheckHienPhimBam" type="CheckButton" parent="PanelCaiDatDan/VBox" unique_id=345363465]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Hiện mã số phím đang bấm"
+
+[node name="CheckChonNhacCu" type="CheckButton" parent="PanelCaiDatDan/VBox" unique_id=48621208]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.96, 1, 1)
+theme_override_fonts/font = ExtResource("3_fontbd")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Hiện thanh chọn SoundFont"
 
 [connection signal="button_down" from="OptionButton" to="OptionButton" method="_on_button_down"]
 [connection signal="item_selected" from="OptionButton" to="OptionButton" method="_on_item_selected"]
-[connection signal="button_down" from="Button" to="OptionButton" method="_on_button_button_down"]
 [connection signal="button_down" from="an_hien" to="." method="_on_an_hien_button_down"]
+[connection signal="button_down" from="Button" to="OptionButton" method="_on_button_button_down"]

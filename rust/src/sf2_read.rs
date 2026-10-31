@@ -24,7 +24,7 @@ impl BoDocSf2 {
     // Hàm khởi tạo bộ xử lý từ một đường dẫn tệp SF2
     fn moi(duong_dan_sf2: &str) -> Result<Self, String> {
         // Mở tệp SoundFont
-        let tep_tin = File::open(duong_dan_sf2)
+        let tep_tin: File = File::open(duong_dan_sf2)
             .map_err(|e| format!("Khong mo duoc SF2 tai '{}': {}", duong_dan_sf2, e))?;
         let mut bo_doc = BufReader::new(tep_tin);
         

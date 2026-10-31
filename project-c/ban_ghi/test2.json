@@ -1,0 +1,349 @@
+{
+  "cac_su_kien": [
+    {
+      "thoi_gian": 0.45555556,
+      "so_phim": 23,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 0.45555556,
+      "so_phim": 21,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 0.56666684,
+      "so_phim": 21,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 0.56666684,
+      "so_phim": 23,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.3777801,
+      "so_phim": 21,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.3888912,
+      "so_phim": 12,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.3888912,
+      "so_phim": 52,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.4000024,
+      "so_phim": 43,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 1.7777811,
+      "so_phim": 52,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.7777811,
+      "so_phim": 43,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.8111145,
+      "so_phim": 21,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 1.8666703,
+      "so_phim": 12,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 2.7222202,
+      "so_phim": 21,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 2.7333312,
+      "so_phim": 59,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 2.7333312,
+      "so_phim": 11,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 2.7555532,
+      "so_phim": 48,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 3.111106,
+      "so_phim": 59,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.144439,
+      "so_phim": 11,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.15555,
+      "so_phim": 48,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.15555,
+      "so_phim": 21,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.7777672,
+      "so_phim": 9,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 3.7888782,
+      "so_phim": 38,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 3.7888782,
+      "so_phim": 47,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 3.8111002,
+      "so_phim": 16,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 3.9888766,
+      "so_phim": 47,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.9888766,
+      "so_phim": 16,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.9888766,
+      "so_phim": 9,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 3.9999876,
+      "so_phim": 38,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 4.4777718,
+      "so_phim": 52,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.533328,
+      "so_phim": 16,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.5555506,
+      "so_phim": 17,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.866666,
+      "so_phim": 50,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 4.8888884,
+      "so_phim": 17,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 4.9333334,
+      "so_phim": 52,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 4.9777784,
+      "so_phim": 16,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 5.0333347,
+      "so_phim": 50,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 5.3333387,
+      "so_phim": 16,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 5.6555653,
+      "so_phim": 47,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.1333494,
+      "so_phim": 50,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.1777945,
+      "so_phim": 17,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.200017,
+      "so_phim": 47,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.200017,
+      "so_phim": 16,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.5111322,
+      "so_phim": 50,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.5222435,
+      "so_phim": 53,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.9000263,
+      "so_phim": 17,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 6.9111376,
+      "so_phim": 47,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.922249,
+      "so_phim": 14,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 6.922249,
+      "so_phim": 53,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 7.222253,
+      "so_phim": 52,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 7.233364,
+      "so_phim": 47,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 7.366699,
+      "so_phim": 52,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 7.3889217,
+      "so_phim": 53,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 7.5111456,
+      "so_phim": 52,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 7.533368,
+      "so_phim": 53,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 7.6444807,
+      "so_phim": 19,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 7.955596,
+      "so_phim": 50,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 7.9889297,
+      "so_phim": 52,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.033375,
+      "so_phim": 14,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.133376,
+      "so_phim": 19,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.177821,
+      "so_phim": 50,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.311156,
+      "so_phim": 45,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 8.322268,
+      "so_phim": 53,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 8.34449,
+      "so_phim": 19,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 8.43338,
+      "so_phim": 11,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.43338,
+      "so_phim": 12,
+      "la_bam": true
+    },
+    {
+      "thoi_gian": 8.61116,
+      "so_phim": 45,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.644494,
+      "so_phim": 53,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.677828,
+      "so_phim": 12,
+      "la_bam": false
+    },
+    {
+      "thoi_gian": 8.70005,
+      "so_phim": 19,
+      "la_bam": false
+    }
+  ]
+}

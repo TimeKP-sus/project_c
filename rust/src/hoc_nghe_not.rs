@@ -10,6 +10,7 @@ use std::time::Duration;
 
 use crate::ban_phim_midi::BanPhimMidi;
 use crate::check_ten_not::chuyen_id_thanh_ten;
+use crate::du_lieu_lich_su::DuLieuLichSu;
 use crate::hop_am::HopAm;
 use crate::sf2_read;
 
@@ -39,6 +40,7 @@ pub struct HocNgheNot {
     phim_da_doan_dung: Vec<i32>,
 
     diem: i32,
+    diem_ky_luc: i32,
     so_lan_dung: i32,
     so_lan_sai: i32,
     so_lan_nghe: i32,
@@ -81,17 +83,9 @@ impl HocNgheNot {
     pub fn get_so_lan_dung(&self) -> i32 {
         self.so_lan_dung
     }
-
     #[func]
-    pub fn chuyen_bai(&mut self) {
-        self.dang_o_bai_so += 1;
-
-        if self.dang_o_bai_so >= self.cac_bai_nghe.len() {
-            // Sửa lỗi method not found bằng emit_signal
-            self.base_mut().emit_signal("xong_het_bai", &[]);
-            return;
-        }
-        self.chay_bai_nghe();
+    pub fn get_diem_cu(&self) -> i32 {
+        self.diem_ky_luc
     }
 
     #[func]
@@ -270,7 +264,7 @@ impl HocNgheNot {
 
         // ƯU TIÊN 1: Nếu từ 2 phím trở lên, thử dịch thành Hợp âm
         if tap_hop_phim.len() >= 2 {
-            let ten_hop_am = HopAm::kiem_tra(&tap_hop_phim);
+            let ten_hop_am: String = HopAm::kiem_tra(&tap_hop_phim);
             if !ten_hop_am.is_empty() {
                 // Trả về Hợp âm nguyên bản, không làm nhỏ số
                 let chuoi_bbcode = format!("[center]{}[/center]", ten_hop_am);
@@ -304,15 +298,15 @@ impl HocNgheNot {
             godot_print!("Lỗi JSON bài nghe: {}", duong_dan);
         }
     }
-    fn sua_ghi_chu(&mut self, cac_ghi_chu: Vec<String>) {
-        let mut noi_dung_ghi_chu = String::new();
-        if self.dang_o_bai_so < cac_ghi_chu.len() {
-            noi_dung_ghi_chu = cac_ghi_chu[self.dang_o_bai_so].clone();
-        }
-        if let Some(mut label) = self.base().try_get_node_as::<Label>("ghi_chu") {
-            label.set_text(&noi_dung_ghi_chu);
-        }
-    } 
+    // fn sua_ghi_chu(&mut self, cac_ghi_chu: Vec<String>) {
+    //     let mut noi_dung_ghi_chu = String::new();
+    //     if self.dang_o_bai_so < cac_ghi_chu.len() {
+    //         noi_dung_ghi_chu = cac_ghi_chu[self.dang_o_bai_so].clone();
+    //     }
+    //     if let Some(mut label) = self.base().try_get_node_as::<Label>("ghi_chu") {
+    //         label.set_text(&noi_dung_ghi_chu);
+    //     }
+    // } 
     #[func]
     pub fn khoi_dong_bai_hoc(&mut self) {
         self.diem = 0;
@@ -322,6 +316,13 @@ impl HocNgheNot {
 
         let path = self.duong_dan_bai_hoc.clone();
         if !path.is_empty() {
+            let ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
+            if let Some(kq) = ls.lay_ket_qua("nghe_va_doan_not", &path.to_string()) {
+                self.diem_ky_luc = kq.diem_cao_nhat;
+            } else {
+                self.diem_ky_luc = 0;
+            }
+
             self.lay_thong_tin_bai_nghe(path);
             if let Some(mut label) = self.base().try_get_node_as::<Label>("ten_bai_hoc") {
                 label.set_text(&format!("{}", self.ten_bai_hoc));
@@ -330,6 +331,42 @@ impl HocNgheNot {
         } else {
             godot_print!("Cảnh báo: Đường dẫn bài học đang trống!");
         }
+    }
+    #[func]
+    pub fn lay_ti_le_hoan_thanh(&self) -> f32 {
+        let tong = self.so_lan_dung + self.so_lan_sai;
+        if tong <= 0 {
+            return 0.0;
+        }
+        ((self.so_lan_dung as f32 / tong as f32) * 100.0).clamp(0.0, 100.0)
+    }
+
+    pub fn luu_ket_qua_nghe_not(&self) {
+        if self.duong_dan_bai_hoc.is_empty() {
+            return;
+        }
+        let ti_le: f32 = self.lay_ti_le_hoan_thanh();
+        let hang: &str = DuLieuLichSu::tinh_hang(ti_le);
+        let mut ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
+        ls.cap_nhat_ket_qua(
+            "nghe_va_doan_not",
+            &self.duong_dan_bai_hoc.to_string(),
+            self.diem,
+            ti_le,
+            hang,
+        );
+    }
+
+    #[func]
+    pub fn chuyen_bai(&mut self) {
+        self.dang_o_bai_so += 1;
+
+        if self.dang_o_bai_so >= self.cac_bai_nghe.len() {
+            self.luu_ket_qua_nghe_not();
+            self.base_mut().emit_signal("xong_het_bai", &[]);
+            return;
+        }
+        self.chay_bai_nghe();
     }
 }
 

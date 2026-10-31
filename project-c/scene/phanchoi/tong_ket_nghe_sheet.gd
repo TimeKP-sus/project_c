@@ -1,6 +1,6 @@
 extends Panel
 
-@onready var hoc_nghe_not:HocNgheNot = $"../.."
+@onready var hoc_nghe_not: HocNgheNot = $"../.."
 @onready var nen_tong_ket: Panel = $".."
 
 @onready var ten: Label = $ten
@@ -47,6 +47,7 @@ func _on_hoc_nghe_not_xong_het_bai() -> void:
 	var doan = hoc_nghe_not.get_so_lan_doan()
 	var nghe_lai = hoc_nghe_not.get_so_lan_nghe()
 	var diem_so = hoc_nghe_not.get_diem()
+	var ky_luc_cu = hoc_nghe_not.get_diem_cu()
 
 
 	so_lan_dung.text = "Đúng: " + str(dung)
@@ -54,6 +55,12 @@ func _on_hoc_nghe_not_xong_het_bai() -> void:
 	so_lan_doan.text = "Tổng lần đoán: " + str(doan)
 	so_lan_nghe_lai.text = "Nghe lại: " + str(nghe_lai)
 	diem.text = str(diem_so)
+
+	diem_cu.text = "Điểm kỷ lục: " + str(ky_luc_cu)
+	if diem_so > ky_luc_cu:
+		diem.text = str(diem_so) + " (Kỷ lục mới!)"
+	else:
+		diem.text = str(diem_so)
 
 	var chinh_xac: float = 0.0
 	if doan > 0:

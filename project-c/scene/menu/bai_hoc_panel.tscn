@@ -4,89 +4,235 @@
 [ext_resource type="Script" uid="uid://c5qiclxjkgtbp" path="res://gd/bai_hoc_panel.gd" id="1_qy5qs"]
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="2_qy5qs"]
 [ext_resource type="FontFile" uid="uid://d3nlqn62vfu1r" path="res://asset/font/ARLRDBD.TTF" id="3_tip2m"]
-[ext_resource type="FontFile" uid="uid://c56hg45h2eink" path="res://asset/font/arial.ttf" id="4_v4xum"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj3hg"]
-bg_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_card_bai_hoc"]
+bg_color = Color(0.06, 0.3, 0.5, 0.88)
+border_width_left = 4
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.4, 0.78, 1, 0.85)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.01, 0.1, 0.2, 0.35)
+shadow_size = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_irrk0"]
-bg_color = Color(1, 1, 1, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_badge_so"]
+bg_color = Color(0.03, 0.2, 0.35, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.45, 0.8, 1, 0.6)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
-[sub_resource type="LabelSettings" id="LabelSettings_cj3hg"]
+[sub_resource type="LabelSettings" id="LabelSettings_so"]
 font = ExtResource("2_qy5qs")
-font_size = 20
+font_size = 34
+font_color = Color(0.65, 0.9, 1, 1)
+outline_size = 5
+outline_color = Color(0.01, 0.12, 0.22, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_c0nay"]
+[sub_resource type="LabelSettings" id="LabelSettings_ten"]
 font = ExtResource("2_qy5qs")
-font_size = 40
+font_size = 24
+outline_size = 4
+outline_color = Color(0.02, 0.14, 0.25, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_purpp"]
+[sub_resource type="LabelSettings" id="LabelSettings_nguoi_tao"]
 font = ExtResource("3_tip2m")
-font_size = 15
+font_color = Color(0.8, 0.92, 1, 0.9)
+outline_size = 3
+outline_color = Color(0.01, 0.12, 0.22, 0.8)
 
-[sub_resource type="FontVariation" id="FontVariation_fm7h5"]
-base_font = ExtResource("4_v4xum")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tag_ket_qua"]
+content_margin_left = 10.0
+content_margin_top = 4.0
+content_margin_right = 10.0
+content_margin_bottom = 4.0
+bg_color = Color(0.04, 0.2, 0.34, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.95, 0.82, 0.35, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
-[sub_resource type="LabelSettings" id="LabelSettings_eonea"]
-font = SubResource("FontVariation_fm7h5")
-font_size = 15
+[sub_resource type="LabelSettings" id="LabelSettings_ket_qua"]
+font = ExtResource("2_qy5qs")
+font_color = Color(1, 0.92, 0.5, 1)
+outline_size = 3
+outline_color = Color(0.01, 0.1, 0.2, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tag_loai"]
+content_margin_left = 10.0
+content_margin_top = 3.0
+content_margin_right = 10.0
+content_margin_bottom = 3.0
+bg_color = Color(0.14, 0.52, 0.8, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.7, 0.92, 1, 0.8)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_loai_bai"]
+font = ExtResource("1_4uuga")
+font_size = 20
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 3
+outline_color = Color(0.02, 0.15, 0.28, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hoc_normal"]
+bg_color = Color(0.16, 0.62, 0.38, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.95, 0.7, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hoc_pressed"]
+bg_color = Color(0.1, 0.45, 0.28, 1)
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.85, 0.6, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hoc_hover"]
+bg_color = Color(0.22, 0.75, 0.46, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.8, 1, 0.88, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [node name="BaiHocPanel" type="Panel" unique_id=901500251]
-custom_minimum_size = Vector2(1000, 112)
-theme_override_styles/panel = SubResource("StyleBoxFlat_cj3hg")
+custom_minimum_size = Vector2(940, 108)
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_card_bai_hoc")
 script = ExtResource("1_qy5qs")
 
-[node name="hoc" type="Button" parent="." unique_id=2026252485]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.94400007
-anchor_top = 0.625
-anchor_right = 0.994
-anchor_bottom = 0.96400005
-offset_left = -6.1035156e-05
-offset_bottom = 0.03199768
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("1_4uuga")
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_irrk0")
-text = ">"
-
-[node name="ten" type="Label" parent="." unique_id=1558598416]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 17.0
-offset_right = 944.0
-offset_bottom = 51.0
-text = "Ten bai hoc"
-label_settings = SubResource("LabelSettings_cj3hg")
-
 [node name="so" type="Label" parent="." unique_id=807508322]
-layout_mode = 0
-offset_right = 84.0
-offset_bottom = 112.0
-text = "0"
-label_settings = SubResource("LabelSettings_c0nay")
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -38.0
+offset_right = 92.0
+offset_bottom = 38.0
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_badge_so")
+text = "1"
+label_settings = SubResource("LabelSettings_so")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ten" type="Label" parent="." unique_id=1558598416]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 112.0
+offset_top = 18.0
+offset_right = -445.0
+offset_bottom = 54.0
+text = "Tên bài học"
+label_settings = SubResource("LabelSettings_ten")
+vertical_alignment = 1
+text_overrun_behavior = 3
+
 [node name="nguoi_tao" type="Label" parent="." unique_id=1112381367]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 56.0
-offset_right = 392.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+offset_left = 112.0
+offset_top = 60.0
+offset_right = -445.0
 offset_bottom = 90.0
-text = "Nguoi tao"
-label_settings = SubResource("LabelSettings_purpp")
+text = "Người tạo"
+label_settings = SubResource("LabelSettings_nguoi_tao")
+vertical_alignment = 1
+
+[node name="ket_qua" type="Label" parent="." unique_id=1035585049]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -435.0
+offset_top = 24.0
+offset_right = -286.0
+offset_bottom = 84.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tag_ket_qua")
+text = "🏆 0 điểm
+🎯 0%"
+label_settings = SubResource("LabelSettings_ket_qua")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="loai_bai" type="Label" parent="." unique_id=1035585048]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 90.0
-offset_right = 1000.0
-offset_bottom = 112.0
-text = "Loai bai"
-label_settings = SubResource("LabelSettings_eonea")
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -276.0
+offset_top = 28.0
+offset_right = -141.0
+offset_bottom = 82.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_tag_loai")
+text = "Loại bài"
+label_settings = SubResource("LabelSettings_loai_bai")
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hoc" type="Button" parent="." unique_id=2026252485]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -124.0
+offset_top = -28.0
+offset_right = -18.0
+offset_bottom = 28.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_4uuga")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_hoc_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hoc_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hoc_hover")
+text = "▶ Học"
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="button_down" from="hoc" to="." method="_on_hoc_button_down"]

@@ -11,7 +11,11 @@ use crate::not_nhac::NotNhac;
 use crate::quan_ly_sheet::QuanLySheet;
 
 pub struct DuLieuNot {
+    pub id_not: i32,
     pub nhip_dich: f32,
+    pub toa_do_y: f32,
+    pub chieu_dai_duoi: f32,
+    pub dang_hien_thi: bool,
     pub not_node: Gd<NotNhac>,
 }
 
@@ -64,43 +68,87 @@ impl KhuongNhac {
     }
 
     pub fn get_tat_ca_not(&mut self) -> Vec<Gd<NotNhac>> {
+        // Chỉ trả về các nốt đang hiển thị trên màn hình để ChoiSheet::xu_ly_nha_phim không phải duyệt hàng nghìn nốt
         self.cac_not_trong_khuong
             .iter()
+            .filter(|du_lieu| du_lieu.dang_hien_thi)
             .map(|du_lieu| du_lieu.not_node.clone())
             .collect()
     }
 
     #[func]
     pub fn get_tong_so_not(&self) -> i32 {
+        // Đọc trực tiếp id_not từ Rust, không cần .bind() sang Godot
         self.cac_not_trong_khuong
             .iter()
-            .filter(|du_lieu| du_lieu.not_node.bind().get_id_not() != 100)
+            .filter(|du_lieu| du_lieu.id_not != 100)
             .count() as i32
     }
 
-    fn phan_tich_not(id_not: i32, mien_bat_dau: i32, chuyen_not: i32) -> (String, f32) {
+    /// Quy đổi độ lệch bán âm sang ký hiệu ngắn gọn, dễ nhìn:
+    /// - Nhích 1 bán âm: "1⬈" hoặc "1⬊"
+    /// - Dưới 1 cụm (< 10 bán âm): tính theo số phím trắng "1p⬈" .. "5p⬈"
+    /// - Từ 1 cụm trở lên (>= 10 bán âm): làm tròn thẳng theo cụm "1c⬈", "2c⬊", "3c⬈" (KHÔNG ghép 2c2p)
+    fn dinh_dang_chuyen_mien(chuyen_not: i32) -> String {
+        if chuyen_not == 0 {
+            return String::new();
+        }
+
+        let mui_ten = if chuyen_not > 0 { "⬈" } else { "⬊" };
+        let so_ban_am = chuyen_not.abs();
+
+        if so_ban_am == 1 {
+            return format!("1{}", mui_ten);
+        }
+
+        // Từ 10 bán âm trở lên -> Làm tròn thẳng thành số cụm (1c, 2c, 3c...)
+        if so_ban_am >= 10 {
+            let so_cum = ((so_ban_am as f32) / 12.0).round() as i32;
+            return format!("{}c{}", so_cum.max(1), mui_ten);
+        }
+
+        // Dưới 10 bán âm -> Quy đổi sang số phím trắng (1p..5p)
+        let so_phim_trang = match so_ban_am {
+            2 => 1,
+            3 | 4 => 2,
+            5 | 6 => 3,
+            7 => 4,
+            8 | 9 => 5,
+            _ => 1,
+        };
+        format!("{}t{}", so_phim_trang, mui_ten)
+    }
+    #[func]
+    pub fn dat_hien_thi_ten_khac(&mut self, hien_thi: bool) {
+        for du_lieu in &mut self.cac_not_trong_khuong {
+            if du_lieu.id_not != 100 && du_lieu.not_node.is_instance_valid() {
+                du_lieu.not_node.bind_mut().set_hien_thi_ten_khac(hien_thi);
+            }
+        }
+    }
+
+    fn phan_tich_not(
+        id_not: i32,
+        mien_bat_dau: i32,
+        chuyen_not: i32,
+        dung_giang: bool,
+    ) -> (String, f32) {
         if id_not == 100 {
-            let ten: String = if chuyen_not > 0 {
-                format!("{}⬈", chuyen_not.abs())
-            } else if chuyen_not < 0 {
-                format!("{}⬊", chuyen_not.abs())
-            } else {
-                String::from("")
-            };
+            let ten: String = Self::dinh_dang_chuyen_mien(chuyen_not);
             return (ten, -6.0);
         }
 
-        // 2. Xử lý nốt bình thường
-        let ten_not = check_ten_not::chuyen_id_thanh_ten(id_not, false).to_string();
+        let ten_not = check_ten_not::chuyen_id_thanh_ten(id_not, dung_giang).to_string();
 
-        // 3. Tính toán vị trí và ÉP CHẶT vào khoảng 0 -> 16
-        let vi_tri_so = (16 - (id_not - mien_bat_dau)).clamp(0, 16);
+        let hang_not = check_ten_not::id_sang_hang_phim_trang(id_not, dung_giang);
+        let hang_mien_bat_dau = check_ten_not::id_sang_hang_phim_trang(mien_bat_dau, false);
+        let vi_tri_so = (16 - (hang_not - hang_mien_bat_dau)).clamp(0, 16);
 
-        let toa_do_y = match vi_tri_so {
+        let toa_do_y_goc = match vi_tri_so {
             0 => -10.0,
-            1 => 1.0,
+            1 => 2.0,
             2 => 14.0,
-            3 => 27.0,
+            3 => 28.0,
             4 => 40.0,
             5 => 53.0,
             6 => 65.0,
@@ -108,17 +156,24 @@ impl KhuongNhac {
             8 => 90.0,
             9 => 105.0,
             10 => 117.0,
-            11 => 131.0,
+            11 => 129.0,
             12 => 142.0,
-            13 => 157.0,
-            14 => 169.0,
-            15 => 184.0,
+            13 => 155.0,
+            14 => 167.0,
+            15 => 182.0,
             16 => 196.0,
             _ => 210.0,
         };
 
-        (ten_not, toa_do_y)
+        let do_lech_y: f32 = match check_ten_not::kiem_tra_ten_not_thang_giang(&ten_not) {
+            check_ten_not::LoaiDauHoa::Thang => -2.0,
+            check_ten_not::LoaiDauHoa::Giang => -2.0,
+            check_ten_not::LoaiDauHoa::BinhThuong => 0.0,
+        };
+
+        (ten_not, toa_do_y_goc + do_lech_y)
     }
+
     #[func]
     pub fn tao_not(
         &mut self,
@@ -128,7 +183,10 @@ impl KhuongNhac {
         nhip_giu: f32,
         chuyen_not: i32,
         mien_bat_dau: i32,
-        toc_do_chung: f32
+        toc_do_chung: f32,
+        dung_giang: bool,
+        ten_khac: String,
+        hien_thi_ten_khac: bool
     ) {
         let Some(scene) = &self.nut_scene else {
             return;
@@ -137,41 +195,61 @@ impl KhuongNhac {
             return;
         };
 
-        let (ten_not, toa_do_y) = Self::phan_tich_not(id_not, mien_bat_dau, chuyen_not);
+        let (ten_not, toa_do_y) = Self::phan_tich_not(id_not, mien_bat_dau, chuyen_not, dung_giang);
         let vt: Vector2 = Vector2::new(2040.0, toa_do_y);
+        let chieu_dai_duoi = if nhip_giu > 0.0 && id_not != 100 {
+            nhip_giu * toc_do_chung
+        } else {
+            -1.0
+        };
 
         {
             let mut not_bind: GdMut<'_, NotNhac> = not_nhac.bind_mut();
             not_bind.set_id_not(id_not);
+            not_bind.set_nhip_dich(nhip_dich);
+            not_bind.set_nhip_giu_goc(nhip_giu);
+            not_bind.set_chuyen_not(chuyen_not);
             not_bind.set_ten_not(ten_not.into());
+            not_bind.set_ten_khac(ten_khac.into());
+            not_bind.set_hien_thi_ten_khac(hien_thi_ten_khac);
+            not_bind.set_chieu_dai_duoi(chieu_dai_duoi);
 
-            // XỬ LÝ NỐT CHUYỂN
             if id_not == 100 {
                 not_bind.bien_thanh_vach_canh_bao();
             } else {
                 not_bind.set_mau_not(&mau_not);
-                if nhip_giu > 0.0 {
-                    not_bind.set_chieu_dai_duoi(nhip_giu * toc_do_chung);
-                }
             }
         }
-        // Thêm điều kiện id_not != 100 để vạch cảnh báo KHÔNG BỊ kéo dài đuôi nhip_giu
-        if nhip_giu > 0.0 && id_not != 100 {
+
+        if chieu_dai_duoi > 0.0 {
             if let Some(mut panel) = not_nhac.try_get_node_as::<Panel>("nen") {
                 let mut size: Vector2 = panel.get_size();
-                size.x += nhip_giu * toc_do_chung;
+                size.x += chieu_dai_duoi;
                 panel.set_size(size);
             }
         }
 
         not_nhac.set_position(vt);
+        not_nhac.set_monitoring(false);
+        not_nhac.set_monitorable(false);
+        not_nhac.set_visible(false);
+
         self.base_mut().add_child(&not_nhac);
-        self.cac_not_trong_khuong.push(DuLieuNot { nhip_dich, not_node: not_nhac });
+        self.cac_not_trong_khuong.push(DuLieuNot {
+            id_not,
+            nhip_dich,
+            toa_do_y,
+            chieu_dai_duoi,
+            dang_hien_thi: false,
+            not_node: not_nhac,
+        });
     }
 
     #[func]
     pub fn xu_ly_di_chuyen_not(&mut self, thoi_gian_hien_tai: f32, toc_do_chung: f32) {
         const TOA_DO_X_DICH: f32 = 130.0;
+        const GIOI_HAN_TRAI: f32 = -100.0;
+        const GIOI_HAN_PHAI: f32 = 2100.0;
 
         self.thoi_gian_hien_tai = thoi_gian_hien_tai;
         self.toc_do_chung = toc_do_chung;
@@ -181,22 +259,33 @@ impl KhuongNhac {
         let cho_phep_xoa = self.cho_phep_xoa_not;
 
         self.cac_not_trong_khuong.retain_mut(|du_lieu| {
-            let tg_dich: f32 = du_lieu.nhip_dich;
-            let vi_tri_x: f32 = TOA_DO_X_DICH + (tg_dich - thoi_gian_hien_tai) * toc_do_chung;
-            let toa_do_y: f32 = du_lieu.not_node.get_position().y;
+            let vi_tri_x: f32 =
+                TOA_DO_X_DICH + (du_lieu.nhip_dich - thoi_gian_hien_tai) * toc_do_chung;
+            let do_dai = du_lieu.chieu_dai_duoi.max(0.0);
+            let toa_do_cuoi_x: f32 = vi_tri_x + do_dai;
 
-            du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), toa_do_y));
-
-            // CHỈ XÓA NỐT KHI CHẾ ĐỘ XÓA ĐANG BẬT
-            if cho_phep_xoa {
-                let chieu_dai: f32 = du_lieu.not_node.bind().get_chieu_dai_duoi();
-                let toa_do_xoa: f32 = vi_tri_x + chieu_dai;
-
-                if toa_do_xoa < -50.0 {
-                    du_lieu.not_node.queue_free();
-                    return false;
-                }
+            // 1. Xóa nốt đã trôi qua bên trái khi ở chế độ chơi
+            if cho_phep_xoa && toa_do_cuoi_x < -50.0 {
+                du_lieu.not_node.queue_free();
+                return false;
             }
+
+            // 2. CULLING: Chỉ bật hiển thị, bật vật lý và cập nhật tọa độ khi nốt nằm trong màn hình
+            let trong_man_hinh = toa_do_cuoi_x >= GIOI_HAN_TRAI && vi_tri_x <= GIOI_HAN_PHAI;
+
+            if trong_man_hinh {
+                if !du_lieu.dang_hien_thi {
+                    du_lieu.dang_hien_thi = true;
+                    du_lieu.not_node.set_visible(true);
+                    du_lieu.not_node.set_monitorable(true);
+                }
+                du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), du_lieu.toa_do_y));
+            } else if du_lieu.dang_hien_thi {
+                du_lieu.dang_hien_thi = false;
+                du_lieu.not_node.set_visible(false);
+                du_lieu.not_node.set_monitorable(false);
+            }
+
             true
         });
 
@@ -212,28 +301,12 @@ impl KhuongNhac {
             return;
         };
 
-        // KIỂM TRA NẾU LÀ NỐT CHUYỂN (ID 100)
+        // KIỂM TRA NẾU LÀ NỐT CHUYỂN MIỀN (ID 100)
         let id: i32 = not_nhac.bind().get_id_not();
         if id == 100 && self.cho_phep_xoa_not {
-            // Lấy tên nốt (VD: "5⬈" hoặc "3⬊")
-            let ten = not_nhac.bind().get_ten_not().to_string();
-
-            // Lọc ra các ký tự số từ chuỗi
-            let so_str: String = ten
-                .chars()
-                .filter(|c| c.is_digit(10))
-                .collect();
-            if let Ok(gia_tri_tuyet_doi) = so_str.parse::<i32>() {
-                // Xác định dấu (lên hay xuống)
-                let gia_tri_chuyen: i32 = if ten.contains('⬈') {
-                    gia_tri_tuyet_doi
-                } else if ten.contains('⬊') {
-                    -gia_tri_tuyet_doi
-                } else {
-                    0
-                };
-
-                // Phát tín hiệu lên QuanLySheet
+            // Lấy trực tiếp độ lệch bán âm đã lưu trong chuyen_not của NotNhac
+            let gia_tri_chuyen: i32 = not_nhac.bind().get_chuyen_not();
+            if gia_tri_chuyen != 0 {
                 self.base_mut().emit_signal("cap_nhat_mien_not", &[gia_tri_chuyen.to_variant()]);
             }
         }
@@ -268,18 +341,35 @@ impl KhuongNhac {
         self.base_mut().queue_redraw();
     }
 
-    // 2. Di chuyển nốt khi tua thanh trượt trong TaoSheet (KHÔNG xóa nốt khi đi qua vạch đích)
     #[func]
     pub fn cap_nhat_vi_tri_soan(&mut self, nhip_hien_tai: f32, toc_do_chung: f32) {
         const TOA_DO_X_DICH: f32 = 130.0;
+        const GIOI_HAN_TRAI: f32 = -100.0;
+        const GIOI_HAN_PHAI: f32 = 2100.0;
+
         self.thoi_gian_hien_tai = nhip_hien_tai;
         self.toc_do_chung = toc_do_chung;
         self.base_mut().queue_redraw();
 
         for du_lieu in &mut self.cac_not_trong_khuong {
             let vi_tri_x = TOA_DO_X_DICH + (du_lieu.nhip_dich - nhip_hien_tai) * toc_do_chung;
-            let toa_do_y = du_lieu.not_node.get_position().y;
-            du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), toa_do_y));
+            let do_dai = du_lieu.chieu_dai_duoi.max(0.0);
+            let toa_do_cuoi_x = vi_tri_x + do_dai;
+
+            let trong_man_hinh = toa_do_cuoi_x >= GIOI_HAN_TRAI && vi_tri_x <= GIOI_HAN_PHAI;
+
+            if trong_man_hinh {
+                if !du_lieu.dang_hien_thi {
+                    du_lieu.dang_hien_thi = true;
+                    du_lieu.not_node.set_visible(true);
+                    du_lieu.not_node.set_monitorable(true);
+                }
+                du_lieu.not_node.set_position(Vector2::new(vi_tri_x.round(), du_lieu.toa_do_y));
+            } else if du_lieu.dang_hien_thi {
+                du_lieu.dang_hien_thi = false;
+                du_lieu.not_node.set_visible(false);
+                du_lieu.not_node.set_monitorable(false);
+            }
         }
     }
     #[func]

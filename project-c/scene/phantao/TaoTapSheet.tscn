@@ -1,0 +1,334 @@
+[gd_scene format=3 uid="uid://d132h0s5g7kne"]
+
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_6iejc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0.36, 0.56, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.04, 0.2, 0.34, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("1_6iejc")
+font_size = 30
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.15, 0.58, 0.35, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.95, 0.68, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.12, 0.46, 0.74, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.55, 0.86, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbl"]
+font = ExtResource("1_6iejc")
+font_size = 20
+font_color = Color(0.88, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TaoTapLuyenSheet" type="TaoTapLuyenSheet" unique_id=301147694]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Nen" type="Panel" parent="." unique_id=1202003133]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="ThanhTren" type="Panel" parent="." unique_id=292259929]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.03
+anchor_right = 0.96
+anchor_bottom = 0.12
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="ThanhTren" unique_id=341537807]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TieuDe" type="Label" parent="ThanhTren/HBox" unique_id=355951249]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🎯 TẠO BÀI TẬP LUYỆN THEO ĐOẠN SHEET"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="ChoiThu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1897317008]
+custom_minimum_size = Vector2(210, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "▶ Chơi thử đoạn này"
+
+[node name="MoJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=42183345]
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "📂 Mở JSON"
+
+[node name="LuuJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1435785278]
+custom_minimum_size = Vector2(150, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "💾 Lưu JSON"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=5112177]
+custom_minimum_size = Vector2(130, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✖ Về Menu"
+
+[node name="KhungChinh" type="Panel" parent="." unique_id=544639313]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.08
+anchor_top = 0.15
+anchor_right = 0.92
+anchor_bottom = 0.94
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="KhungChinh" unique_id=32638393]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 22.0
+offset_right = -30.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="HangTen" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=309993375]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NhanTen" type="Label" parent="KhungChinh/VBox/HangTen" unique_id=319544786]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Tên bài tập:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="TenBai_Input" type="LineEdit" parent="KhungChinh/VBox/HangTen" unique_id=2051727224]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "VD: Luyện tập đoạn điệp khúc tay phải..."
+
+[node name="HangSheet" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1263364519]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NhanSheet" type="Label" parent="KhungChinh/VBox/HangSheet" unique_id=429123084]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Sheet nhạc gốc:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="DuongDanSheet_Input" type="LineEdit" parent="KhungChinh/VBox/HangSheet" unique_id=1465260405]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "res://bai_hoc/choi_sheet/test.json"
+
+[node name="ChonSheet_Btn" type="Button" parent="KhungChinh/VBox/HangSheet" unique_id=1392393286]
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "🎼 Chọn file Sheet"
+
+[node name="ThongTinSheet_Label" type="Label" parent="KhungChinh/VBox" unique_id=48400988]
+layout_mode = 2
+text = "ℹ Chọn file Sheet gốc để xem tổng số nhịp và BPM."
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="HangCauHinh" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1652157138]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="NhanKhuong" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=14408804]
+layout_mode = 2
+text = "Khuông luyện:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="Khuong_Option" type="OptionButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1055109593]
+custom_minimum_size = Vector2(210, 44)
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "12 - Cả hai tay (K1 & K2)"
+popup/item_0/id = 0
+popup/item_1/text = "1 - Chỉ tay phải (K1)"
+popup/item_1/id = 1
+popup/item_2/text = "2 - Chỉ tay trái (K2)"
+popup/item_2/id = 2
+
+[node name="NhanBPM" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=2022315560]
+layout_mode = 2
+text = "BPM:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="Bpm_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=1275135758]
+custom_minimum_size = Vector2(100, 44)
+layout_mode = 2
+max_value = 300.0
+
+[node name="ChoPhepCho_Check" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1198098388]
+layout_mode = 2
+button_pressed = true
+text = "Dừng nhịp chờ bấm đúng phím"
+
+[node name="NhanTu" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=1600142900]
+layout_mode = 2
+text = "Từ nhịp:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="NhipBatDau_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=314347199]
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+max_value = 2000.0
+step = 0.25
+value = 1.5
+
+[node name="NhanDen" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=2022315559]
+layout_mode = 2
+text = "Đến nhịp:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="NhipKetThuc_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=1275135757]
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+max_value = 2000.0
+step = 0.25
+value = 10.0
+
+[node name="HangGhiChu" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1676387057]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="NhanGC" type="Label" parent="KhungChinh/VBox/HangGhiChu" unique_id=1779471525]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Ghi chú ở nhịp:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="NhipGhiChu_Spin" type="SpinBox" parent="KhungChinh/VBox/HangGhiChu" unique_id=831904607]
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+max_value = 2000.0
+step = 0.25
+
+[node name="NoiDungGhiChu_Input" type="LineEdit" parent="KhungChinh/VBox/HangGhiChu" unique_id=608346177]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Nhập lời nhắc hiển thị tại nhịp này..."
+
+[node name="ThemGhiChu_Btn" type="Button" parent="KhungChinh/VBox/HangGhiChu" unique_id=956679891]
+custom_minimum_size = Vector2(150, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "➕ Thêm nhắc"
+
+[node name="XoaGhiChu_Btn" type="Button" parent="KhungChinh/VBox/HangGhiChu" unique_id=643226375]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "🗑 Xóa nhắc"
+
+[node name="DanhSachGhiChu" type="ItemList" parent="KhungChinh/VBox" unique_id=1235961435]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+
+[node name="HopThoaiChonSheet" type="FileDialog" parent="." unique_id=143060403]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "bai_hoc/choi_sheet"
+filters = PackedStringArray("*.json ; Sheet Music JSON")
+
+[node name="HopThoaiLuuJson" type="FileDialog" parent="." unique_id=368425748]
+title = "Lưu bài Tập Luyện Sheet JSON"
+initial_position = 2
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Practice Sheet JSON")
+
+[node name="HopThoaiMoJson" type="FileDialog" parent="." unique_id=1300158292]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Practice Sheet JSON")

@@ -6,6 +6,7 @@ use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::ban_phim_midi::BanPhimMidi;
 use crate::doc_sheet_json;
+use crate::du_lieu_lich_su::DuLieuLichSu;
 use crate::khuong_nhac::KhuongNhac;
 use crate::not_nhac::NotNhac;
 use crate::quan_ly_sheet::QuanLySheet;
@@ -16,6 +17,7 @@ pub struct ChoiSheet {
     #[base]
     base: Base<Control>,
     diem: i32,
+    diem_ky_luc: i32,
     ban_phim_midi_node: Option<Gd<BanPhimMidi>>,
     quan_ly_sheet_node: Option<Gd<QuanLySheet>>,
     #[export]
@@ -203,6 +205,60 @@ impl ChoiSheet {
         self.so_phim_truot = 0;
         self.cat_nhat_diem_label(self.diem);
     }
+    pub fn lay_ten_che_do_luu(&self) -> &'static str {
+        if self.phan_luyen_tap {
+            "luyen_tap_sheet"
+        } else {
+            "choi_sheet"
+        }
+    }
+
+    #[func]
+    pub fn lay_ti_le_hoan_thanh(&self) -> f32 {
+        let tong_not = self
+            .quan_ly_sheet_node
+            .as_ref()
+            .map(|q| q.bind().get_tong_so_not_sheet())
+            .unwrap_or(0);
+        let da_danh_trung = self.so_phim_tot + self.so_phim_kha;
+        let mau_so = tong_not.max(da_danh_trung + self.so_phim_truot);
+        if mau_so <= 0 {
+            return 0.0;
+        }
+        ((da_danh_trung as f32 / mau_so as f32) * 100.0).clamp(0.0, 100.0)
+    }
+
+    #[func]
+    pub fn lay_diem_cao_nhat_cu(&self) -> i32 {
+        self.diem_ky_luc
+    }
+
+    #[func]
+    pub fn tong_ket(&mut self) {
+        if self.duong_dan_bai_hoc.is_empty() {
+            return;
+        }
+        let ti_le = self.lay_ti_le_hoan_thanh();
+        let hang = DuLieuLichSu::tinh_hang(ti_le);
+        let che_do = self.lay_ten_che_do_luu();
+
+        let mut ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
+
+        // 1. Lưu lại điểm kỷ lục cũ TRƯỚC KHI cập nhật kết quả mới
+        self.diem_ky_luc = ls
+            .lay_ket_qua(che_do, &self.duong_dan_bai_hoc.to_string())
+            .map(|kq| kq.diem_cao_nhat)
+            .unwrap_or(0);
+
+        // 2. Cập nhật kết quả mới vào file lich_su.json
+        ls.cap_nhat_ket_qua(
+            che_do,
+            &self.duong_dan_bai_hoc.to_string(),
+            self.diem,
+            ti_le,
+            hang,
+        );
+    }
 }
 
 #[godot_api]
@@ -260,6 +316,12 @@ impl IControl for ChoiSheet {
                                 du_lieu_lt.khuong.into(),
                                 du_lieu_lt.phan_thoi_gian.into()
                             );
+                            if let Some(bpm_moi) = du_lieu_lt.bpm_tuy_chinh {
+                            if bpm_moi > 0.0 {
+                                // Ghi đè biến bpm nội bộ của QuanLySheet
+                                quan_ly_sheet.bind_mut().bpm = bpm_moi;
+                            }
+                        }
                     }
 
                     // 1. Lấy thông tin Tác giả, Người tạo sheet từ file test.json gốc
@@ -279,5 +341,6 @@ impl IControl for ChoiSheet {
                 self.set_thong_tin_bai_hat();
             }
         }
+
     }
 }

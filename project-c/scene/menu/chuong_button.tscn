@@ -1,10 +1,84 @@
 [gd_scene format=3 uid="uid://budykwkj1gl4p"]
 
 [ext_resource type="Script" uid="uid://bctcnxv6u54b4" path="res://gd/chuong_button.gd" id="1_smvnb"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chuong_normal"]
+content_margin_left = 18.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.12, 0.47, 0.74, 0.9)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.45, 0.8, 1, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.01, 0.12, 0.22, 0.35)
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chuong_hover"]
+content_margin_left = 22.0
+content_margin_top = 12.0
+content_margin_right = 18.0
+content_margin_bottom = 12.0
+bg_color = Color(0.18, 0.56, 0.86, 1)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.8, 0.96, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0.1, 0.5, 0.85, 0.45)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chuong_pressed"]
+content_margin_left = 18.0
+content_margin_top = 15.0
+content_margin_right = 18.0
+content_margin_bottom = 9.0
+bg_color = Color(0.04, 0.26, 0.45, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.5, 0.85, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_chuong_focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.96, 1, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="1" type="Button" unique_id=365704622]
-theme_override_font_sizes/font_size = 30
-text = "1"
+custom_minimum_size = Vector2(310, 68)
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0.9, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_chuong_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_chuong_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_chuong_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_chuong_focus")
+text = "Chương 1"
 script = ExtResource("1_smvnb")
 
 [connection signal="button_down" from="." to="." method="_on_button_down"]

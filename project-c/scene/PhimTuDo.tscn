@@ -1,0 +1,252 @@
+[gd_scene format=3 uid="uid://fl1kx5vr4reu"]
+
+[ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_gx65u"]
+[ext_resource type="Texture2D" uid="uid://bm5pmi4eqammk" path="res://asset/nen1.jpg" id="1_uelcm"]
+[ext_resource type="Script" uid="uid://b4npbwypdnpko" path="res://gd/phim_tu_do.gd" id="2_script"]
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_bar"]
+bg_color = Color(0.06, 0.08, 0.12, 0.95)
+border_width_bottom = 3
+border_color = Color(0.28, 0.34, 0.45, 0.9)
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 15
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("3_font")
+font_size = 28
+font_color = Color(0.45, 0.85, 1, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_blue"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.16, 0.38, 0.68, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.35, 0.6, 0.95, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_red"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.75, 0.2, 0.25, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.95, 0.4, 0.4, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.18, 0.22, 0.28, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.35, 0.42, 0.52, 0.9)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.25, 0.3, 0.38, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.6, 0.75, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.15, 0.55, 0.32, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.3, 0.8, 0.5, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_filename"]
+font = ExtResource("3_font")
+font_size = 20
+font_color = Color(0.95, 0.95, 0.5, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 0.85)
+shadow_size = 3
+shadow_color = Color(0, 0, 0, 0.6)
+
+[node name="PhimTuDo" type="PhimTuDo" unique_id=1018267489]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_script")
+
+[node name="Nen1" type="Sprite2D" parent="." unique_id=2017986007]
+position = Vector2(960, 540)
+scale = Vector2(1.3813334, 1.12)
+texture = ExtResource("1_uelcm")
+
+[node name="VungNotBay" type="Control" parent="." unique_id=971412961]
+clip_contents = true
+layout_mode = 1
+anchor_top = 0.08
+anchor_right = 1.0
+anchor_bottom = 0.84
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_gx65u")]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+offset_top = -167.0
+
+[node name="ThanhThongTin" type="Panel" parent="." unique_id=1930909397]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.06944445
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_bar")
+metadata/_edit_use_anchors_ = true
+
+[node name="HBox" type="HBoxContainer" parent="ThanhThongTin" unique_id=1577694295]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015625
+anchor_right = 0.984375
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+metadata/_edit_use_anchors_ = true
+
+[node name="TieuDe" type="Label" parent="ThanhThongTin/HBox" unique_id=545074159]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🎹 CHẾ ĐỘ CHƠI TỰ DO (FREE PLAY)"
+label_settings = SubResource("LabelSettings_title")
+vertical_alignment = 1
+
+[node name="MoFile_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=223419831]
+custom_minimum_size = Vector2(110, 46)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_blue")
+text = "📂 Mở"
+
+[node name="LuuFile_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=409876789]
+custom_minimum_size = Vector2(110, 46)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_blue")
+text = "💾 Lưu"
+
+[node name="GhiAm_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=1220161293]
+custom_minimum_size = Vector2(150, 46)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_red")
+text = "⏺ Ghi âm"
+
+[node name="Dung_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=502239572]
+custom_minimum_size = Vector2(120, 46)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+disabled = true
+text = "⏹ Dừng"
+
+[node name="Phat_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=621608894]
+custom_minimum_size = Vector2(150, 46)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "▶ Phát lại"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=1751801296]
+custom_minimum_size = Vector2(140, 46)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+text = "✖ Về Menu"
+
+[node name="TenFilePhatLai_Label" type="Label" parent="." unique_id=84067417]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 85.0
+offset_bottom = 120.0
+grow_horizontal = 2
+text = "🎵 Đang phát: abc.json"
+label_settings = SubResource("LabelSettings_filename")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HopThoaiLuuFile" type="FileDialog" parent="." unique_id=5396781]
+title = "Lưu bản ghi"
+initial_position = 2
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "ban_ghi"
+filters = PackedStringArray("*.json ; JSON Files")
+
+[node name="HopThoaiMoFile" type="FileDialog" parent="." unique_id=601002248]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+file_mode = 0
+access = 2
+root_subfolder = "ban_ghi"
+filters = PackedStringArray("*.json ; JSON Files")
+
+[connection signal="pressed" from="ThanhThongTin/HBox/MoFile_Btn" to="." method="_on_mo_file_btn_pressed"]
+[connection signal="pressed" from="ThanhThongTin/HBox/LuuFile_Btn" to="." method="_on_luu_file_btn_pressed"]
+[connection signal="pressed" from="ThanhThongTin/HBox/GhiAm_Btn" to="." method="_on_ghi_am_btn_pressed"]
+[connection signal="pressed" from="ThanhThongTin/HBox/Dung_Btn" to="." method="_on_dung_btn_pressed"]
+[connection signal="pressed" from="ThanhThongTin/HBox/Phat_Btn" to="." method="_on_phat_btn_pressed"]
+[connection signal="pressed" from="ThanhThongTin/HBox/VeMenu_Btn" to="." method="_on_ve_menu_btn_pressed"]
+[connection signal="file_selected" from="HopThoaiLuuFile" to="." method="_on_hop_thoai_luu_file_file_selected"]
+[connection signal="file_selected" from="HopThoaiMoFile" to="." method="_on_hop_thoai_mo_file_file_selected"]

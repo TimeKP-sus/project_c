@@ -1,0 +1,369 @@
+[gd_scene format=3 uid="uid://bxkaff0vkg4ai"]
+
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_font"]
+[ext_resource type="Script" uid="uid://buijv0b1gl6q8" path="res://gd/tao_video.gd" id="1_t7kgk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0.36, 0.56, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.04, 0.2, 0.34, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("1_font")
+font_size = 30
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.12, 0.46, 0.74, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.55, 0.86, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.15, 0.58, 0.35, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.95, 0.68, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_bg"]
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.06, 0.07, 0.1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.25, 0.3, 0.4, 0.8)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_fill"]
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.85, 0.2, 0.25, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbl"]
+font = ExtResource("1_font")
+font_size = 20
+font_color = Color(0.88, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TaoBaiVideo" type="TaoVideo" unique_id=22997036]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t7kgk")
+
+[node name="Nen" type="Panel" parent="." unique_id=965836557]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="ThanhTren" type="Panel" parent="." unique_id=184347354]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.03
+anchor_right = 0.96
+anchor_bottom = 0.12
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="ThanhTren" unique_id=1543906941]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TieuDe" type="Label" parent="ThanhTren/HBox" unique_id=316659975]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "🎬 TRÌNH TẠO BÀI HỌC VIDEO"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="MoJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=243535048]
+custom_minimum_size = Vector2(140, 48)
+custom_maximum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "📂 Mở JSON"
+
+[node name="LuuJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=84139466]
+custom_minimum_size = Vector2(150, 48)
+custom_maximum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "💾 Lưu JSON"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1639265050]
+custom_minimum_size = Vector2(130, 48)
+custom_maximum_size = Vector2(200, 60)
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✖ Về Menu"
+
+[node name="KhungVideo" type="Panel" parent="." unique_id=1679309206]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.15
+anchor_right = 0.58
+anchor_bottom = 0.95
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="KhungVideo" unique_id=2056238010]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.017
+anchor_top = 0.016
+anchor_right = 0.98600006
+anchor_bottom = 0.91300005
+offset_left = -0.42559433
+offset_top = 0.17599964
+offset_right = 0.5151367
+offset_bottom = 0.16796875
+grow_horizontal = 2
+grow_vertical = 2
+expand = true
+
+[node name="ThanhTua" type="HSlider" parent="KhungVideo" unique_id=1661811244]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.019290125
+anchor_top = 0.9305556
+anchor_right = 0.83603394
+anchor_bottom = 0.9710648
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider_bg")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_slider_fill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_slider_fill")
+step = 0.1
+metadata/_edit_use_anchors_ = true
+
+[node name="ThoiGianLbl" type="Label" parent="KhungVideo" unique_id=1012431929]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.845679
+anchor_top = 0.9305556
+anchor_right = 0.98070985
+anchor_bottom = 0.9710648
+grow_horizontal = 0
+grow_vertical = 0
+text = "00:00 / 00:00"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="KhungChinh" type="Panel" parent="." unique_id=1988394579]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.6
+anchor_top = 0.15
+anchor_right = 0.96
+anchor_bottom = 0.95
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="KhungChinh" unique_id=1583093135]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="HangTen" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=149220291]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NhanTen" type="Label" parent="KhungChinh/VBox/HangTen" unique_id=1044401171]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Tên bài:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="TenBai_Input" type="LineEdit" parent="KhungChinh/VBox/HangTen" unique_id=925317462]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "VD: Rải ngón tay trái..."
+
+[node name="NhanTG" type="Label" parent="KhungChinh/VBox/HangTen" unique_id=1338190141]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "Tác giả:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="NguoiTao_Input" type="LineEdit" parent="KhungChinh/VBox/HangTen" unique_id=510008860]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+text = "timekp"
+placeholder_text = "Người tạo..."
+
+[node name="HangVideo" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=601266088]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NhanVideo" type="Label" parent="KhungChinh/VBox/HangVideo" unique_id=840916073]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "File Video:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="DuongDanVideo_Input" type="LineEdit" parent="KhungChinh/VBox/HangVideo" unique_id=1026030363]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "res://bai_hoc/video/v1.mp4"
+placeholder_text = "res://bai_hoc/video/..."
+
+[node name="ChonVideo_Btn" type="Button" parent="KhungChinh/VBox/HangVideo" unique_id=670315394]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "📁 Chọn Video"
+
+[node name="HangThemMoc" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=498112284]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NhanMoc" type="Label" parent="KhungChinh/VBox/HangThemMoc" unique_id=1605894116]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Mốc (s):"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="ThoiGian_Spin" type="SpinBox" parent="KhungChinh/VBox/HangThemMoc" unique_id=1595939315]
+custom_minimum_size = Vector2(100, 44)
+layout_mode = 2
+max_value = 7200.0
+suffix = "s"
+
+[node name="TieuDeMoc_Input" type="LineEdit" parent="KhungChinh/VBox/HangThemMoc" unique_id=2086244514]
+custom_minimum_size = Vector2(0, 44)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Tiêu đề mốc..."
+
+[node name="ThemMoc_Btn" type="Button" parent="KhungChinh/VBox/HangThemMoc" unique_id=1174815271]
+custom_minimum_size = Vector2(120, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "➕ Thêm"
+
+[node name="XoaMoc_Btn" type="Button" parent="KhungChinh/VBox/HangThemMoc" unique_id=355574961]
+custom_minimum_size = Vector2(100, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "🗑 Xóa"
+
+[node name="NhanDS" type="Label" parent="KhungChinh/VBox" unique_id=474969989]
+layout_mode = 2
+text = "Danh sách các mốc thời gian trong bài học:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="DanhSachMoc" type="ItemList" parent="KhungChinh/VBox" unique_id=123114044]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 20
+
+[node name="HopThoaiChonVideo" type="FileDialog" parent="." unique_id=791147683]
+oversampling_override = 1.0
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.mp4, *.ogv, *.webm ; Video Files")
+
+[node name="HopThoaiLuuJson" type="FileDialog" parent="." unique_id=1536522516]
+title = "Lưu bài học Video JSON"
+initial_position = 2
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Video Lesson JSON")
+
+[node name="HopThoaiMoJson" type="FileDialog" parent="." unique_id=29552521]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Video Lesson JSON")
+
+[connection signal="gui_input" from="KhungVideo/VideoStreamPlayer" to="." method="_on_video_stream_player_gui_input"]
+[connection signal="drag_ended" from="KhungVideo/ThanhTua" to="." method="_on_thanh_tua_drag_ended"]
+[connection signal="drag_started" from="KhungVideo/ThanhTua" to="." method="_on_thanh_tua_drag_started"]

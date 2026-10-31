@@ -1,106 +1,422 @@
 [gd_scene format=3 uid="uid://7e3w2txydrge"]
 
+[ext_resource type="Texture2D" uid="uid://i3s0mud0bk3w" path="res://asset/110215.jpg" id="1_4nvyv"]
+[ext_resource type="Script" uid="uid://blnr2wa0noshf" path="res://scene/menu/menu_chinh.gd" id="1_cjnyv"]
 [ext_resource type="PackedScene" uid="uid://0gn6uhig7bu0" path="res://scene/button/button_1.tscn" id="1_t2k7j"]
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="1_vmede"]
 [ext_resource type="Texture2D" uid="uid://db0hgdh16ym0t" path="res://asset/piano.png" id="2_nejbb"]
-[ext_resource type="StyleBox" uid="uid://cv7fv8dvpspt0" path="res://asset/theme/button_press_1.tres" id="2_um4pu"]
 [ext_resource type="PackedScene" uid="uid://okkufgawrf0i" path="res://scene/phanchoi/ChoiSheet.tscn" id="3_um4pu"]
+[ext_resource type="PackedScene" uid="uid://mre47t220lg4" path="res://scene/menu/DanhSachBaiHoc.tscn" id="4_4nvyv"]
 [ext_resource type="FontFile" uid="uid://d3nlqn62vfu1r" path="res://asset/font/ARLRDBD.TTF" id="5_weqhr"]
-[ext_resource type="PackedScene" uid="uid://tlomyfbvm53t" path="res://scene/menu/nut_menu.tscn" id="7_prnif"]
+[ext_resource type="PackedScene" uid="uid://fl1kx5vr4reu" path="res://scene/PhimTuDo.tscn" id="6_6g7ni"]
+[ext_resource type="PackedScene" uid="uid://c5v7x2m8q4p1n" path="res://scene/menu/CaiDat.tscn" id="8_6g7ni"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nen_menu"]
+bg_color = Color(1.1551381e-06, 0.6100426, 0.90236866, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_f281m"]
 line_spacing = 10.0
 paragraph_spacing = 40.0
 font = ExtResource("1_vmede")
-font_size = 100
-outline_size = 20
-outline_color = Color(0, 0, 0, 1)
+font_size = 92
+outline_size = 18
+outline_color = Color(0.02, 0.16, 0.28, 1)
+shadow_size = 16
+shadow_color = Color(0.01, 0.1, 0.18, 0.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_phu_de"]
+font = ExtResource("1_vmede")
+font_size = 26
+font_color = Color(0.85, 0.95, 1, 1)
+outline_size = 6
+outline_color = Color(0.02, 0.18, 0.3, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_menu_normal"]
+content_margin_left = 28.0
+content_margin_right = 28.0
+bg_color = Color(0.119973846, 0.47248286, 0.7366863, 0.92156863)
+border_width_left = 2
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.3, 0.65, 0.9, 0.85)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.01, 0.12, 0.2, 0.4)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_menu_pressed"]
+content_margin_left = 28.0
+content_margin_top = 4.0
+content_margin_right = 28.0
+bg_color = Color(0.02, 0.18, 0.3, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.2, 0.55, 0.8, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.01, 0.08, 0.14, 0.3)
+shadow_size = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_menu_hover"]
+content_margin_left = 34.0
+content_margin_right = 28.0
+bg_color = Color(0.06, 0.36, 0.56, 1)
+border_width_left = 4
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.65, 0.9, 1, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0.1, 0.5, 0.8, 0.45)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_menu_focus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.7, 0.92, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khung_anh"]
+bg_color = Color(0.17558163, 0.60718703, 0.8215499, 0.651)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 0.7490196)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+shadow_color = Color(1, 1, 1, 0.4509804)
+shadow_size = 18
 
 [sub_resource type="LabelSettings" id="LabelSettings_prnif"]
 font = ExtResource("5_weqhr")
-font_size = 40
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
+font_size = 26
+font_color = Color(0.8, 0.92, 1, 0.85)
+outline_size = 6
+outline_color = Color(0.13657826, 0.483451, 0.7225683, 1)
 
-[node name="MenuChinh" type="Control" unique_id=15579019]
-layout_mode = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_chon_loai"]
+bg_color = Color(0.02, 0.16, 0.28, 0.96)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.4, 0.78, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_size = 20
+
+[node name="MenuChinh" type="PhimTuDo" unique_id=1317055463]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cjnyv")
+
+[node name="NenMau" type="Panel" parent="." unique_id=297314070]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nen_menu")
+
+[node name="110215" type="Sprite2D" parent="." unique_id=1849311134]
+position = Vector2(960, 537.50006)
+scale = Vector2(1.9159999, 1.6026988)
+texture = ExtResource("1_4nvyv")
+
+[node name="CumTieuDe" type="VBoxContainer" parent="." unique_id=347353530]
+layout_mode = 0
+anchor_left = 0.0625
+anchor_top = 0.083333336
+anchor_right = 0.5208333
+anchor_bottom = 0.24351852
+offset_right = 6.1035156e-05
+offset_bottom = -3.0
+theme_override_constants/separation = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="tieu_de" type="Label" parent="CumTieuDe" unique_id=1825215812]
+layout_mode = 2
+text = "PROJECT-C"
+label_settings = SubResource("LabelSettings_f281m")
+
+[node name="phu_de" type="Label" parent="CumTieuDe" unique_id=602216550]
+layout_mode = 2
+text = "Trình tập luyện phím piano"
+label_settings = SubResource("LabelSettings_phu_de")
+
+[node name="DanhSachNut" type="VBoxContainer" parent="." unique_id=1259215025]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 240.0
+offset_right = 796.0
+offset_bottom = 1020.0
+theme_override_constants/separation = 22
+alignment = 1
+
+[node name="bat_dau" parent="DanhSachNut" unique_id=1368048531 instance=ExtResource("1_t2k7j")]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
+text = "▶ Bắt đầu"
+path_scene_den = ExtResource("4_4nvyv")
+loai_nut = "chuyen scene"
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="tao_bai_hoc" parent="DanhSachNut" unique_id=426480918 instance=ExtResource("1_t2k7j")]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
+text = "📝Tạo bài học"
+loai_nut = "chuyen scene"
+metadata/_edit_pinned_properties_ = []
+
+[node name="tao_sheet" parent="DanhSachNut" unique_id=184014852 instance=ExtResource("1_t2k7j")]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
+text = "🎹 Phím tự do"
+path_scene_den = ExtResource("6_6g7ni")
+loai_nut = "chuyen scene"
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="lich_su" parent="DanhSachNut" unique_id=907769662 instance=ExtResource("1_t2k7j")]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
+text = "📜 Lịch sử "
+path_scene_den = ExtResource("3_um4pu")
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="cai_datt" parent="DanhSachNut" unique_id=304146953 instance=ExtResource("1_t2k7j")]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
+text = "⚙ Cài đặt"
+path_scene_den = ExtResource("8_6g7ni")
+loai_nut = "chuyen scene"
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="thoat" parent="DanhSachNut" unique_id=840116379 instance=ExtResource("1_t2k7j")]
+custom_minimum_size = Vector2(300, 95)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
+theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
+text = "Thoát"
+path_scene_den = ExtResource("8_6g7ni")
+loai_nut = "thoat"
+metadata/_edit_pinned_properties_ = [&"path_scene_den"]
+
+[node name="KhungAnhMinhHoa" type="Panel" parent="." unique_id=132516257]
+layout_mode = 0
+offset_left = 940.0
+offset_top = 280.0
+offset_right = 1800.0
+offset_bottom = 880.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_khung_anh")
+
+[node name="anh" type="TextureRect" parent="KhungAnhMinhHoa" unique_id=1226762362]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = -25.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_nejbb")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="gioi_thieu" type="Label" parent="." unique_id=1996472345]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0625
+anchor_top = 0.9166667
+anchor_right = 0.41666666
+anchor_bottom = 0.962963
+grow_vertical = 0
+text = "Ver 0.2 • Godot & Rust Engine • TimeKP"
+label_settings = SubResource("LabelSettings_prnif")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PanelChonLoaiBaiHoc" type="Control" parent="." unique_id=967664449]
+visible = false
+clip_contents = true
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="bat_dau" parent="." unique_id=1368048531 instance=ExtResource("1_t2k7j")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 162.0
-offset_top = 384.0
-offset_right = 562.0
-offset_bottom = 496.0
-theme_override_styles/pressed = ExtResource("2_um4pu")
-path_scene_den = ExtResource("3_um4pu")
-metadata/_edit_pinned_properties_ = [&"path_scene_den"]
-
-[node name="lich_su" parent="." unique_id=907769662 instance=ExtResource("1_t2k7j")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 162.0
-offset_top = 576.0
-offset_right = 562.0
-offset_bottom = 688.0
-theme_override_styles/pressed = ExtResource("2_um4pu")
-text = "Lịch sử"
-path_scene_den = ExtResource("3_um4pu")
-metadata/_edit_pinned_properties_ = [&"path_scene_den"]
-
-[node name="cai_datt" parent="." unique_id=304146953 instance=ExtResource("1_t2k7j")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 162.0
-offset_top = 768.0
-offset_right = 562.0
-offset_bottom = 880.0
-theme_override_styles/pressed = ExtResource("2_um4pu")
-text = "Cài đặt"
-path_scene_den = ExtResource("3_um4pu")
-metadata/_edit_pinned_properties_ = [&"path_scene_den"]
-
-[node name="tieu_de" type="Label" parent="." unique_id=1825215812]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 128.0
-offset_right = 1856.0
-offset_bottom = 320.0
-text = "PROJECT-C"
-label_settings = SubResource("LabelSettings_f281m")
-vertical_alignment = 1
-
-[node name="gioi_thieu" type="Label" parent="." unique_id=1996472345]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 960.0
-offset_right = 864.0
-offset_bottom = 1079.0
-text = "Ver 0.1 | TimeKP"
-label_settings = SubResource("LabelSettings_prnif")
-vertical_alignment = 1
-
-[node name="anh" type="TextureRect" parent="." unique_id=1226762362]
+[node name="NenMo" type="ColorRect" parent="PanelChonLoaiBaiHoc" unique_id=2144090531]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = -0.007
-anchor_bottom = -0.007
-offset_left = 992.0
-offset_top = 415.56
-offset_right = 1744.0
-offset_bottom = 919.56
-texture = ExtResource("2_nejbb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
 
-[node name="NutMenu" parent="." unique_id=52198437 instance=ExtResource("7_prnif")]
+[node name="PanelChinh" type="Panel" parent="PanelChonLoaiBaiHoc" unique_id=246823275]
+custom_minimum_size = Vector2(700, 750)
 layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -350.0
+offset_top = -375.0
+offset_right = 350.0
+offset_bottom = 375.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_chon_loai")
+
+[node name="VBox" type="VBoxContainer" parent="PanelChonLoaiBaiHoc/PanelChinh" unique_id=1278352487]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 35.0
+offset_top = 30.0
+offset_right = -35.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TieuDePanel" type="Label" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=64530207]
+layout_mode = 2
+text = "🛠️ CHỌN LOẠI BÀI HỌC MUỐN TẠO"
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1920319110]
+layout_mode = 2
+
+[node name="Btn_TaoSheetGoc" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1618066220]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+text = "🎹 Tạo Sheet nhạc gốc"
+
+[node name="Btn_TaoTapLuyen" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1503505311]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+text = "🎯 Tạo bài tập luyện theo đoạn Sheet"
+
+[node name="Btn_TaoNgheNot" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1542691691]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+text = "👂 Tạo bài học Nghe & Đoán Nốt"
+
+[node name="Btn_TaoTimNot" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=2131312554]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+text = "🎹 Tạo bài học Tìm & Đánh Nốt"
+
+[node name="Btn_TaoVideo" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1582373176]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+text = "🎬 Tạo bài học Video kèm mốc thời gian"
+
+[node name="Btn_TaoDanhSach" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1833740341]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
+text = "📚 Quản lý Chương & Ghép Danh Sách Bài"
+
+[node name="Spacer" type="Control" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=52932425]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Btn_DongPanel" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1393039762]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vmede")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_pressed")
+text = "✖ Đóng lại"
+
+[connection signal="button_down" from="DanhSachNut/tao_bai_hoc" to="." method="_on_tao_bai_hoc_button_down" flags=3]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_TaoSheetGoc" to="." method="_on_btn_tao_sheet_goc_button_down"]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_TaoTapLuyen" to="." method="_on_btn_tao_tap_luyen_button_down"]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_TaoNgheNot" to="." method="_on_btn_tao_nghe_not_button_down"]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_TaoTimNot" to="." method="_on_btn_tao_tim_not_button_down"]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_TaoVideo" to="." method="_on_btn_tao_video_button_down"]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_TaoDanhSach" to="." method="_on_btn_tao_danh_sach_button_down"]
+[connection signal="button_down" from="PanelChonLoaiBaiHoc/PanelChinh/VBox/Btn_DongPanel" to="." method="_on_btn_dong_panel_button_down"]

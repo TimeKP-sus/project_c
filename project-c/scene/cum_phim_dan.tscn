@@ -12,7 +12,6 @@ font_color = Color(0, 0, 0, 1)
 font_size = 14
 
 [node name="cum_phim" type="CumPhimDan" unique_id=1052476577]
-propagate_maximum_size = true
 anchors_preset = -1
 anchor_right = 0.18300001
 anchor_bottom = 0.13900001
@@ -31,6 +30,8 @@ offset_right = 74.00003
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
+stretch_mode = 0
 
 [node name="3" parent="." unique_id=56781528 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -42,6 +43,7 @@ offset_right = 123.99999
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
 
 [node name="5" parent="." unique_id=604186716 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -53,6 +55,7 @@ offset_right = 174.0
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
 
 [node name="6" parent="." unique_id=1736795912 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -64,6 +67,7 @@ offset_right = 224.0
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
 
 [node name="8" parent="." unique_id=282370675 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -75,6 +79,7 @@ offset_right = 274.0
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
 
 [node name="10" parent="." unique_id=785926282 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -86,6 +91,7 @@ offset_right = 324.0
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
 
 [node name="12" parent="." unique_id=1193145905 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -97,6 +103,7 @@ offset_right = 374.00003
 offset_bottom = 214.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("2_ln04q")
+expand_mode = 1
 
 [node name="2" parent="." unique_id=418213654 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -109,6 +116,7 @@ offset_right = 71.42857
 offset_bottom = 123.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_12bpw")
+expand_mode = 1
 
 [node name="4" parent="." unique_id=928997669 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -120,6 +128,7 @@ offset_right = 121.42857
 offset_bottom = 122.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_12bpw")
+expand_mode = 1
 
 [node name="7" parent="." unique_id=1643584363 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -131,6 +140,7 @@ offset_right = 221.42856
 offset_bottom = 122.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_12bpw")
+expand_mode = 1
 
 [node name="9" parent="." unique_id=1571747214 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -142,6 +152,7 @@ offset_right = 271.4286
 offset_bottom = 122.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_12bpw")
+expand_mode = 1
 
 [node name="11" parent="." unique_id=1275941464 instance=ExtResource("1_thw8e")]
 layout_mode = 0
@@ -153,6 +164,7 @@ offset_right = 320.00003
 offset_bottom = 122.0
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("3_12bpw")
+expand_mode = 1
 
 [node name="p1" type="Label" parent="." unique_id=1638694673]
 visible = false
@@ -167,8 +179,9 @@ horizontal_alignment = 1
 [node name="cac_not_khac" type="Control" parent="." unique_id=437080944]
 visible = false
 anchors_preset = 0
-offset_right = 351.0
-offset_bottom = 150.0
+anchor_right = 0.99715906
+anchor_bottom = 1.0
+metadata/_edit_use_anchors_ = true
 
 [node name="p2" type="Label" parent="cac_not_khac" unique_id=1829550024]
 layout_mode = 0
@@ -189,6 +202,7 @@ offset_bottom = 147.0
 text = "D"
 label_settings = SubResource("LabelSettings_thw8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p4" type="Label" parent="cac_not_khac" unique_id=1399556282]
 layout_mode = 0
@@ -199,6 +213,7 @@ offset_bottom = 80.0
 text = "D#"
 label_settings = SubResource("LabelSettings_ln04q")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p5" type="Label" parent="cac_not_khac" unique_id=635350524]
 layout_mode = 0
@@ -209,6 +224,7 @@ offset_bottom = 147.0
 text = "E"
 label_settings = SubResource("LabelSettings_thw8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p6" type="Label" parent="cac_not_khac" unique_id=1266496375]
 layout_mode = 0
@@ -219,6 +235,7 @@ offset_bottom = 147.0
 text = "F"
 label_settings = SubResource("LabelSettings_thw8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p7" type="Label" parent="cac_not_khac" unique_id=1981750600]
 layout_mode = 0
@@ -229,6 +246,7 @@ offset_bottom = 80.0
 text = "F#"
 label_settings = SubResource("LabelSettings_ln04q")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p8" type="Label" parent="cac_not_khac" unique_id=1545734521]
 layout_mode = 0
@@ -239,6 +257,7 @@ offset_bottom = 147.0
 text = "G"
 label_settings = SubResource("LabelSettings_thw8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p9" type="Label" parent="cac_not_khac" unique_id=483810492]
 layout_mode = 0
@@ -249,6 +268,7 @@ offset_bottom = 80.0
 text = "G#"
 label_settings = SubResource("LabelSettings_ln04q")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p10" type="Label" parent="cac_not_khac" unique_id=621387695]
 layout_mode = 0
@@ -259,6 +279,7 @@ offset_bottom = 147.0
 text = "A"
 label_settings = SubResource("LabelSettings_thw8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p11" type="Label" parent="cac_not_khac" unique_id=137187446]
 layout_mode = 0
@@ -269,6 +290,7 @@ offset_bottom = 80.0
 text = "A#"
 label_settings = SubResource("LabelSettings_ln04q")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="p12" type="Label" parent="cac_not_khac" unique_id=1821672322]
 layout_mode = 0
@@ -279,3 +301,4 @@ offset_bottom = 147.0
 text = "B"
 label_settings = SubResource("LabelSettings_thw8e")
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true

@@ -1,9 +1,376 @@
-[gd_scene format=3 uid="uid://d3ctfu2rrjayl"]
+[gd_scene format=3 uid="uid://c5v7x2m8q4p1n"]
 
-[node name="CaiDat" type="Control" unique_id=1420653677]
-layout_mode = 3
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0.36, 0.56, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.04, 0.2, 0.34, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.4)
+shadow_size = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("1_font")
+font_size = 30
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.12, 0.46, 0.74, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.55, 0.86, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+content_margin_left = 16.0
+content_margin_right = 16.0
+bg_color = Color(0.15, 0.58, 0.35, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.95, 0.68, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_subpanel"]
+bg_color = Color(0.02, 0.14, 0.25, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.68, 0.95, 0.5)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_section"]
+font = ExtResource("1_font")
+font_size = 24
+font_color = Color(0.45, 0.88, 1, 1)
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbl"]
+font = ExtResource("1_font")
+font_size = 20
+font_color = Color(0.9, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="ManHinhCaiDat" type="ManHinhCaiDat" unique_id=1847291034]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Nen" type="Panel" parent="." unique_id=167021039]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="ThanhTren" type="Panel" parent="." unique_id=1299544050]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.03
+anchor_right = 0.96
+anchor_bottom = 0.12
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="ThanhTren" unique_id=2098067096]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_right = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="TieuDe" type="Label" parent="ThanhTren/HBox" unique_id=1811726817]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "⚙️ CÀI ĐẶT TRÒ CHƠI & ĐỒ HỌA"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="MacDinh_Btn" type="Button" parent="ThanhTren/HBox" unique_id=804958549]
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "↺ Mặc định"
+
+[node name="LuuCaiDat_Btn" type="Button" parent="ThanhTren/HBox" unique_id=601987941]
+custom_minimum_size = Vector2(190, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "💾 Lưu & Áp dụng"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=2061483790]
+custom_minimum_size = Vector2(140, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✖ Về Menu"
+
+[node name="KhungChinh" type="Panel" parent="." unique_id=1064608043]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.04
+anchor_top = 0.15
+anchor_right = 0.96
+anchor_bottom = 0.94
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="KhungChinh" unique_id=1509831418]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.9
+offset_left = 28.0
+offset_top = 24.0
+offset_right = -28.0
+offset_bottom = -12.0
+theme_override_constants/separation = 24
+
+[node name="CotChoiNhac" type="Panel" parent="KhungChinh/HBox" unique_id=63370184]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_subpanel")
+
+[node name="VBox" type="VBoxContainer" parent="KhungChinh/HBox/CotChoiNhac" unique_id=1542616045]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 26
+
+[node name="TieuDeNhac" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=1129172392]
+layout_mode = 2
+text = "🎹 CÀI ĐẶT CHƠI NHẠC & ĐẦU VÀO"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="HangTocDo" type="HBoxContainer" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=1278505941]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangTocDo" unique_id=490506509]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Tốc độ chơi mặc định:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="TocDo_Slider" type="HSlider" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangTocDo" unique_id=1328989342]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = 0.25
+max_value = 2.5
+step = 0.05
+value = 1.0
+
+[node name="TocDo_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangTocDo" unique_id=1268818746]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "1.00x"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+
+[node name="HangDoTre" type="HBoxContainer" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=119296980]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangDoTre" unique_id=580405273]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Độ trễ phím (Offset):"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="DoTre_Slider" type="HSlider" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangDoTre" unique_id=964775181]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+min_value = -200.0
+max_value = 200.0
+
+[node name="DoTre_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangDoTre" unique_id=235308301]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "0 ms"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+
+[node name="HangAmLuong" type="HBoxContainer" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=1387316229]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLuong" unique_id=361418409]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Âm lượng tổng:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="AmLuong_Slider" type="HSlider" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLuong" unique_id=180116967]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 80.0
+
+[node name="AmLuong_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLuong" unique_id=1247916433]
+custom_minimum_size = Vector2(90, 0)
+layout_mode = 2
+text = "80%"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+
+[node name="GhiChuDoTre" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=2261701]
+layout_mode = 2
+text = "💡 Gợi ý: Nếu bấm đàn bị nhận trễ hơn nhạc, hãy chỉnh độ trễ phím về số âm và ngược lại
+                                                               (VD: -25 ms)."
+label_settings = SubResource("LabelSettings_lbl")
+autowrap_mode = 2
+
+[node name="CotDoHoa" type="Panel" parent="KhungChinh/HBox" unique_id=801978375]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_subpanel")
+
+[node name="VBox" type="VBoxContainer" parent="KhungChinh/HBox/CotDoHoa" unique_id=1729972518]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 22
+
+[node name="TieuDeDoHoa" type="Label" parent="KhungChinh/HBox/CotDoHoa/VBox" unique_id=921699913]
+layout_mode = 2
+text = "🖥️ CÀI ĐẶT ĐỒ HỌA & HIỂN THỊ"
+label_settings = SubResource("LabelSettings_section")
+
+[node name="ToanManHinh_Check" type="CheckButton" parent="KhungChinh/HBox/CotDoHoa/VBox" unique_id=1689744172]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+text = "Chế độ Toàn màn hình (Fullscreen)"
+
+[node name="VSync_Check" type="CheckButton" parent="KhungChinh/HBox/CotDoHoa/VBox" unique_id=1741654831]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+button_pressed = true
+text = "Đồng bộ dọc (VSync - Chống xé hình)"
+
+[node name="HangPhanGiai" type="HBoxContainer" parent="KhungChinh/HBox/CotDoHoa/VBox" unique_id=1031548556]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotDoHoa/VBox/HangPhanGiai" unique_id=2067153680]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Độ phân giải cửa sổ:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="DoPhanGiai_Option" type="OptionButton" parent="KhungChinh/HBox/CotDoHoa/VBox/HangPhanGiai" unique_id=371385277]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+selected = 2
+item_count = 4
+popup/item_0/text = "1280 x 720 (HD)"
+popup/item_0/id = 0
+popup/item_1/text = "1600 x 900 (HD+)"
+popup/item_1/id = 1
+popup/item_2/text = "1920 x 1080 (Full HD)"
+popup/item_2/id = 2
+popup/item_3/text = "2560 x 1440 (2K QHD)"
+popup/item_3/id = 3
+
+[node name="HangFps" type="HBoxContainer" parent="KhungChinh/HBox/CotDoHoa/VBox" unique_id=1151060671]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotDoHoa/VBox/HangFps" unique_id=1402685197]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Giới hạn khung hình (FPS):"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="GioiHanFps_Option" type="OptionButton" parent="KhungChinh/HBox/CotDoHoa/VBox/HangFps" unique_id=1347302626]
+custom_minimum_size = Vector2(220, 44)
+layout_mode = 2
+selected = 1
+item_count = 6
+popup/item_0/text = "Không giới hạn"
+popup/item_0/id = 0
+popup/item_1/text = "60 FPS"
+popup/item_1/id = 1
+popup/item_2/text = "90 FPS"
+popup/item_2/id = 2
+popup/item_3/text = "120 FPS"
+popup/item_3/id = 3
+popup/item_4/text = "144 FPS"
+popup/item_4/id = 4
+popup/item_5/text = "240 FPS"
+popup/item_5/id = 5
+
+[node name="HienThiFps_Check" type="CheckButton" parent="KhungChinh/HBox/CotDoHoa/VBox" unique_id=1369738850]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+text = "Hiển thị bộ đếm FPS khi chơi"
+
+[node name="TrangThai_Label" type="Label" parent="KhungChinh" unique_id=957117344]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.91
+anchor_right = 1.0
+anchor_bottom = 0.99
+offset_left = 30.0
+offset_right = -30.0
+text = "📂 File cấu hình thử nghiệm: res://du_lieu_nguoi_dung/cai_dat.json"
+label_settings = SubResource("LabelSettings_lbl")
+vertical_alignment = 1

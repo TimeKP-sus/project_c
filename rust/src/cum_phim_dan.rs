@@ -64,18 +64,15 @@ impl CumPhimDan {
         // godot_print!("Thả phím {}", so_phim);
     }
     pub fn kiem_tra_hien_thi(&mut self, hien_thi_c: bool, hien_thi_all: bool) {
-        if hien_thi_c {
-            let text_c = GString::from(format!("C{}", self.cum_so));
-            if let Some(mut label) = self.base().try_get_node_as::<Label>("p1") {
-                label.set_visible(true);
-                label.set_text(&text_c);
-            }       
+        let text_c = GString::from(format!("C{}", self.cum_so));
+        if let Some(mut label) = self.base().try_get_node_as::<Label>("p1") {
+            label.set_text(&text_c);
+            // Hiện nốt C nếu bật "Hiện nốt C" HOẶC bật "Hiện tất cả nốt"
+            label.set_visible(hien_thi_c || hien_thi_all);
         }
-        
-        if hien_thi_all {
-            if let Some(mut cac_not_khac) = self.base().try_get_node_as::<Control>("cac_not_khac") {
-                cac_not_khac.set_visible(true);
-            }     
+
+        if let Some(mut cac_not_khac) = self.base().try_get_node_as::<Control>("cac_not_khac") {
+            cac_not_khac.set_visible(hien_thi_all);
         }
     }
 }

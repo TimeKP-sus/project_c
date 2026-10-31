@@ -1,25 +1,26 @@
-use godot::builtin::{Color, GString};
-use godot::classes::{Control, FileAccess, IControl, Label};
+use godot::builtin::{ Color, GString };
+use godot::classes::{ Control, FileAccess, IControl, Label };
 use godot::global::godot_print;
-use godot::obj::{Gd, WithBaseField};
-use godot::{obj::Base, prelude::{GodotClass, ToGodot, godot_api}};
+use godot::obj::{ Gd, WithBaseField };
+use godot::{ obj::Base, prelude::{ GodotClass, ToGodot, godot_api } };
 use serde::Deserialize;
 use std::collections::HashSet;
 
 use crate::ban_phim_midi::BanPhimMidi;
 use crate::check_ten_not::chuyen_id_thanh_ten;
+use crate::du_lieu_lich_su::DuLieuLichSu;
 use crate::hop_am::HopAm;
 
 #[derive(Deserialize, Debug)]
 pub struct BaiTimJson {
     pub ten_bai_hoc: String,
     pub nguoi_tao: String,
-    pub danh_sach_bai: Vec<String>, 
+    pub danh_sach_bai: Vec<String>,
     pub cac_ghi_chu: Option<Vec<String>>,
 }
 
 #[derive(GodotClass)]
-#[class(init, base=Control)] 
+#[class(init, base = Control)]
 pub struct HocTimNot {
     #[base]
     base: Base<Control>,
@@ -35,12 +36,13 @@ pub struct HocTimNot {
     cac_ghi_chu: Vec<String>,
 
     dang_o_bai_so: usize,
-    
+
     muc_tieu_hien_tai: Vec<Vec<i32>>,
     vi_tri_dang_danh: usize,
     phim_da_doan_dung: Vec<i32>,
 
     diem: i32,
+    diem_ky_luc: i32,
     so_lan_dung: i32,
     so_lan_sai: i32,
 
@@ -53,28 +55,38 @@ impl HocTimNot {
     fn xong_het_bai();
 
     #[func]
-    pub fn get_diem(&self) -> i32 { self.diem }
+    pub fn get_diem(&self) -> i32 {
+        self.diem
+    }
     #[func]
-    pub fn get_ten_bai_hoc(&self) -> GString { self.ten_bai_hoc.clone() }
+    pub fn get_ten_bai_hoc(&self) -> GString {
+        self.ten_bai_hoc.clone()
+    }
     #[func]
-    pub fn get_nguoi_tao(&self) -> GString { self.nguoi_tao.clone() }
+    pub fn get_nguoi_tao(&self) -> GString {
+        self.nguoi_tao.clone()
+    }
+    #[func]
+    pub fn get_diem_cu(&self) -> i32 {
+        self.diem_ky_luc
+    }
 
     // ================= TÍNH NĂNG TÔ MÀU GỢI Ý =================
     fn lay_mau_sac_cho_phim(so_phim: i32) -> Color {
         let vi_tri_not = so_phim % 12;
         match vi_tri_not {
-            0 => Color::from_rgba(1.0, 0.2, 0.2, 0.9),   // C  - Đỏ
-            1 => Color::from_rgba(1.0, 0.4, 0.4, 0.9),   // C# - Đỏ nhạt
-            2 => Color::from_rgba(1.0, 0.6, 0.1, 0.9),   // D  - Cam
-            3 => Color::from_rgba(1.0, 0.7, 0.4, 0.9),   // D# - Cam nhạt
-            4 => Color::from_rgba(1.0, 0.9, 0.1, 0.9),   // E  - Vàng
-            5 => Color::from_rgba(0.2, 0.8, 0.2, 0.9),   // F  - Xanh lá
-            6 => Color::from_rgba(0.4, 0.9, 0.5, 0.9),   // F# - Xanh ngọc
-            7 => Color::from_rgba(0.1, 0.6, 1.0, 0.9),   // G  - Xanh dương
-            8 => Color::from_rgba(0.4, 0.7, 1.0, 0.9),   // G# - Xanh lơ
-            9 => Color::from_rgba(0.6, 0.2, 1.0, 0.9),   // A  - Tím
-            10 => Color::from_rgba(0.8, 0.4, 1.0, 0.9),  // A# - Tím nhạt
-            11 => Color::from_rgba(1.0, 0.2, 0.7, 0.9),  // B  - Hồng
+            0 => Color::from_rgba(1.0, 0.2, 0.2, 0.9), // C  - Đỏ
+            1 => Color::from_rgba(1.0, 0.4, 0.4, 0.9), // C# - Đỏ nhạt
+            2 => Color::from_rgba(1.0, 0.6, 0.1, 0.9), // D  - Cam
+            3 => Color::from_rgba(1.0, 0.7, 0.4, 0.9), // D# - Cam nhạt
+            4 => Color::from_rgba(1.0, 0.9, 0.1, 0.9), // E  - Vàng
+            5 => Color::from_rgba(0.2, 0.8, 0.2, 0.9), // F  - Xanh lá
+            6 => Color::from_rgba(0.4, 0.9, 0.5, 0.9), // F# - Xanh ngọc
+            7 => Color::from_rgba(0.1, 0.6, 1.0, 0.9), // G  - Xanh dương
+            8 => Color::from_rgba(0.4, 0.7, 1.0, 0.9), // G# - Xanh lơ
+            9 => Color::from_rgba(0.6, 0.2, 1.0, 0.9), // A  - Tím
+            10 => Color::from_rgba(0.8, 0.4, 1.0, 0.9), // A# - Tím nhạt
+            11 => Color::from_rgba(1.0, 0.2, 0.7, 0.9), // B  - Hồng
             _ => Color::from_rgba(1.0, 1.0, 1.0, 0.9),
         }
     }
@@ -101,14 +113,20 @@ impl HocTimNot {
 
     #[func]
     pub fn to_mau_muc_tieu_hien_tai(&mut self) {
-        if !self.cho_phep_to_mau_goi_y { return; }
-        if self.vi_tri_dang_danh >= self.muc_tieu_hien_tai.len() { return; }
-        
+        if !self.cho_phep_to_mau_goi_y {
+            return;
+        }
+        if self.vi_tri_dang_danh >= self.muc_tieu_hien_tai.len() {
+            return;
+        }
+
         if self.ban_phim_midi.is_none() {
             if let Some(ban_phim) = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
                 self.ban_phim_midi = Some(ban_phim);
             } else {
-                godot_print!("LỖI TÔ MÀU: Không tìm thấy 'MIDI/BanPhimPiano'. Kiểm tra lại tên Node!");
+                godot_print!(
+                    "LỖI TÔ MÀU: Không tìm thấy 'MIDI/BanPhimPiano'. Kiểm tra lại tên Node!"
+                );
                 return;
             }
         }
@@ -127,25 +145,16 @@ impl HocTimNot {
     // ==========================================================
 
     #[func]
-    pub fn chuyen_bai(&mut self) {
-        self.dang_o_bai_so += 1;
-        
+    pub fn chay_bai_tim(&mut self) {
         if self.dang_o_bai_so >= self.cac_bai_tim.len() {
-            self.base_mut().emit_signal("xong_het_bai", &[]);
             return;
         }
-        self.chay_bai_tim();
-    }
-
-    #[func]
-    pub fn chay_bai_tim(&mut self) {
-        if self.dang_o_bai_so >= self.cac_bai_tim.len() { return; }
 
         let chuoi_cau_hoi = self.cac_bai_tim[self.dang_o_bai_so].clone();
-        
+
         self.xoa_mau_tat_ca_muc_tieu();
         self.muc_tieu_hien_tai.clear();
-        
+
         for cum_str in chuoi_cau_hoi.split_whitespace() {
             let mut hop_am = Vec::new();
             for id_str in cum_str.split('_') {
@@ -157,11 +166,11 @@ impl HocTimNot {
                 self.muc_tieu_hien_tai.push(hop_am);
             }
         }
-        
+
         self.vi_tri_dang_danh = 0;
         self.phim_da_doan_dung.clear();
         self.base_mut().call("xoa_cac_not_tim", &[]);
-        
+
         let mut noi_dung_ghi_chu = String::new();
         if self.dang_o_bai_so < self.cac_ghi_chu.len() {
             noi_dung_ghi_chu = self.cac_ghi_chu[self.dang_o_bai_so].clone();
@@ -169,10 +178,14 @@ impl HocTimNot {
         if let Some(mut label) = self.base().try_get_node_as::<Label>("ghi_chu") {
             label.set_text(&noi_dung_ghi_chu);
         }
-        
+
         let muc_tieu_hien_tai = self.muc_tieu_hien_tai.clone();
         for hop_am in muc_tieu_hien_tai {
-            let chuoi_id = hop_am.iter().map(|id| id.to_string()).collect::<Vec<String>>().join("_");
+            let chuoi_id = hop_am
+                .iter()
+                .map(|id| id.to_string())
+                .collect::<Vec<String>>()
+                .join("_");
             self.base_mut().call("them_not_tim", &[chuoi_id.to_variant()]);
         }
         self.base_mut().call_deferred("to_mau_muc_tieu_hien_tai", &[]);
@@ -187,7 +200,9 @@ impl HocTimNot {
 
     #[func]
     pub fn kiem_tra_phim(&mut self, so_phim: i32) {
-        if self.vi_tri_dang_danh >= self.muc_tieu_hien_tai.len() { return; }
+        if self.vi_tri_dang_danh >= self.muc_tieu_hien_tai.len() {
+            return;
+        }
 
         let muc_tieu_hop_am = self.muc_tieu_hien_tai[self.vi_tri_dang_danh].clone();
 
@@ -208,16 +223,19 @@ impl HocTimNot {
             // Bấm nốt SAI
             self.so_lan_sai += 1;
             self.diem -= 5; // Trừ 5 điểm cho Tìm Nốt
-            if self.diem < 0 { self.diem = 0; }
+            if self.diem < 0 {
+                self.diem = 0;
+            }
             let vi_tri_dang_danh = self.vi_tri_dang_danh as i32;
             self.base_mut().call("hien_thi_not_tim_sai", &[vi_tri_dang_danh.to_variant()]);
         }
-        
+
         self.cap_nhat_diem();
 
         // 3. KIỂM TRA ĐIỀU KIỆN THẮNG
-        let hoan_thanh = self.phim_da_doan_dung.len() == muc_tieu_hop_am.len() 
-            && muc_tieu_hop_am.iter().all(|phim| self.phim_da_doan_dung.contains(phim));
+        let hoan_thanh =
+            self.phim_da_doan_dung.len() == muc_tieu_hop_am.len() &&
+            muc_tieu_hop_am.iter().all(|phim| self.phim_da_doan_dung.contains(phim));
 
         if hoan_thanh {
             self.hoan_thanh_muc_tieu();
@@ -226,8 +244,10 @@ impl HocTimNot {
 
     #[func]
     pub fn xu_ly_phim_nha(&mut self, so_phim: i32) {
-        if self.vi_tri_dang_danh >= self.muc_tieu_hien_tai.len() { return; }
-        
+        if self.vi_tri_dang_danh >= self.muc_tieu_hien_tai.len() {
+            return;
+        }
+
         // 1. Xóa phím vừa nhả khỏi danh sách đang giữ
         self.phim_da_doan_dung.retain(|&x| x != so_phim);
 
@@ -244,8 +264,9 @@ impl HocTimNot {
         }
 
         // 3. Kiểm tra lại điều kiện thắng (Phòng trường hợp đang giữ nốt sai rồi nhả nốt sai ra)
-        let hoan_thanh = self.phim_da_doan_dung.len() == muc_tieu_hop_am.len() 
-            && muc_tieu_hop_am.iter().all(|phim| self.phim_da_doan_dung.contains(phim));
+        let hoan_thanh =
+            self.phim_da_doan_dung.len() == muc_tieu_hop_am.len() &&
+            muc_tieu_hop_am.iter().all(|phim| self.phim_da_doan_dung.contains(phim));
 
         if hoan_thanh {
             self.hoan_thanh_muc_tieu();
@@ -255,9 +276,9 @@ impl HocTimNot {
     // Hàm phụ trợ nội bộ xử lý chuyển bài/chuyển hợp âm
     fn hoan_thanh_muc_tieu(&mut self) {
         let muc_tieu_hop_am = self.muc_tieu_hien_tai[self.vi_tri_dang_danh].clone();
-        
+
         self.so_lan_dung += 1;
-        self.diem += 50 * muc_tieu_hop_am.len() as i32; // 50 điểm/nốt cho Tìm Nốt
+        self.diem += 50 * (muc_tieu_hop_am.len() as i32); // 50 điểm/nốt cho Tìm Nốt
 
         let vi_tri_dang_danh = self.vi_tri_dang_danh as i32;
         self.base_mut().call("hien_thi_not_tim_dung", &[vi_tri_dang_danh.to_variant()]);
@@ -332,14 +353,52 @@ impl HocTimNot {
         self.so_lan_dung = 0;
         self.so_lan_sai = 0;
 
-        let path = self.duong_dan_bai_hoc.clone();
+        let path: GString = self.duong_dan_bai_hoc.clone();
         if !path.is_empty() {
+            // Đọc điểm kỷ lục cũ
+            let ls = DuLieuLichSu::doc_lich_su();
+            if let Some(kq) = ls.lay_ket_qua("tim_not", &path.to_string()) {
+                self.diem_ky_luc = kq.diem_cao_nhat;
+            } else {
+                self.diem_ky_luc = 0;
+            }
+
             self.lay_thong_tin_bai_hoc(path);
             if let Some(mut label) = self.base().try_get_node_as::<Label>("ten_bai_hoc") {
                 label.set_text(&format!("{}", self.ten_bai_hoc));
             }
             self.chay_bai_tim();
         }
+    }
+    #[func]
+    pub fn lay_ti_le_hoan_thanh(&self) -> f32 {
+        let tong = self.so_lan_dung + self.so_lan_sai;
+        if tong <= 0 {
+            return 0.0;
+        }
+        (((self.so_lan_dung as f32) / (tong as f32)) * 100.0).clamp(0.0, 100.0)
+    }
+
+    pub fn luu_ket_qua_tim_not(&self) {
+        if self.duong_dan_bai_hoc.is_empty() {
+            return;
+        }
+        let ti_le: f32 = self.lay_ti_le_hoan_thanh();
+        let hang = DuLieuLichSu::tinh_hang(ti_le);
+        let mut ls = DuLieuLichSu::doc_lich_su();
+        ls.cap_nhat_ket_qua("tim_not", &self.duong_dan_bai_hoc.to_string(), self.diem, ti_le, hang);
+    }
+
+    #[func]
+    pub fn chuyen_bai(&mut self) {
+        self.dang_o_bai_so += 1;
+
+        if self.dang_o_bai_so >= self.cac_bai_tim.len() {
+            self.luu_ket_qua_tim_not();
+            self.base_mut().emit_signal("xong_het_bai", &[]);
+            return;
+        }
+        self.chay_bai_tim();
     }
 }
 
@@ -348,12 +407,12 @@ impl IControl for HocTimNot {
     fn ready(&mut self) {
         self.dang_o_bai_so = 0;
         self.cho_phep_to_mau_goi_y = true; // Mặc định bật tô màu khi mới vào
-        
+
         if let Some(mut ban_phim) = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
             // Lắng nghe tín hiệu nhả phím để tô màu lại nếu lỡ tay
             let callable = self.base().callable("xu_ly_phim_nha");
             ban_phim.connect("phim_vua_duoc_nha", &callable);
-            
+
             self.ban_phim_midi = Some(ban_phim);
         }
     }

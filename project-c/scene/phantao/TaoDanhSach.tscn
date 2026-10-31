@@ -1,0 +1,364 @@
+[gd_scene format=3 uid="uid://bflnfwp0cf8lo"]
+
+[ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_font"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0, 0.36, 0.56, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.04, 0.2, 0.34, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font = ExtResource("1_font")
+font_size = 28
+font_color = Color(0.95, 0.98, 1, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn"]
+content_margin_left = 14.0
+content_margin_right = 14.0
+bg_color = Color(0.12, 0.46, 0.74, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.55, 0.86, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_green"]
+content_margin_left = 14.0
+content_margin_right = 14.0
+bg_color = Color(0.15, 0.58, 0.35, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.95, 0.68, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="LabelSettings" id="LabelSettings_lbl"]
+font = ExtResource("1_font")
+font_size = 19
+font_color = Color(0.88, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[node name="TaoDanhSachChuong" type="TaoDanhSach" unique_id=322855422]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Nen" type="Panel" parent="." unique_id=2035601569]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="ThanhTren" type="Panel" parent="." unique_id=577693195]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.98
+anchor_bottom = 0.11
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="HBox" type="HBoxContainer" parent="ThanhTren" unique_id=1794089231]
+clip_contents = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.010850694
+anchor_right = 0.98914933
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TieuDe" type="Label" parent="ThanhTren/HBox" unique_id=1611862171]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "📚 QUẢN LÝ CHƯƠNG & GHÉP DANH SÁCH BÀI HỌC"
+label_settings = SubResource("LabelSettings_title")
+
+[node name="QuetLai_Btn" type="Button" parent="ThanhTren/HBox" unique_id=652564451]
+custom_minimum_size = Vector2(160, 60)
+custom_maximum_size = Vector2(250, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "↻ Quét kho bài"
+
+[node name="ChonFileLe_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1986037971]
+custom_minimum_size = Vector2(180, 60)
+custom_maximum_size = Vector2(250, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "📁 Chọn file bài lẻ"
+
+[node name="MoChuong_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1497226184]
+custom_minimum_size = Vector2(150, 60)
+custom_maximum_size = Vector2(250, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "📂 Mở Chương"
+
+[node name="LuuChuong_Btn" type="Button" parent="ThanhTren/HBox" unique_id=479973031]
+custom_minimum_size = Vector2(160, 60)
+custom_maximum_size = Vector2(250, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "💾 Lưu Chương"
+
+[node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=733744992]
+custom_minimum_size = Vector2(120, 60)
+custom_maximum_size = Vector2(250, 90)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✖ Về Menu"
+
+[node name="CotTrai" type="Panel" parent="." unique_id=1378726590]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.02
+anchor_top = 0.13
+anchor_right = 0.48
+anchor_bottom = 0.96
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="CotTrai" unique_id=216418694]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = -20.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="HangLoc" type="HBoxContainer" parent="CotTrai/VBox" unique_id=791503057]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NhanKho" type="Label" parent="CotTrai/VBox/HangLoc" unique_id=1817190411]
+layout_mode = 2
+text = "1. Kho bài học có sẵn:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="TimKiem_Input" type="LineEdit" parent="CotTrai/VBox/HangLoc" unique_id=1507014208]
+custom_minimum_size = Vector2(250, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "🔍 Tìm tên bài học..."
+clear_button_enabled = true
+
+[node name="LocLoai_Option" type="OptionButton" parent="CotTrai/VBox/HangLoc" unique_id=2028397378]
+custom_minimum_size = Vector2(220, 40)
+layout_mode = 2
+selected = 0
+item_count = 6
+popup/item_0/text = "Tất cả loại bài học"
+popup/item_0/id = 0
+popup/item_1/text = "choi_sheet"
+popup/item_1/id = 1
+popup/item_2/text = "tap_luyen_sheet"
+popup/item_2/id = 2
+popup/item_3/text = "nghe_va_doan_not"
+popup/item_3/id = 3
+popup/item_4/text = "tim_not"
+popup/item_4/id = 4
+popup/item_5/text = "xem_video"
+popup/item_5/id = 5
+
+[node name="KhoBaiHoc_List" type="ItemList" parent="CotTrai/VBox" unique_id=1067038775]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 18
+select_mode = 1
+
+[node name="ThemVaoChuong_Btn" type="Button" parent="CotTrai/VBox" unique_id=1885924854]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "➕ Đưa bài đang chọn sang Chương  ➔"
+
+[node name="CotPhai" type="Panel" parent="." unique_id=666104419]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.13
+anchor_right = 0.98
+anchor_bottom = 0.96
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="CotPhai" unique_id=1438701338]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 18.0
+offset_right = -20.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="HangTenChuong" type="HBoxContainer" parent="CotPhai/VBox" unique_id=814756589]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="NhanTC" type="Label" parent="CotPhai/VBox/HangTenChuong" unique_id=723829474]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+text = "Tên Chương:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="TenChuong_Input" type="LineEdit" parent="CotPhai/VBox/HangTenChuong" unique_id=1055710121]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chương 1"
+placeholder_text = "Nhập tên chương (VD: Chương 1 - Cơ bản)..."
+
+[node name="BaiTrongChuong_List" type="ItemList" parent="CotPhai/VBox" unique_id=795907541]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 18
+
+[node name="HangSuaNhanh" type="HBoxContainer" parent="CotPhai/VBox" unique_id=949210697]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TenBaiTuyChinh_Input" type="LineEdit" parent="CotPhai/VBox/HangSuaNhanh" unique_id=664659120]
+custom_minimum_size = Vector2(0, 42)
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Sửa tên hiển thị của bài học..."
+
+[node name="LoaiBai_Option" type="OptionButton" parent="CotPhai/VBox/HangSuaNhanh" unique_id=2065742272]
+custom_minimum_size = Vector2(190, 42)
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "choi_sheet"
+popup/item_0/id = 0
+popup/item_1/text = "tap_luyen_sheet"
+popup/item_1/id = 1
+popup/item_2/text = "nghe_va_doan_not"
+popup/item_2/id = 2
+popup/item_3/text = "tim_not"
+popup/item_3/id = 3
+popup/item_4/text = "xem_video"
+popup/item_4/id = 4
+
+[node name="CapNhatBai_Btn" type="Button" parent="CotPhai/VBox/HangSuaNhanh" unique_id=265048493]
+custom_minimum_size = Vector2(125, 42)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "✎ Sửa bài"
+
+[node name="HangDieuKhien" type="HBoxContainer" parent="CotPhai/VBox" unique_id=623012818]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Len_Btn" type="Button" parent="CotPhai/VBox/HangDieuKhien" unique_id=205865504]
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "▲ Đẩy lên trên"
+
+[node name="Xuong_Btn" type="Button" parent="CotPhai/VBox/HangDieuKhien" unique_id=2055179762]
+custom_minimum_size = Vector2(170, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "▼ Đẩy xuống dưới"
+
+[node name="XoaBai_Btn" type="Button" parent="CotPhai/VBox/HangDieuKhien" unique_id=907726225]
+custom_minimum_size = Vector2(190, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "🗑 Gỡ khỏi chương"
+
+[node name="HopThoaiChonBaiLe" type="FileDialog" parent="." unique_id=1472131777]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "bai_hoc"
+filters = PackedStringArray("*.json ; Lesson JSON")
+
+[node name="HopThoaiLuuChuong" type="FileDialog" parent="." unique_id=2016854856]
+title = "Lưu file Danh Sách Chương JSON"
+initial_position = 2
+size = Vector2i(750, 500)
+access = 2
+root_subfolder = "bai_hoc/danh_sach"
+filters = PackedStringArray("*.json ; Chapter JSON")
+
+[node name="HopThoaiMoChuong" type="FileDialog" parent="." unique_id=418952808]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+root_subfolder = "bai_hoc/danh_sach"
+filters = PackedStringArray("*.json ; Chapter JSON")

@@ -52,9 +52,9 @@ scale = Vector2(1.4, 1.4)
 
 [node name="K2" parent="." unique_id=1559595971 instance=ExtResource("1_4oah5")]
 layout_mode = 1
-anchor_top = 0.51944447
-anchor_right = 1.401
-anchor_bottom = 0.79200006
+anchor_top = 0.50277776
+anchor_right = 1.4009999
+anchor_bottom = 0.7753333
 offset_right = -768.9199
 offset_bottom = -84.36005
 scale = Vector2(1.4, 1.4)
@@ -71,39 +71,58 @@ text = "00:00"
 label_settings = SubResource("LabelSettings_4oah5")
 metadata/_edit_use_anchors_ = true
 
-[node name="GClef" type="Sprite2D" parent="." unique_id=371704389]
+[node name="GClef" type="TextureRect" parent="." unique_id=605190095]
 modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
-position = Vector2(46, 347.5)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.031770837
+anchor_top = 0.19629629
+anchor_right = 0.089583315
+anchor_bottom = 0.42777783
+offset_right = 285.67825
+offset_bottom = 158.94568
 scale = Vector2(0.44921875, 0.6113282)
 texture = ExtResource("3_1hfxq")
+expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="GClef2" type="Sprite2D" parent="." unique_id=1968527863]
+[node name="GClef2" type="TextureRect" parent="." unique_id=717385602]
 modulate = Color(0.41598046, 0.41598043, 0.4159804, 1)
-position = Vector2(48.999996, 717)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5185185
+anchor_right = 0.057291668
+anchor_bottom = 0.75740755
+offset_right = 402.0
+offset_bottom = 270.38416
 scale = Vector2(0.21484374, 0.48828125)
 texture = ExtResource("4_hntyr")
+metadata/_edit_use_anchors_ = true
 
 [node name="nhipK1" type="Label" parent="." unique_id=762706351]
 layout_mode = 0
-offset_left = 103.0
-offset_top = 271.0
-offset_right = 146.0
-offset_bottom = 449.0
+anchor_left = 0.053645834
+anchor_top = 0.25092593
+anchor_right = 0.07604167
+anchor_bottom = 0.41574073
 text = "2
 4"
 label_settings = SubResource("LabelSettings_x82fm")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="nhipK2" type="Label" parent="." unique_id=578805271]
-layout_mode = 0
-offset_left = 106.0
-offset_top = 630.0
-offset_right = 149.0
-offset_bottom = 810.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.055208333
+anchor_top = 0.56666666
+anchor_right = 0.07760417
+anchor_bottom = 0.73333347
 text = "2
 4"
 label_settings = SubResource("LabelSettings_x82fm")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="nhip_trong" type="AudioStreamPlayer2D" parent="." unique_id=1262709956]
 stream = ExtResource("6_x82fm")
@@ -131,9 +150,9 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.009895833
-anchor_top = 0.47592592
+anchor_top = 0.4592593
 anchor_right = 0.073731996
-anchor_bottom = 0.51039994
+anchor_bottom = 0.49373326
 offset_bottom = 1.5258789e-05
 grow_horizontal = 2
 text = "C2 - D3"

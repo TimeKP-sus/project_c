@@ -1,38 +1,194 @@
 [gd_scene format=3 uid="uid://mre47t220lg4"]
 
 [ext_resource type="Script" uid="uid://yw6v86xh2avk" path="res://gd/danh_sach_bai_hoc.gd" id="1_irrk0"]
+[ext_resource type="Texture2D" uid="uid://i3s0mud0bk3w" path="res://asset/110215.jpg" id="2_bgimg"]
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_irrk0"]
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="3_purpp"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_purpp"]
-bg_color = Color(0.41291764, 0.4129177, 0.41291758, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nen_chinh"]
+bg_color = Color(0, 0.4, 0.6, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01teo"]
-content_margin_left = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_quay_lai_normal"]
+bg_color = Color(0.12, 0.47, 0.74, 0.92)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.55, 0.85, 1, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.01, 0.1, 0.18, 0.35)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_quay_lai_pressed"]
+bg_color = Color(0.04, 0.25, 0.42, 1)
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 1
+border_color = Color(0.4, 0.75, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_quay_lai_hover"]
+bg_color = Color(0.18, 0.58, 0.88, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.85, 0.96, 1, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thanh_tren"]
+bg_color = Color(0.05, 0.28, 0.46, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.45, 0.82, 1, 0.8)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.01, 0.1, 0.18, 0.35)
+shadow_size = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o_tim_kiem"]
+content_margin_left = 16.0
 content_margin_top = 16.0
-bg_color = Color(0.33735362, 0.33735362, 0.3373535, 1)
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.02, 0.16, 0.28, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.35, 0.72, 0.96, 0.85)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cj3hg"]
-content_margin_left = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o_tim_kiem_focus"]
+content_margin_left = 16.0
 content_margin_top = 10.0
-content_margin_right = 10.0
-content_margin_bottom = 10.0
-bg_color = Color(0, 0, 0, 1)
-border_color = Color(0.35831767, 0.3583177, 0.35831743, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-corner_detail = 20
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.03, 0.2, 0.34, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.75, 0.95, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_nhan_loc"]
+font = ExtResource("3_irrk0")
+font_size = 18
+font_color = Color(0.9, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0.01, 0.14, 0.25, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_loc"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.12, 0.47, 0.74, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.55, 0.85, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_loc_hover"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(0.18, 0.56, 0.86, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.85, 0.96, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_khu_vuc"]
+bg_color = Color(0.04, 0.24, 0.4, 0.84)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.4, 0.78, 1, 0.75)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0.01, 0.1, 0.18, 0.4)
+shadow_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_tieu_de_cot"]
+font = ExtResource("3_purpp")
+font_size = 22
+font_color = Color(0.88, 0.96, 1, 1)
+outline_size = 5
+outline_color = Color(0.02, 0.16, 0.28, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_khung_thong_tin"]
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+bg_color = Color(0.02, 0.15, 0.26, 0.9)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.72, 0.96, 0.65)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
 
 [node name="DanhSachBaiHoc" type="DanhSachBaiHoc" unique_id=788736684]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 0.00012207031
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_irrk0")
+
+[node name="NenMau" type="Panel" parent="." unique_id=1486517747]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nen_chinh")
+
+[node name="110215" type="Sprite2D" parent="." unique_id=57237037]
+position = Vector2(960, 543.5)
+scale = Vector2(1.916, 1.61169)
+texture = ExtResource("2_bgimg")
 
 [node name="khung" type="Control" parent="." unique_id=1486567539]
 visible = false
@@ -40,145 +196,171 @@ anchors_preset = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 
-[node name="ColorRect" type="ColorRect" parent="khung" unique_id=2108535038]
-layout_mode = 0
-offset_right = 378.0
-offset_bottom = 1080.0
+[node name="quay_lai" type="Button" parent="." unique_id=2082852234]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_top = 0.018
+anchor_right = 0.185
+anchor_bottom = 0.096
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_purpp")
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_quay_lai_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_quay_lai_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_quay_lai_hover")
+text = "◀  Menu chính"
 
-[node name="ColorRect2" type="ColorRect" parent="khung" unique_id=1243967967]
-layout_mode = 0
-offset_left = 378.0
-offset_right = 1920.0
-offset_bottom = 112.0
-color = Color(0.44368353, 0.44368356, 0.44368353, 1)
+[node name="menu_tren" type="Panel" parent="." unique_id=628778533]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.197
+anchor_top = 0.018
+anchor_right = 0.988
+anchor_bottom = 0.096
+theme_override_styles/panel = SubResource("StyleBoxFlat_thanh_tren")
 
-[node name="ColorRect5" type="ColorRect" parent="khung" unique_id=1128069531]
-layout_mode = 0
-offset_left = 1400.0
-offset_top = 112.0
-offset_right = 1920.0
-offset_bottom = 1079.0
-color = Color(0.1281006, 0.12810066, 0.1281006, 1)
+[node name="tim_kiem" type="TextEdit" parent="menu_tren" unique_id=1642749798]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.015
+anchor_top = 0.15
+anchor_right = 0.42
+anchor_bottom = 0.85
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_placeholder_color = Color(0.65, 0.82, 0.95, 0.75)
+theme_override_fonts/font = ExtResource("3_irrk0")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_o_tim_kiem")
+theme_override_styles/focus = SubResource("StyleBoxFlat_o_tim_kiem_focus")
+placeholder_text = "🔍 Nhập tên bài học để tìm kiếm..."
 
-[node name="ColorRect3" type="ColorRect" parent="khung" unique_id=919494733]
-layout_mode = 0
-offset_left = 378.0
-offset_top = 112.0
-offset_right = 1400.0
-offset_bottom = 1080.0
-color = Color(0.740546, 0.7405459, 0.7405459, 1)
+[node name="BoLoc" type="HBoxContainer" parent="menu_tren" unique_id=125678211]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.435
+anchor_top = 0.15
+anchor_right = 0.985
+anchor_bottom = 0.85
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="NhanLoai" type="Label" parent="menu_tren/BoLoc" unique_id=132743802]
+layout_mode = 2
+text = "Chế độ:"
+label_settings = SubResource("LabelSettings_nhan_loc")
+
+[node name="LocLoaiBai_Option" type="OptionButton" parent="menu_tren/BoLoc" unique_id=1245596425]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_irrk0")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_nut_loc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o_tim_kiem_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nut_loc_hover")
+selected = 0
+item_count = 5
+popup/item_0/text = "Tất cả chế độ"
+popup/item_0/id = 0
+popup/item_1/text = "🎼 Chơi Sheet nhạc"
+popup/item_1/id = 1
+popup/item_2/text = "🎯 Luyện tập theo đoạn"
+popup/item_2/id = 2
+popup/item_3/text = "👂 Nghe và đoán nốt"
+popup/item_3/id = 3
+popup/item_4/text = "🎹 Tìm nốt trên đàn"
+popup/item_4/id = 4
+
+[node name="NhanSapXep" type="Label" parent="menu_tren/BoLoc" unique_id=1829024166]
+layout_mode = 2
+text = "Sắp xếp:"
+label_settings = SubResource("LabelSettings_nhan_loc")
+
+[node name="SapXep_Option" type="OptionButton" parent="menu_tren/BoLoc" unique_id=595848015]
+custom_minimum_size = Vector2(175, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_irrk0")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_nut_loc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_o_tim_kiem_focus")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nut_loc_hover")
+selected = 0
+item_count = 3
+popup/item_0/text = "Thứ tự mặc định"
+popup/item_0/id = 0
+popup/item_1/text = "Tên: A → Z"
+popup/item_1/id = 1
+popup/item_2/text = "Tên: Z → A"
+popup/item_2/id = 2
+
+[node name="DatLaiLoc_Btn" type="Button" parent="menu_tren/BoLoc" unique_id=1352547725]
+custom_minimum_size = Vector2(115, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_irrk0")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_nut_loc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_quay_lai_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nut_loc_hover")
+text = "↺ Đặt lại"
 
 [node name="menu_trai" type="Panel" parent="." unique_id=677898717]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.104
-anchor_right = 0.19700001
-anchor_bottom = 1.006
-offset_top = -0.3199997
-offset_right = -0.24002075
-offset_bottom = -7.4801025
-theme_override_styles/panel = SubResource("StyleBoxFlat_purpp")
+anchor_left = 0.012
+anchor_top = 0.112
+anchor_right = 0.185
+anchor_bottom = 0.982
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_khu_vuc")
+
+[node name="TieuDeChuong" type="Label" parent="menu_trai" unique_id=1751695437]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14.0
+offset_bottom = 48.0
+grow_horizontal = 2
+text = "📚 DANH MỤC CHƯƠNG"
+label_settings = SubResource("LabelSettings_tieu_de_cot")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VScrollBar" type="VScrollBar" parent="menu_trai" unique_id=1625892632]
+visible = false
 layout_mode = 0
 offset_top = 112.0
 offset_right = 8.0
 offset_bottom = 120.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="menu_trai" unique_id=920174276]
-layout_mode = 0
-offset_top = 24.0
-offset_right = 378.0
-offset_bottom = 967.0
-theme_override_constants/scrollbar_h_separation = 1
-theme_override_constants/scrollbar_v_separation = 1
-
-[node name="DanhSachChuong" type="VBoxContainer" parent="menu_trai/ScrollContainer" unique_id=950426875]
-custom_minimum_size = Vector2(378, 966)
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="quay_lai" type="Button" parent="." unique_id=2082852234]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.007
-anchor_top = 0.013
-anchor_right = 0.051000003
-anchor_bottom = 0.091000006
-offset_left = 0.55999947
-offset_top = -0.03999996
-offset_right = 0.0799942
-offset_bottom = -0.2800064
-theme_override_fonts/font = ExtResource("3_purpp")
-theme_override_font_sizes/font_size = 50
-text = "<"
-
-[node name="menu_tren" type="Panel" parent="." unique_id=628778533]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.19700001
-anchor_right = 0.9990001
-anchor_bottom = 0.104
-offset_left = -0.24002075
-offset_right = 1.9199219
-offset_bottom = -0.3199997
-
-[node name="tim_kiem" type="TextEdit" parent="menu_tren" unique_id=1642749798]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.045
-anchor_top = 0.25
-anchor_right = 0.48100004
-anchor_bottom = 0.87500006
-offset_left = 0.609993
-offset_top = -3.0
-offset_right = 0.2979126
-offset_bottom = -5.698036
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_01teo")
-text = "dsadasddddd"
-
-[node name="tu_tao" type="MenuButton" parent="menu_tren" unique_id=1948285041]
-layout_mode = 0
-offset_left = 1288.0
-offset_top = 25.0
-offset_right = 1512.0
-offset_bottom = 98.0
-theme_override_font_sizes/font_size = 30
-text = "Tạo bài học"
-
-[node name="menu_phai" type="Panel" parent="." unique_id=2100984069]
-layout_mode = 0
-offset_left = 1400.0
-offset_top = 112.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-
-[node name="thong_tin" type="RichTextLabel" parent="menu_phai" unique_id=1977675641]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.027
-anchor_top = 0.008
-anchor_right = 0.96900004
-anchor_bottom = 0.98300004
-offset_left = -0.03999996
-offset_top = 0.25599957
-offset_right = 0.1199646
-offset_bottom = 0.45593262
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 58.0
+offset_right = -14.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/normal_font = ExtResource("3_irrk0")
-theme_override_font_sizes/normal_font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_cj3hg")
-bbcode_enabled = true
-text = "Dsadasd"
+horizontal_scroll_mode = 0
+
+[node name="DanhSachChuong" type="VBoxContainer" parent="menu_trai/ScrollContainer" unique_id=950426875]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 14
 
 [node name="menu_giua" type="Panel" parent="." unique_id=1141818910]
-layout_mode = 0
-offset_left = 392.0
-offset_top = 120.0
-offset_right = 1400.0
-offset_bottom = 1078.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.197
+anchor_top = 0.112
+anchor_right = 0.72
+anchor_bottom = 0.982
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_khu_vuc")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="menu_giua" unique_id=1176077096]
 propagate_maximum_size = true
@@ -186,12 +368,57 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = -18.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
 [node name="DanhSachBaiHoc" type="VBoxContainer" parent="menu_giua/ScrollContainer" unique_id=440594186]
-custom_minimum_size = Vector2(1000, 966)
 layout_mode = 2
-theme_override_constants/separation = 5
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="menu_phai" type="Panel" parent="." unique_id=2100984069]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.732
+anchor_top = 0.112
+anchor_right = 0.988
+anchor_bottom = 0.982
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_khu_vuc")
+
+[node name="TieuDeChiTiet" type="Label" parent="menu_phai" unique_id=1081227813]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14.0
+offset_bottom = 48.0
+grow_horizontal = 2
+text = "ℹ CHI TIẾT BÀI HỌC"
+label_settings = SubResource("LabelSettings_tieu_de_cot")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="thong_tin" type="RichTextLabel" parent="menu_phai" unique_id=1977675641]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 58.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.92, 0.97, 1, 1)
+theme_override_fonts/normal_font = ExtResource("3_irrk0")
+theme_override_font_sizes/normal_font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_khung_thong_tin")
+bbcode_enabled = true
+text = "Hãy di chuột hoặc chọn một bài học ở danh sách bên trái để xem thông tin chi tiết."
 
 [connection signal="text_changed" from="menu_tren/tim_kiem" to="." method="_on_tim_kiem_text_changed"]

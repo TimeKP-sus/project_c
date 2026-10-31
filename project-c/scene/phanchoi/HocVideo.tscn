@@ -2,25 +2,188 @@
 
 [ext_resource type="Script" uid="uid://b7yb2lur2hd7x" path="res://gd/hoc_video.gd" id="1_mkm1g"]
 [ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_yno10"]
+[ext_resource type="Script" uid="uid://dy51oyniurnd" path="res://gd/nut_menu.gd" id="2_nutmenu_gd"]
+[ext_resource type="PackedScene" uid="uid://0gn6uhig7bu0" path="res://scene/button/button_1.tscn" id="3_btn1"]
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="4_l8i2y"]
 [ext_resource type="FontFile" uid="uid://d3nlqn62vfu1r" path="res://asset/font/ARLRDBD.TTF" id="5_fyy56"]
 [ext_resource type="FontFile" uid="uid://xit3ra6vpk7w" path="res://asset/font/ariali.ttf" id="5_s5qh7"]
+[ext_resource type="Script" uid="uid://cc3htkv3exfwd" path="res://gd/fps.gd" id="6_fps"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5k85u"]
+bg_color = Color(0, 0.36, 0.56, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_panel_phu"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_mkm1g"]
 font = ExtResource("4_l8i2y")
-font_size = 50
+font_size = 42
+font_color = Color(0.95, 0.98, 1, 1)
 outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_l8i2y"]
 font = ExtResource("5_s5qh7")
-font_size = 30
-outline_size = 10
+font_size = 25
+font_color = Color(0.75, 0.9, 1, 1)
+outline_size = 8
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_bg"]
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.05, 0.12, 0.2, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.35, 0.7, 1, 0.6)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider_fill"]
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.25, 0.7, 1, 0.95)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_thoi_gian"]
+font = ExtResource("4_l8i2y")
+font_size = 18
+font_color = Color(0.9, 0.96, 1, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_play"]
+bg_color = Color(0.12, 0.45, 0.75, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.6, 0.88, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phu_de_bg"]
+content_margin_left = 20.0
+content_margin_right = 20.0
+bg_color = Color(0.02, 0.08, 0.15, 0.78)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_s5qh7"]
 font = ExtResource("5_fyy56")
-font_size = 20
+font_size = 24
+font_color = Color(1, 0.96, 0.75, 1)
+outline_size = 6
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hoan_thanh"]
+bg_color = Color(0.15, 0.6, 0.36, 0.95)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.55, 0.95, 0.7, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thanh_menu"]
+bg_color = Color(0.05, 0.16, 0.28, 0.94)
+border_width_bottom = 3
+border_color = Color(0.35, 0.75, 1, 0.85)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_normal"]
+content_margin_left = 18.0
+content_margin_right = 18.0
+bg_color = Color(0.12, 0.42, 0.68, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 3
+border_color = Color(0.5, 0.82, 1, 0.9)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_pressed"]
+content_margin_left = 18.0
+content_margin_top = 3.0
+content_margin_right = 18.0
+bg_color = Color(0.06, 0.25, 0.42, 1)
+border_width_left = 1
+border_width_top = 3
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.75, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_hover"]
+content_margin_left = 18.0
+content_margin_right = 18.0
+bg_color = Color(0.18, 0.54, 0.84, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.85, 0.96, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_mo_normal"]
+bg_color = Color(0.06, 0.22, 0.36, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.45, 0.8, 1, 0.9)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_mo_hover"]
+bg_color = Color(0.12, 0.38, 0.62, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0.8, 0.95, 1, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_fps"]
+font = ExtResource("4_l8i2y")
+font_size = 18
+font_color = Color(0.75, 0.92, 1, 0.9)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
 
 [node name="HocVideo" type="HocVideo" unique_id=1293407081]
 duong_dan_video = "res://bai_hoc/video/v1.mp4"
@@ -31,15 +194,23 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_mkm1g")
 
+[node name="Nen" type="Panel" parent="." unique_id=1048662938]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_5k85u")
+
 [node name="video" type="VideoStreamPlayer" parent="." unique_id=607626360]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.104
-anchor_right = 1.0
-anchor_bottom = 0.88900006
-offset_top = -112.32
-offset_bottom = -0.12005615
+anchor_top = -0.0018518518
+anchor_right = 0.9984375
+anchor_bottom = 0.8509259
 expand = true
+metadata/_edit_use_anchors_ = true
 
 [node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_yno10")]
 layout_mode = 1
@@ -48,19 +219,23 @@ hien_thi_midi = false
 [node name="panel" type="Panel" parent="." unique_id=653628095]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.006
-anchor_bottom = 0.88900006
-offset_right = -11.52002
-offset_bottom = -0.12005615
+anchor_left = 0.00052083336
+anchor_right = 0.9984375
+anchor_bottom = 0.8509259
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_panel_phu")
+metadata/_edit_use_anchors_ = true
 
 [node name="ten_bai_hoc" type="Label" parent="panel" unique_id=11173132]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.003
 anchor_bottom = 0.143
+offset_left = 88.0
 offset_right = -5.3759766
 offset_bottom = -0.11200714
-text = "Ten bai hoc"
+text = "Tên bài học"
 label_settings = SubResource("LabelSettings_mkm1g")
 vertical_alignment = 1
 
@@ -69,54 +244,58 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.003
 anchor_bottom = 0.143
-offset_top = 112.0
+offset_left = 88.0
+offset_top = 86.0
 offset_right = -5.3759766
-offset_bottom = 56.887993
-text = "Nguoi tao"
+offset_bottom = 30.887993
+text = "Người tạo"
 label_settings = SubResource("LabelSettings_l8i2y")
 vertical_alignment = 1
 
 [node name="thanh_tua" type="HSlider" parent="panel" unique_id=1148524638]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.021000002
-anchor_top = 0.9620001
-anchor_right = 0.99200004
-anchor_bottom = 0.99200004
-offset_left = 1.6799965
-offset_top = 0.47991943
-offset_right = -0.6401367
-offset_bottom = -0.32006836
+anchor_left = 0.035
+anchor_top = 0.955
+anchor_right = 0.985
+anchor_bottom = 0.992
+theme_override_styles/slider = SubResource("StyleBoxFlat_slider_bg")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_slider_fill")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_slider_fill")
 step = 0.1
 
 [node name="thoi_gian" type="Label" parent="panel/thanh_tua" unique_id=1050794711]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.015000001
-anchor_top = -1.0
-anchor_right = 0.038000003
-offset_left = -0.069999695
-offset_top = -1.1444092e-05
-offset_right = -0.75600433
+anchor_top = -1.1
+anchor_right = 0.08
+offset_top = -6.0
+label_settings = SubResource("LabelSettings_thoi_gian")
 
 [node name="dung_lai" type="Button" parent="panel/thanh_tua" unique_id=1637816516]
 layout_mode = 1
 anchors_preset = -1
-offset_left = -34.0
-offset_right = -6.0
-offset_bottom = 28.0
+offset_left = -46.0
+offset_top = -2.0
+offset_right = -8.0
+offset_bottom = 32.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_play")
+text = "⏯"
 
 [node name="chu_thich" type="Label" parent="panel" unique_id=1576199791]
 layout_mode = 0
-offset_top = 882.0
-offset_right = 1918.0
-offset_bottom = 924.0
-text = "ddsad"
+offset_left = 274.0
+offset_top = 826.0
+offset_right = 1674.0
+offset_bottom = 876.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_phu_de_bg")
 label_settings = SubResource("LabelSettings_s5qh7")
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="menu" type="Button" parent="." unique_id=718089457]
+visible = false
 layout_mode = 0
 offset_left = 1846.0
 offset_top = 1008.0
@@ -125,6 +304,7 @@ offset_bottom = 1039.0
 text = "Menu"
 
 [node name="panel_menu" type="Panel" parent="." unique_id=130078151]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = -0.078
@@ -135,12 +315,99 @@ offset_right = -2.0
 [node name="hoan_thanh" type="Button" parent="." unique_id=264234390]
 visible = false
 layout_mode = 0
-offset_left = 1680.0
-offset_top = 840.0
-offset_right = 1904.0
-offset_bottom = 896.0
+offset_left = 1660.0
+offset_top = 830.0
+offset_right = 1900.0
+offset_bottom = 892.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_l8i2y")
 theme_override_font_sizes/font_size = 24
-text = "Hoan thanh"
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_hoan_thanh")
+text = "✔ Hoàn thành"
+
+[node name="NutMenu" type="Control" parent="." unique_id=52198437]
+z_index = 40
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_nutmenu_gd")
+metadata/_edit_lock_ = true
+
+[node name="Menu" type="Control" parent="NutMenu" unique_id=1964604858]
+anchors_preset = 0
+offset_top = -80.0
+offset_right = 1920.0
+mouse_filter = 2
+
+[node name="NenThanhMenu" type="Panel" parent="NutMenu/Menu" unique_id=1989353861]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 4.0
+offset_right = 680.0
+offset_bottom = 74.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_thanh_menu")
+
+[node name="tam_dung_menu" type="Button" parent="NutMenu/Menu" unique_id=1368048531]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 14.0
+offset_right = 350.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("4_l8i2y")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
+text = "⏯ Phát / Tạm dừng"
+
+[node name="quay_lai" parent="NutMenu/Menu" unique_id=1391915915 instance=ExtResource("3_btn1")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 370.0
+offset_top = 14.0
+offset_right = 660.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
+text = "📚 Danh sách bài học"
+loai_nut = "them moi"
+metadata/_edit_pinned_properties_ = [&"loai_nut"]
+
+[node name="nut_menu" type="Button" parent="NutMenu" unique_id=680074442]
+layout_mode = 0
+offset_left = 1862.0
+offset_top = 974.0
+offset_right = 1914.0
+offset_bottom = 1026.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("4_l8i2y")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nut_mo_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nut_mo_hover")
+text = "☰"
+
+[node name="fps" type="Label" parent="NutMenu" unique_id=1403853146]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.896
+anchor_right = 0.992
+anchor_bottom = 0.032
+offset_top = 8.0
+label_settings = SubResource("LabelSettings_fps")
+horizontal_alignment = 2
+script = ExtResource("6_fps")
+hien_fps = true
 
 [connection signal="finished" from="video" to="." method="_on_video_finished"]
 [connection signal="gui_input" from="panel" to="." method="_on_video_gui_input"]
@@ -148,3 +415,5 @@ text = "Hoan thanh"
 [connection signal="drag_started" from="panel/thanh_tua" to="." method="_on_thanh_tua_drag_started"]
 [connection signal="button_down" from="panel/thanh_tua/dung_lai" to="." method="_on_dung_lai_button_down"]
 [connection signal="button_down" from="menu" to="." method="_on_menu_button_down"]
+[connection signal="button_down" from="NutMenu/Menu/tam_dung_menu" to="." method="_on_dung_lai_button_down"]
+[connection signal="button_down" from="NutMenu/nut_menu" to="NutMenu" method="_on_nut_menu_button_down"]
