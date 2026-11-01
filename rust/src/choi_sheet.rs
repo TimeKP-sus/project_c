@@ -1,5 +1,5 @@
 use godot::builtin::{ Callable, Color, GString, NodePath, Variant };
-use godot::classes::{ Control, IControl, Label, Object };
+use godot::classes::{ Button, Control, IControl, Label, Object};
 
 use godot::obj::{ Gd, GdRef, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
@@ -26,6 +26,8 @@ pub struct ChoiSheet {
     tac_gia_label: Option<Gd<Label>>,
     #[export]
     nguoi_tao_label: Option<Gd<Label>>,
+    #[export]
+    che_do_choi_thu: bool,
 
     #[export]
     phan_luyen_tap: bool,
@@ -234,8 +236,14 @@ impl ChoiSheet {
     }
 
     #[func]
+    pub fn thoat_choi_thu(&mut self) {
+        self.base_mut().queue_free();
+    }
+
+    #[func]
     pub fn tong_ket(&mut self) {
-        if self.duong_dan_bai_hoc.is_empty() {
+        // Không lưu điểm vào lich_su.json nếu đang ở chế độ Chơi thử
+        if self.duong_dan_bai_hoc.is_empty() || self.che_do_choi_thu {
             return;
         }
         let ti_le = self.lay_ti_le_hoan_thanh();
@@ -243,14 +251,11 @@ impl ChoiSheet {
         let che_do = self.lay_ten_che_do_luu();
 
         let mut ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
-
-        // 1. Lưu lại điểm kỷ lục cũ TRƯỚC KHI cập nhật kết quả mới
         self.diem_ky_luc = ls
             .lay_ket_qua(che_do, &self.duong_dan_bai_hoc.to_string())
             .map(|kq| kq.diem_cao_nhat)
             .unwrap_or(0);
 
-        // 2. Cập nhật kết quả mới vào file lich_su.json
         ls.cap_nhat_ket_qua(
             che_do,
             &self.duong_dan_bai_hoc.to_string(),
@@ -339,6 +344,15 @@ impl IControl for ChoiSheet {
                 }
                 // Lấy trọn bộ thông tin từ file test.json gốc
                 self.set_thong_tin_bai_hat();
+                
+            }
+        }
+        // Hiện nút Thoát chơi thử nếu đi từ TaoTapSheet sang
+        if let Some(mut btn_thoat) = self.base().try_get_node_as::<Button>("thoat_choi_thu") {
+            btn_thoat.set_visible(self.che_do_choi_thu);
+            let callable_thoat = self.base().callable("thoat_choi_thu");
+            if !btn_thoat.is_connected("button_down", &callable_thoat) {
+                btn_thoat.connect("button_down", &callable_thoat);
             }
         }
 

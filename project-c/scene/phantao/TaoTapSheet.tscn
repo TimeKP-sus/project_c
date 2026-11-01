@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d132h0s5g7kne"]
 
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_6iejc"]
+[ext_resource type="Script" uid="uid://d4k0csukcct2f" path="res://gd/tao_tap_sheet.gd" id="1_h32o1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0, 0.36, 0.56, 1)
@@ -67,6 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_h32o1")
 
 [node name="Nen" type="Panel" parent="." unique_id=1202003133]
 layout_mode = 1

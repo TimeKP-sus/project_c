@@ -14,15 +14,24 @@ extends Panel
 @onready var trat: Label = $trat
 @onready var danh_gia: Label = $danh_gia
 @onready var do_chinh_xac: Label = $do_chinh_xac
+@onready var ve_ds_btn: Button = $ve_ds
 
 func _ready() -> void:
 	# Ẩn panel tổng kết lúc mới vào game
 	nen_tong_ket.hide()
 
 func _on_choi_lai_button_down() -> void:
-	var scene_hien_tai = get_tree().current_scene
-	var duong_dan_da_luu = scene_hien_tai.duong_dan_bai_hoc
-	var la_luyen_tap = scene_hien_tai.phan_luyen_tap
+	# Nếu đang ở chế độ Chơi thử (đè lên TaoTapSheet), nhờ TaoTapSheet mở lại bản chơi thử mới
+	if choi_sheet.che_do_choi_thu:
+		var tao_tap_scene = get_tree().current_scene
+		choi_sheet.queue_free()
+		if tao_tap_scene and tao_tap_scene.has_method("choi_thu_doan_luyen_tap"):
+			tao_tap_scene.call_deferred("choi_thu_doan_luyen_tap")
+		return
+
+	# Chế độ chơi bình thường từ Danh sách bài học
+	var duong_dan_da_luu = choi_sheet.duong_dan_bai_hoc
+	var la_luyen_tap = choi_sheet.phan_luyen_tap
 
 	var choi_sheet_scene = load("res://scene/phanchoi/ChoiSheet.tscn")
 	var scene_moi = choi_sheet_scene.instantiate()
@@ -32,13 +41,18 @@ func _on_choi_lai_button_down() -> void:
 
 	get_tree().root.add_child(scene_moi)
 	get_tree().current_scene = scene_moi
-	scene_hien_tai.queue_free()
+	choi_sheet.queue_free()
 
 func _on_ve_ds_button_down() -> void:
-	get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
+	if choi_sheet.che_do_choi_thu:
+		choi_sheet.thoat_choi_thu()
+	else:
+		get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
 
 func _on_quan_ly_sheet_bai_hat_ket_thuc() -> void:
 	nen_tong_ket.show()
+	if choi_sheet.che_do_choi_thu and ve_ds_btn:
+		ve_ds_btn.text = "⬅ Về tạo bài"
 
 	ten.text = quan_ly_sheet.get_ten_bai_hat()
 	tac_gia.text = "Tác giả: " + quan_ly_sheet.get_tac_gia()

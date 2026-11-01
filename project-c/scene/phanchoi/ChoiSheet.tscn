@@ -156,15 +156,6 @@ corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thanh_menu"]
-bg_color = Color(0.05, 0.16, 0.28, 0.94)
-border_width_bottom = 3
-border_color = Color(0.35, 0.75, 1, 0.85)
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-shadow_color = Color(0, 0, 0, 0.45)
-shadow_size = 12
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_item_normal"]
 content_margin_left = 16.0
 content_margin_right = 16.0
@@ -207,6 +198,15 @@ corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thanh_menu"]
+bg_color = Color(0.05, 0.16, 0.28, 0.94)
+border_width_bottom = 3
+border_color = Color(0.35, 0.75, 1, 0.85)
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nut_mo_normal"]
 bg_color = Color(0.06, 0.22, 0.36, 0.9)
@@ -467,6 +467,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_green")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_green_hover")
 text = "↻ Chơi lại"
 
+[node name="thoat_choi_thu" type="Button" parent="." unique_id=1977084999]
+z_index = 42
+layout_mode = 0
+offset_left = 84.0
+offset_top = 12.0
+offset_right = 310.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 0.95, 0.85, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
+text = "⬅ Thoát chơi thử"
+
 [node name="NutMenu" type="Control" parent="." unique_id=52198437]
 z_index = 40
 layout_mode = 1
@@ -489,7 +504,7 @@ mouse_filter = 2
 layout_mode = 0
 offset_left = 72.0
 offset_top = 4.0
-offset_right = 1261.0
+offset_right = 1601.0
 offset_bottom = 74.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_thanh_menu")
 
