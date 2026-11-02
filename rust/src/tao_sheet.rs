@@ -32,6 +32,7 @@ use crate::khuong_nhac::KhuongNhac;
 use crate::midi_read::MIDIRead;
 use crate::quan_ly_sheet::QuanLySheet;
 use crate::quan_ly_tao_sheet::{QuanLyTaoSheet, ThongTinNotChon};
+use crate::thong_bao;
 
 const NHIP_CHO_DAU: f32 = -2.0;
 const THOI_GIAN_GOM_HOP_AM: f32 = 0.1;
@@ -133,6 +134,21 @@ pub struct TaoSheet {
 
 #[godot_api]
 impl TaoSheet {
+    fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
+        if let Some(mut tb) = self
+            .base()
+            .try_get_node_as::<thong_bao::ThongBao>("ThongBao")
+        {
+            let noi_dung = GString::from(noi_dung);
+            match loai {
+                "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
+                "canh_bao" => tb.bind_mut().thong_bao_canh_bao(noi_dung),
+                "thong_tin" => tb.bind_mut().thong_bao_thong_tin(noi_dung),
+                _ => tb.bind_mut().thong_bao_thanh_cong(noi_dung),
+            }
+        }
+    }
+
     #[func]
     pub fn khi_bat_tat_ten_khac(&mut self, bat: bool) {
         if let Some(mut k1) = self.khuong_1.clone() {
@@ -245,6 +261,7 @@ impl TaoSheet {
                 self.dat_nhip_hien_tai(NHIP_CHO_DAU);
             }
             godot_print!("Bắt đầu ghi hành trình nốt (Zero-Delay)...");
+            self.hien_thong_bao("Bắt đầu ghi hành trình nốt.", "thong_tin");
         } else {
             // KẾT THÚC GHI -> CHỐT VÀ LƯU TOÀN BỘ NỐT VỪA ĐÁNH LÊN SHEET
             self.dang_ghi_hanh_trinh = false;
@@ -317,6 +334,7 @@ impl TaoSheet {
                 self.cap_nhat_khuong_nhac(2, true);
             }
             godot_print!("Đã lưu hành trình nốt vào Sheet!");
+            self.hien_thong_bao("Đã lưu hành trình nốt vào Sheet.", "thanh_cong");
         }
     }
 
@@ -1513,12 +1531,18 @@ impl TaoSheet {
 
             if duong_dan_str.ends_with(".mid") || duong_dan_str.ends_with(".midi") {
                 godot_print!("Đã kéo thả file MIDI: {}", duong_dan);
+                self.hien_thong_bao("Đang nhập file MIDI...", "thong_tin");
                 self.thuc_hien_nhap_midi(duong_dan);
             } else if duong_dan_str.ends_with(".json") {
                 godot_print!("Đã kéo thả file JSON: {}", duong_dan);
+                self.hien_thong_bao("Đang mở file JSON bài hát...", "thong_tin");
                 self.thuc_hien_mo_file(duong_dan);
             } else {
                 godot_print!("Định dạng file không hỗ trợ! Chỉ nhận .mid hoặc .json");
+                self.hien_thong_bao(
+                    "Định dạng file không hỗ trợ. Chỉ nhận MIDI hoặc JSON.",
+                    "canh_bao",
+                );
             }
         }
     }

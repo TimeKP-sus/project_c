@@ -124,7 +124,9 @@ label_settings = SubResource("LabelSettings_title")
 
 [node name="MacDinh_Btn" type="Button" parent="ThanhTren/HBox" unique_id=804958549]
 custom_minimum_size = Vector2(160, 48)
+custom_maximum_size = Vector2(400, 70)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
@@ -132,7 +134,9 @@ text = "↺ Mặc định"
 
 [node name="LuuCaiDat_Btn" type="Button" parent="ThanhTren/HBox" unique_id=601987941]
 custom_minimum_size = Vector2(190, 48)
+custom_maximum_size = Vector2(400, 70)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
@@ -140,7 +144,9 @@ text = "💾 Lưu & Áp dụng"
 
 [node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=2061483790]
 custom_minimum_size = Vector2(140, 48)
+custom_maximum_size = Vector2(400, 70)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_font")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")

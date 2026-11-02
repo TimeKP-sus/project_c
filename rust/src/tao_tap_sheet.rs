@@ -17,7 +17,7 @@ use godot::{
     }, obj::{ Base, Gd, WithBaseField }, prelude::{ GodotClass, godot_api }, tools::load,
 };
 
-use crate::doc_sheet_json::{ doc_file_json, doc_file_luyen_tap, luu_file_luyen_tap, LuyenTapJson };
+use crate::{doc_sheet_json::{ LuyenTapJson, doc_file_json, doc_file_luyen_tap, luu_file_luyen_tap }, thong_bao};
 
 #[derive(GodotClass)]
 #[class(base = Control)]
@@ -44,6 +44,17 @@ pub struct TaoTapLuyenSheet {
 
 #[godot_api]
 impl TaoTapLuyenSheet {
+    fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
+        if let Some(mut tb) = self.base().try_get_node_as::<thong_bao::ThongBao>("ThongBao") {
+            let noi_dung = GString::from(noi_dung);
+            match loai {
+                "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
+                "canh_bao" => tb.bind_mut().thong_bao_canh_bao(noi_dung),
+                _ => tb.bind_mut().thong_bao_thanh_cong(noi_dung),
+            }
+        }
+    }
+
     #[signal]
     fn mo_file();
     // ==================== GETTERS & SETTERS ====================
@@ -411,7 +422,12 @@ impl TaoTapLuyenSheet {
             bpm_tuy_chinh: bpm_opt,
             cac_ghi_chu: self.cac_ghi_chu.clone(),
         };
-        luu_file_luyen_tap(&path.to_string(), &data)
+        let ket_qua = luu_file_luyen_tap(&path.to_string(), &data);
+        self.hien_thong_bao(
+            if ket_qua { "Đã lưu bài luyện tập." } else { "Không thể lưu bài luyện tập." },
+            if ket_qua { "thanh_cong" } else { "loi" },
+        );
+        ket_qua
     }
 
     #[func]
@@ -446,8 +462,10 @@ impl TaoTapLuyenSheet {
                 self.base_mut().call("cap_nhat_thong_tin_giao_dien", &[]);
             }
             self.base_mut().emit_signal("mo_file", &[]);
+            self.hien_thong_bao("Đã mở bài luyện tập thành công.", "thanh_cong");
             return true;
         }
+        self.hien_thong_bao("Không thể mở bài luyện tập từ file JSON.", "loi");
         false
     }
 

@@ -301,6 +301,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="nen_tong_ket" type="Panel" parent="." unique_id=922925555]
+visible = false
 z_index = 45
 layout_mode = 0
 offset_right = 1920.0
@@ -588,6 +589,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_nut_mo_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_nut_mo_hover")
 text = "☰"
+
+[node name="nhac" type="AudioStreamPlayer2D" parent="." unique_id=587984294]
+
+[node name="loi" type="AudioStreamPlayer2D" parent="." unique_id=1816502100]
 
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="." method="tong_ket"]
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_quan_ly_sheet_bai_hat_ket_thuc" flags=3]

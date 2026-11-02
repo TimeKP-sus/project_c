@@ -17,11 +17,9 @@ extends Panel
 @onready var ve_ds_btn: Button = $ve_ds
 
 func _ready() -> void:
-	# Ẩn panel tổng kết lúc mới vào game
 	nen_tong_ket.hide()
 
 func _on_choi_lai_button_down() -> void:
-	# Nếu đang ở chế độ Chơi thử (đè lên TaoTapSheet), nhờ TaoTapSheet mở lại bản chơi thử mới
 	if choi_sheet.che_do_choi_thu:
 		var tao_tap_scene = get_tree().current_scene
 		choi_sheet.queue_free()

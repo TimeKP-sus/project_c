@@ -9,8 +9,7 @@ use godot::{
 };
 
 use crate::{
-    ban_phim_midi::BanPhimMidi,
-    doc_sheet_json::{doc_file_nghe_tim_json, luu_file_nghe_tim_json, NgheTimNotJson},
+    ban_phim_midi::BanPhimMidi, doc_sheet_json::{NgheTimNotJson, doc_file_nghe_tim_json, luu_file_nghe_tim_json}, thong_bao,
 };
 
 #[derive(GodotClass)]
@@ -31,6 +30,17 @@ pub struct TaoTimNot {
 
 #[godot_api]
 impl TaoTimNot {
+    fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
+        if let Some(mut tb) = self.base().try_get_node_as::<thong_bao::ThongBao>("ThongBao") {
+            let noi_dung = GString::from(noi_dung);
+            match loai {
+                "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
+                "canh_bao" => tb.bind_mut().thong_bao_canh_bao(noi_dung),
+                _ => tb.bind_mut().thong_bao_thanh_cong(noi_dung),
+            }
+        }
+    }
+
     // ==================== GETTERS & SETTERS ====================
     #[func]
     pub fn set_ten_bai_hoc(&mut self, ten: GString) {
@@ -194,6 +204,7 @@ impl TaoTimNot {
             self.cac_ghi_chu.push(gc);
         }
         self.lam_moi_danh_sach_ui();
+        self.hien_thong_bao("Đã cập nhật danh sách bước tìm nốt.", "thanh_cong");
     }
 
     #[func]
@@ -270,6 +281,7 @@ impl TaoTimNot {
                 }
                 self.set_che_do_sua(false);
                 self.lam_moi_danh_sach_ui();
+                self.hien_thong_bao("Đã xóa bước tìm nốt.", "thanh_cong");
             }
         }
     }
@@ -330,7 +342,12 @@ impl TaoTimNot {
             danh_sach_bai: self.danh_sach_bai.clone(),
             cac_ghi_chu: self.cac_ghi_chu.clone(),
         };
-        luu_file_nghe_tim_json(&path.to_string(), &data)
+        let ket_qua = luu_file_nghe_tim_json(&path.to_string(), &data);
+        self.hien_thong_bao(
+            if ket_qua { "Đã lưu bài tìm nốt." } else { "Không thể lưu bài tìm nốt." },
+            if ket_qua { "thanh_cong" } else { "loi" },
+        );
+        ket_qua
     }
 
     #[func]
@@ -342,8 +359,10 @@ impl TaoTimNot {
             self.cac_ghi_chu = data.cac_ghi_chu;
             self.set_che_do_sua(false);
             self.lam_moi_danh_sach_ui();
+            self.hien_thong_bao("Đã mở bài tìm nốt thành công.", "thanh_cong");
             return true;
         }
+        self.hien_thong_bao("Không thể mở bài tìm nốt từ file JSON.", "loi");
         false
     }
 

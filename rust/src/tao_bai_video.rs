@@ -16,12 +16,9 @@ use godot::{
     prelude::{ GodotClass, godot_api },
 };
 
-use crate::doc_sheet_json::{
-    doc_file_video_json,
-    luu_file_video_json,
-    BaiHocVideoJson,
-    MocThoiGianJson,
-};
+use crate::{doc_sheet_json::{
+    BaiHocVideoJson, MocThoiGianJson, doc_file_video_json, luu_file_video_json,
+}, thong_bao};
 
 #[derive(GodotClass)]
 #[class(base = Control)]
@@ -42,6 +39,21 @@ pub struct TaoVideo {
 
 #[godot_api]
 impl TaoVideo {
+    fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
+        if let Some(mut tb) = self
+            .base()
+            .try_get_node_as::<thong_bao::ThongBao>("ThongBao")
+        {
+            let noi_dung = GString::from(noi_dung);
+            match loai {
+                "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
+                "canh_bao" => tb.bind_mut().thong_bao_canh_bao(noi_dung),
+                "thong_tin" => tb.bind_mut().thong_bao_thong_tin(noi_dung),
+                _ => tb.bind_mut().thong_bao_thanh_cong(noi_dung),
+            }
+        }
+    }
+
     // ==================== GETTERS & SETTERS ====================
     #[func]
     pub fn set_ten_bai_hoc(&mut self, ten: GString) {
@@ -299,6 +311,7 @@ impl TaoVideo {
                 duong_dan_str.ends_with(".webm")
             {
                 godot_print!("Đã kéo thả file Video: {}", duong_dan);
+                self.hien_thong_bao("Đã chọn file video.", "thanh_cong");
                 // Cập nhật lên ô Input
                 self.set_duong_dan_video(ProjectSettings::singleton().localize_path(&duong_dan));
                 // Gọi hàm GDScript để bắt đầu phát video
@@ -311,10 +324,15 @@ impl TaoVideo {
                 duong_dan_str.ends_with(".json")
             {
                 godot_print!("Đã kéo thả file JSON bài học video: {}", duong_dan);
+                self.hien_thong_bao("Đang mở bài học video từ file JSON...", "thong_tin");
                 self.mo_bai_hoc_json(duong_dan);
             } else {
                 godot_print!(
                     "Định dạng file không hỗ trợ! Vui lòng thả file Video (.mp4) hoặc JSON (.json)."
+                );
+                self.hien_thong_bao(
+                    "Định dạng file không hỗ trợ. Hãy chọn Video hoặc JSON.",
+                    "canh_bao",
                 );
             }
         }
@@ -351,7 +369,12 @@ impl TaoVideo {
             duong_dan_video: self.get_duong_dan_video().to_string().trim().to_string(),
             cac_moc_thoi_gian: self.cac_moc.clone(),
         };
-        luu_file_video_json(&path.to_string(), &data)
+        let ket_qua = luu_file_video_json(&path.to_string(), &data);
+        self.hien_thong_bao(
+            if ket_qua { "Đã lưu bài học video." } else { "Không thể lưu bài học video." },
+            if ket_qua { "thanh_cong" } else { "loi" },
+        );
+        ket_qua
     }
 
     #[func]
@@ -369,8 +392,10 @@ impl TaoVideo {
 
             self.base_mut().call("load_va_phat_video", &[path_video.to_variant()]);
             godot_print!("Đã mở bài học từ file JSON: {}", path);
+            self.hien_thong_bao("Đã mở bài học video thành công.", "thanh_cong");
             return true;
         }
+        self.hien_thong_bao("Không thể mở bài học video từ file JSON.", "loi");
         false
     }
 

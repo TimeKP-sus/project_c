@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://bfakx7jw57ymo" path="res://gd/tao_sheet.gd" id="1_wit0p"]
 [ext_resource type="PackedScene" uid="uid://bc60vic3bfv5a" path="res://scene/quan_ly_nhac.tscn" id="2_0iuma"]
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="3_4c48n"]
+[ext_resource type="PackedScene" uid="uid://bifbis7ohxpni" path="res://scene/menu/thong_bao.tscn" id="6_jn0q5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel_bar"]
 bg_color = Color(0.1, 0.12, 0.16, 0.92)
@@ -805,5 +806,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_green")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_green_hover")
 text = "▶ Nghe thử"
+
+[node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("6_jn0q5")]
+layout_mode = 0
+anchors_preset = 0
 
 [connection signal="button_down" from="ThanhThongTin/HBox/VeMenu_Btn" to="." method="_on_ve_menu_btn_button_down"]

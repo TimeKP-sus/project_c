@@ -1,7 +1,10 @@
-use godot::builtin::{ Array, Dictionary, GString };
-use godot::classes::{ Control, DirAccess, FileAccess, IControl };
+use godot::builtin::{Array, Dictionary, GString};
+use godot::classes::{Control, DirAccess, FileAccess, IControl};
 use godot::global::godot_print;
-use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
+use godot::{
+    obj::Base,
+    prelude::{GodotClass, godot_api},
+};
 use serde::Deserialize;
 
 use crate::du_lieu_lich_su::DuLieuLichSu;
@@ -53,8 +56,8 @@ impl DanhSachBaiHoc {
         ds_ten_file.sort();
 
         for ten_file in ds_ten_file {
-            let duong_dan = format!("res://bai_hoc/danh_sach/{}", ten_file);
-            let file_text = FileAccess::get_file_as_string(&duong_dan);
+            let duong_dan: String = format!("res://bai_hoc/danh_sach/{}", ten_file);
+            let file_text: GString = FileAccess::get_file_as_string(&duong_dan);
 
             if let Ok(data) = serde_json::from_str::<ChuongJson>(&file_text.to_string()) {
                 let mut dict = Dictionary::new();
@@ -79,7 +82,7 @@ impl DanhSachBaiHoc {
             Ok(du_lieu) => {
                 for bai in du_lieu.bai_hoc {
                     let mut dict: Dictionary = Dictionary::new();
-                    let nguoi_tao = if bai.nguoi_tao.is_empty() {
+                    let nguoi_tao: String = if bai.nguoi_tao.is_empty() {
                         String::from("TimeKP")
                     } else {
                         bai.nguoi_tao
@@ -123,10 +126,8 @@ impl DanhSachBaiHoc {
     ) -> Dictionary {
         let lich_su: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
         let mut dict: Dictionary = Dictionary::new();
-        if let Some(kq) = lich_su.lay_ket_qua(
-            &loai_bai_hoc.to_string(),
-            &duong_dan_bai.to_string(),
-        ) {
+        if let Some(kq) = lich_su.lay_ket_qua(&loai_bai_hoc.to_string(), &duong_dan_bai.to_string())
+        {
             dict.set("diem_cao_nhat", kq.diem_cao_nhat);
             dict.set("ti_le_hoan_thanh", kq.ti_le_hoan_thanh);
             dict.set("so_lan_choi", kq.so_lan_choi);
@@ -141,7 +142,6 @@ impl DanhSachBaiHoc {
         }
         dict
     }
-
 }
 
 #[godot_api]

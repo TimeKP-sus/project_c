@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://ddusllkul0qg0" path="res://scene/MIDI.tscn" id="1_d3ics"]
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="2_font"]
+[ext_resource type="PackedScene" uid="uid://bifbis7ohxpni" path="res://scene/menu/thong_bao.tscn" id="3_6d5ai"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0, 0.36, 0.56, 1)
@@ -285,3 +286,6 @@ file_mode = 0
 access = 2
 root_subfolder = "bai_hoc"
 filters = PackedStringArray("*.json ; Listen Lesson JSON")
+
+[node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("3_6d5ai")]
+layout_mode = 1

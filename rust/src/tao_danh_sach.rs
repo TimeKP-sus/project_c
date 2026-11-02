@@ -37,6 +37,17 @@ pub struct TaoDanhSach {
 
 #[godot_api]
 impl TaoDanhSach {
+    fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
+        if let Some(mut tb) = self.base().try_get_node_as::<crate::thong_bao::ThongBao>("ThongBao") {
+            let noi_dung: GString = GString::from(noi_dung);
+            match loai {
+                "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
+                "canh_bao" => tb.bind_mut().thong_bao_canh_bao(noi_dung),
+                _ => tb.bind_mut().thong_bao_thanh_cong(noi_dung),
+            }
+        }
+    }
+
     // ==================== GETTERS & SETTERS ====================
     #[func]
     pub fn set_ten_chuong(&mut self, ten: GString) {
@@ -236,12 +247,16 @@ impl TaoDanhSach {
                 }
             }
         }
+        let so_bai_them = cac_index_kho.len();
         for idx in cac_index_kho {
             if let Some(b) = self.kho_bai_hoc.get(idx).cloned() {
                 self.bai_trong_chuong.push(b);
             }
         }
         self.cap_nhat_ui_chuong();
+        if so_bai_them > 0 {
+            self.hien_thong_bao("Đã thêm bài học vào chương.", "thanh_cong");
+        }
     }
 
     #[func]

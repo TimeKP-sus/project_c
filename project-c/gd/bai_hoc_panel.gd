@@ -29,15 +29,15 @@ const PATH_TIM_NOT = "res://scene/phanchoi/HocTimNot.tscn"
 func lay_ten_che_do_hien_thi() -> String:
 	match loai_bai_hoc:
 		"choi_sheet":
-			return "🎼 Đọc Bản Nhạc"
+			return "🎼 Chơi Nhạc"
 		"tap_luyen_sheet", "luyen_tap_sheet":
-			return "🎯 Luyện Tập Đoạn"
+			return "🎯 Luyện Tập"
 		"nghe_va_doan_not":
-			return "👂 Nghe & Đoán Nốt"
+			return "👂 Đoán Nốt"
 		"tim_not":
-			return "🎹 Tìm & Đánh Nốt"
+			return "🎹 Tìm nốt"
 		"xem_video":
-			return "🎬 Học Qua Video"
+			return "🎬 Video"
 		_:
 			return "📌 Khác"
 
@@ -70,10 +70,10 @@ func cap_nhat_du_lieu_lich_su() -> void:
 			if loai_bai_hoc == "xem_video":
 				ket_qua_label.text = "✅ Đã xem\n🎯 %.0f%%" % ti_le_hoan_thanh
 			else:
-				ket_qua_label.text = "🏆 %d đ\n🎯 %.0f%% (%s)" % [diem_cao_nhat, ti_le_hoan_thanh, hang_tot_nhat]
+				ket_qua_label.text = "🎯 %.0f%%" % [ ti_le_hoan_thanh]
 			ket_qua_label.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		else:
-			ket_qua_label.text = "🏆 Chưa học\n🎯 0%"
+			ket_qua_label.text = "🎯 0%"
 			ket_qua_label.modulate = Color(0.75, 0.85, 0.95, 0.85)
 
 

@@ -2,6 +2,7 @@
 
 [ext_resource type="FontFile" uid="uid://dfrdk4gqc6ubn" path="res://asset/font/arialbd.ttf" id="1_font"]
 [ext_resource type="Script" uid="uid://buijv0b1gl6q8" path="res://gd/tao_video.gd" id="1_t7kgk"]
+[ext_resource type="PackedScene" uid="uid://bifbis7ohxpni" path="res://scene/menu/thong_bao.tscn" id="3_wtq0c"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0, 0.36, 0.56, 1)
@@ -363,6 +364,9 @@ file_mode = 0
 access = 2
 root_subfolder = "bai_hoc"
 filters = PackedStringArray("*.json ; Video Lesson JSON")
+
+[node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("3_wtq0c")]
+layout_mode = 1
 
 [connection signal="gui_input" from="KhungVideo/VideoStreamPlayer" to="." method="_on_video_stream_player_gui_input"]
 [connection signal="drag_ended" from="KhungVideo/ThanhTua" to="." method="_on_thanh_tua_drag_ended"]
