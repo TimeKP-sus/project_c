@@ -85,7 +85,7 @@ impl ThongBao {
                 &doi_tuong,
                 &NodePath::from("position"),
                 &Variant::from(vi_tri_ket_thuc),
-                0.35,
+                2.0,
             ) {
                 step.set_trans(TransitionType::BACK);
                 step.set_ease(EaseType::OUT);
@@ -94,7 +94,7 @@ impl ThongBao {
                 &doi_tuong,
                 &NodePath::from("scale"),
                 &Variant::from(Vector2::new(1.0, 1.0)),
-                0.3,
+                1.0,
             ) {
                 step.set_trans(TransitionType::CUBIC);
                 step.set_ease(EaseType::OUT);
@@ -103,20 +103,20 @@ impl ThongBao {
                 &doi_tuong,
                 &NodePath::from("modulate:a"),
                 &Variant::from(1.0_f32),
-                0.25,
+                1.0,
             );
 
             // --- THỜI GIAN ĐỨNG YÊN ĐỂ ĐỌC ---
             tween.set_parallel_ex().parallel(false).done();
-            tween.tween_interval(thoi_gian_hien.max(0.5));
+            tween.tween_interval(thoi_gian_hien.max(3.0));
 
-            // --- HIỆU ỨNG BIẾN MẤT (0.3 giây) ---
+            // --- HIỆU ỨNG BIẾN MẤT ---
             tween.set_parallel();
             if let Some(mut step) = tween.tween_property(
                 &doi_tuong,
                 &NodePath::from("position"),
                 &Variant::from(vi_tri_bien_mat),
-                0.3,
+                1.5,
             ) {
                 step.set_trans(TransitionType::CUBIC);
                 step.set_ease(EaseType::IN);
@@ -125,7 +125,7 @@ impl ThongBao {
                 &doi_tuong,
                 &NodePath::from("modulate:a"),
                 &Variant::from(0.0_f32),
-                0.28,
+                1.0,
             );
 
             // --- KẾT THÚC ---
@@ -144,25 +144,25 @@ impl ThongBao {
     #[func]
     pub fn thong_bao_thanh_cong(&mut self, noi_dung: GString) {
         self.dat_icon("✔");
-        self.hien_thong_bao(noi_dung, Color::from_rgba(0.2, 0.85, 0.45, 1.0), 2.5);
+        self.hien_thong_bao(noi_dung, Color::from_rgba(0.2, 0.85, 0.45, 1.0), 4.5);
     }
 
     #[func]
     pub fn thong_bao_canh_bao(&mut self, noi_dung: GString) {
         self.dat_icon("⚠");
-        self.hien_thong_bao(noi_dung, Color::from_rgba(1.0, 0.75, 0.2, 1.0), 3.0);
+        self.hien_thong_bao(noi_dung, Color::from_rgba(1.0, 0.75, 0.2, 1.0), 5.0);
     }
 
     #[func]
     pub fn thong_bao_loi(&mut self, noi_dung: GString) {
         self.dat_icon("✖");
-        self.hien_thong_bao(noi_dung, Color::from_rgba(0.95, 0.3, 0.3, 1.0), 3.2);
+        self.hien_thong_bao(noi_dung, Color::from_rgba(0.95, 0.3, 0.3, 1.0), 5.0);
     }
 
     #[func]
     pub fn thong_bao_thong_tin(&mut self, noi_dung: GString) {
         self.dat_icon("🔔");
-        self.hien_thong_bao(noi_dung, Color::from_rgba(0.35, 0.78, 1.0, 1.0), 2.5);
+        self.hien_thong_bao(noi_dung, Color::from_rgba(0.35, 0.78, 1.0, 1.0), 4.0);
     }
 
     fn dat_icon(&mut self, ky_tu: &str) {
