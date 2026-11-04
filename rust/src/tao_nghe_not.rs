@@ -1,3 +1,5 @@
+use std::time::SystemTime;
+
 use godot::{
     builtin::{Callable, Color, GString, Variant},
     classes::{
@@ -398,7 +400,20 @@ impl TaoNgheNot {
 
     #[func]
     fn _mo_popup_luu(&mut self) {
+        let ten_bai = self.get_ten_bai_hoc().to_string().trim().replace(" ", "_").to_lowercase();
+
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
+            d.set_current_dir("res://bai_hoc/nghe_va_doan_not");
+            
+            let id_ngau_nhien = SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs();
+            
+            let ten_file_moi = if ten_bai.is_empty() {
+                format!("nghe_not_{}.json", id_ngau_nhien)
+            } else {
+                format!("{}_{}.json", ten_bai, id_ngau_nhien)
+            };
+
+            d.set_current_file(&GString::from(&ten_file_moi));
             d.popup_centered();
         }
     }

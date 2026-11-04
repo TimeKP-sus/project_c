@@ -1,8 +1,11 @@
+use std::time::SystemTime;
+
 use godot::{
     builtin::{ Callable, GString, PackedStringArray },
     classes::{
         Button,
         Control,
+        DirAccess,
         FileDialog,
         IControl,
         ItemList,
@@ -10,15 +13,16 @@ use godot::{
         ProjectSettings,
         SpinBox,
     },
-    global::godot_print,
+    global::{ Error, godot_print },
     meta::ToGodot,
     obj::{ Base, WithBaseField },
     prelude::{ GodotClass, godot_api },
 };
 
-use crate::{doc_sheet_json::{
-    BaiHocVideoJson, MocThoiGianJson, doc_file_video_json, luu_file_video_json,
-}, thong_bao};
+use crate::{
+    doc_sheet_json::{ BaiHocVideoJson, MocThoiGianJson, doc_file_video_json, luu_file_video_json },
+    thong_bao,
+};
 
 #[derive(GodotClass)]
 #[class(base = Control)]
@@ -40,10 +44,7 @@ pub struct TaoVideo {
 #[godot_api]
 impl TaoVideo {
     fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
-        if let Some(mut tb) = self
-            .base()
-            .try_get_node_as::<thong_bao::ThongBao>("ThongBao")
-        {
+        if let Some(mut tb) = self.base().try_get_node_as::<thong_bao::ThongBao>("ThongBao") {
             let noi_dung = GString::from(noi_dung);
             match loai {
                 "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
@@ -332,7 +333,7 @@ impl TaoVideo {
                 );
                 self.hien_thong_bao(
                     "Định dạng file không hỗ trợ. Hãy chọn Video hoặc JSON.",
-                    "canh_bao",
+                    "canh_bao"
                 );
             }
         }
@@ -363,16 +364,96 @@ impl TaoVideo {
 
     #[func]
     pub fn luu_bai_hoc_json(&mut self, path: GString) -> bool {
+        let duong_dan_goc: String = self.get_duong_dan_video().to_string().trim().to_string();
+
+        // 1. NẾU VIDEO ĐÃ NẰM SẴN TRONG THƯ MỤC CHUẨN: Giữ nguyên đường dẫn, không copy
+        if duong_dan_goc.is_empty() || duong_dan_goc.starts_with("res://bai_hoc/video") {
+            return self.thuc_hien_luu_json(path, GString::from(duong_dan_goc));
+        }
+
+        // 2. NẾU VIDEO TỪ BÊN NGOÀI: Copy vào và đổi tên thành mã random
+        self.hien_thong_bao("Đang tiến hành sao chép video, vui lòng đợi...", "thong_tin");
+
+        let thu_muc_dich = "res://bai_hoc/video";
+        
+        // Tạo mã ID ngẫu nhiên từ thời gian thực
+        let id_ngau_nhien: u64 = SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs();
+
+        // Lấy đuôi file gốc (vd: mp4, webm)
+        let duoi_file = duong_dan_goc.rsplit('.').next().unwrap_or("mp4");
+
+        // Chuẩn hóa tên bài học (vd: "Bài 1" thành "bai_1")
+        let ten_bai = self.get_ten_bai_hoc().to_string().trim().replace(" ", "_").to_lowercase();
+        
+        // Ghép thành tên file hoàn chỉnh (Tên_ID.đuôi hoặc video_ID.đuôi)
+        let ten_file = if ten_bai.is_empty() {
+            format!("video_{}.{}", id_ngau_nhien, duoi_file)
+        } else {
+            format!("{}_{}.{}", ten_bai, id_ngau_nhien, duoi_file)
+        };
+
+        let duong_dan_dich = format!("{}/{}", thu_muc_dich, ten_file);
+        
+        // Thực hiện lệnh copy
+        let err: Error = DirAccess::copy_absolute(
+            &GString::from(&duong_dan_goc),
+            &GString::from(&duong_dan_dich)
+        );
+
+        // Xử lý sau khi copy
+        if err == Error::OK {
+            self._xu_ly_copy_thanh_cong(path, GString::from(duong_dan_dich));
+            true
+        } else {
+            self._xu_ly_copy_that_bai(path, GString::from(duong_dan_goc));
+            false
+        }
+    }
+
+
+    /// Hàm nội bộ được gọi từ Thread sau khi copy video thành công
+    #[func]
+    fn _xu_ly_copy_thanh_cong(&mut self, path_json: GString, duong_dan_video_moi: GString) {
+        self.set_duong_dan_video(duong_dan_video_moi.clone());
+        self.thuc_hien_luu_json(path_json, duong_dan_video_moi);
+    }
+
+    /// Hàm nội bộ được gọi từ Thread nếu copy video thất bại (Sẽ lưu JSON với đường dẫn cũ)
+    #[func]
+    fn _xu_ly_copy_that_bai(&mut self, path_json: GString, duong_dan_video_goc: GString) {
+        godot_print!("Lỗi sao chép video! Vẫn tiếp tục lưu JSON với đường dẫn video cũ.");
+        self.hien_thong_bao("Copy video thất bại! Giữ nguyên đường dẫn cũ.", "canh_bao");
+        self.thuc_hien_luu_json(path_json, duong_dan_video_goc);
+    }
+
+    /// Hàm lưu file JSON cuối cùng (Được dùng chung)
+    fn thuc_hien_luu_json(
+        &mut self,
+        path_json: GString,
+        duong_dan_video_chinh_thuc: GString
+    ) -> bool {
         let data = BaiHocVideoJson {
             ten_bai_hoc: self.get_ten_bai_hoc().to_string().trim().to_string(),
             nguoi_tao: self.get_nguoi_tao().to_string().trim().to_string(),
-            duong_dan_video: self.get_duong_dan_video().to_string().trim().to_string(),
+            duong_dan_video: duong_dan_video_chinh_thuc.to_string(),
             cac_moc_thoi_gian: self.cac_moc.clone(),
         };
-        let ket_qua = luu_file_video_json(&path.to_string(), &data);
+
+        let ket_qua = luu_file_video_json(&path_json.to_string(), &data);
         self.hien_thong_bao(
-            if ket_qua { "Đã lưu bài học video." } else { "Không thể lưu bài học video." },
-            if ket_qua { "thanh_cong" } else { "loi" },
+            if ket_qua {
+                "Đã lưu bài học video thành công."
+            } else {
+                "Lỗi không thể lưu file JSON bài học video!"
+            },
+            if ket_qua {
+                "thanh_cong"
+            } else {
+                "loi"
+            }
         );
         ket_qua
     }
@@ -407,16 +488,44 @@ impl TaoVideo {
     }
     #[func]
     fn _mo_popup_luu(&mut self) {
+        let id_ngau_nhien = SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs();
+        let ten_bai: String = self
+            .get_ten_bai_hoc()
+            .to_string()
+            .trim()
+            .replace(" ", "_")
+            .to_lowercase();
+
+        let ten_file_moi: String = if ten_bai.is_empty() {
+            format!("video_{}.json", id_ngau_nhien)
+        } else {
+            format!("{}_{}.json", ten_bai, id_ngau_nhien)
+        };
+
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
+            // Đảm bảo thư mục đích TỒN TẠI trước khi mở hộp thoại
+            let thu_muc_json = "res://bai_hoc/xem_video";
+            let _ = DirAccess::make_dir_recursive_absolute(&GString::from(thu_muc_json));
+            d.set_current_dir(thu_muc_json);
+            d.set_current_file(&GString::from(&ten_file_moi));
             d.popup_centered();
         }
     }
+
     #[func]
     fn _mo_popup_mo(&mut self) {
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiMoJson") {
+
+            let thu_muc_json = "res://bai_hoc/xem_video";
+            let _ = DirAccess::make_dir_recursive_absolute(&GString::from(thu_muc_json));
+            d.set_current_dir(thu_muc_json);
             d.popup_centered();
         }
     }
+
     #[func]
     fn _ve_menu_chinh(&mut self) {
         if let Some(mut tree) = self.base().get_tree() {

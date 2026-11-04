@@ -810,5 +810,6 @@ text = "▶ Nghe thử"
 [node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("6_jn0q5")]
 layout_mode = 0
 anchors_preset = 0
+metadata/_edit_lock_ = true
 
 [connection signal="button_down" from="ThanhThongTin/HBox/VeMenu_Btn" to="." method="_on_ve_menu_btn_button_down"]

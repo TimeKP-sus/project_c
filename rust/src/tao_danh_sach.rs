@@ -1,3 +1,5 @@
+use std::time::SystemTime;
+
 use godot::{
     builtin::{Callable, GString, Variant},
     classes::{
@@ -443,7 +445,21 @@ impl TaoDanhSach {
     }
     #[func]
     fn _mo_popup_luu(&mut self) {
+        // Lấy tên trước khi mượn mutable self qua base_mut().
+        let ten_chuong: String = self.get_ten_chuong().to_string().trim().replace(" ", "_").to_lowercase();
+
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuChuong") {
+            d.set_current_dir("res://bai_hoc");
+            
+            let id_ngau_nhien: u64 = SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs();
+            
+            let ten_file_moi = if ten_chuong.is_empty() {
+                format!("chuong_{}.json", id_ngau_nhien)
+            } else {
+                format!("{}_{}.json", ten_chuong, id_ngau_nhien)
+            };
+
+            d.set_current_file(&GString::from(&ten_file_moi));
             d.popup_centered();
         }
     }

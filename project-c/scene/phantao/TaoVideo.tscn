@@ -351,8 +351,6 @@ filters = PackedStringArray("*.mp4, *.ogv, *.webm ; Video Files")
 title = "Lưu bài học Video JSON"
 initial_position = 2
 size = Vector2i(750, 500)
-access = 2
-root_subfolder = "bai_hoc"
 filters = PackedStringArray("*.json ; Video Lesson JSON")
 
 [node name="HopThoaiMoJson" type="FileDialog" parent="." unique_id=29552521]
@@ -361,8 +359,6 @@ initial_position = 2
 size = Vector2i(750, 500)
 ok_button_text = "Open"
 file_mode = 0
-access = 2
-root_subfolder = "bai_hoc"
 filters = PackedStringArray("*.json ; Video Lesson JSON")
 
 [node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("3_wtq0c")]
