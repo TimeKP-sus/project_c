@@ -173,7 +173,7 @@ impl TaoDanhSach {
     #[func]
     pub fn quet_kho_bai_hoc(&mut self) {
         self.kho_bai_hoc.clear();
-        self.quet_de_quy("res://bai_hoc");
+        self.quet_de_quy(&format!("{}bai_hoc", crate::ham_phu::lay_duong_dan_goc()));
         self.hien_thi_kho_bai_hoc();
     }
     #[func]
@@ -449,7 +449,7 @@ impl TaoDanhSach {
         let ten_chuong: String = self.get_ten_chuong().to_string().trim().replace(" ", "_").to_lowercase();
 
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuChuong") {
-            d.set_current_dir("res://bai_hoc");
+            d.set_current_dir(&GString::from(format!("{}bai_hoc", crate::ham_phu::lay_duong_dan_goc())));
             
             let id_ngau_nhien: u64 = SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs();
             

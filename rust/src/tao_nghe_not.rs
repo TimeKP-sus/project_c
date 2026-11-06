@@ -403,7 +403,7 @@ impl TaoNgheNot {
         let ten_bai = self.get_ten_bai_hoc().to_string().trim().replace(" ", "_").to_lowercase();
 
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
-            d.set_current_dir("res://bai_hoc/nghe_va_doan_not");
+            d.set_current_dir(&GString::from(format!("{}bai_hoc/nghe_va_doan_not", crate::ham_phu::lay_duong_dan_goc())));
             
             let id_ngau_nhien = SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs();
             

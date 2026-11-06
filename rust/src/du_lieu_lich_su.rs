@@ -4,8 +4,11 @@ use godot::global::godot_print;
 use godot::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use crate::ham_phu::lay_duong_dan_goc;
 
-pub const DUONG_DAN_LICH_SU: &str = "res://du_lieu_nguoi_dung/lich_su.json";
+pub fn duong_dan_lich_su() -> String {
+    format!("{}du_lieu_nguoi_dung/lich_su.json", lay_duong_dan_goc())
+}
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct KetQuaBaiHocJson {
@@ -42,7 +45,8 @@ impl DuLieuLichSu {
     }
 
     pub fn doc_lich_su() -> Self {
-        let txt = FileAccess::get_file_as_string(DUONG_DAN_LICH_SU).to_string();
+        let duong_dan = duong_dan_lich_su();
+        let txt = FileAccess::get_file_as_string(&duong_dan).to_string();
         if !txt.trim().is_empty() {
             if let Ok(data) = serde_json::from_str::<DuLieuLichSu>(&txt) {
                 return data;
@@ -52,14 +56,16 @@ impl DuLieuLichSu {
     }
 
     pub fn luu_lich_su(&self) -> bool {
-        let _ = DirAccess::make_dir_recursive_absolute("res://du_lieu_nguoi_dung");
+        let thu_muc = format!("{}du_lieu_nguoi_dung", lay_duong_dan_goc());
+        let _ = DirAccess::make_dir_recursive_absolute(&thu_muc);
+        let duong_dan = duong_dan_lich_su();
         if let Ok(noi_dung) = serde_json::to_string_pretty(self) {
-            if let Some(mut file) = FileAccess::open(DUONG_DAN_LICH_SU, ModeFlags::WRITE) {
+            if let Some(mut file) = FileAccess::open(&duong_dan, ModeFlags::WRITE) {
                 file.store_string(&noi_dung);
                 return true;
             }
         }
-        godot_print!("Lỗi: Không thể ghi file lịch sử tại {}", DUONG_DAN_LICH_SU);
+        godot_print!("Lỗi: Không thể ghi file lịch sử tại {}", duong_dan);
         false
     }
 

@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://0gn6uhig7bu0" path="res://scene/button/button_1.tscn" id="1_t2k7j"]
 [ext_resource type="FontFile" uid="uid://dery6xs06a777" path="res://asset/font/ariblk.ttf" id="1_vmede"]
 [ext_resource type="Texture2D" uid="uid://db0hgdh16ym0t" path="res://asset/piano.png" id="2_nejbb"]
-[ext_resource type="PackedScene" uid="uid://okkufgawrf0i" path="res://scene/phanchoi/ChoiSheet.tscn" id="3_um4pu"]
 [ext_resource type="PackedScene" uid="uid://mre47t220lg4" path="res://scene/menu/DanhSachBaiHoc.tscn" id="4_4nvyv"]
 [ext_resource type="FontFile" uid="uid://d3nlqn62vfu1r" path="res://asset/font/ARLRDBD.TTF" id="5_weqhr"]
 [ext_resource type="PackedScene" uid="uid://fl1kx5vr4reu" path="res://scene/PhimTuDo.tscn" id="6_6g7ni"]
@@ -219,19 +218,6 @@ path_scene_den = ExtResource("6_6g7ni")
 loai_nut = "chuyen scene"
 metadata/_edit_pinned_properties_ = [&"path_scene_den"]
 
-[node name="lich_su" parent="DanhSachNut" unique_id=907769662 instance=ExtResource("1_t2k7j")]
-custom_minimum_size = Vector2(300, 95)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_menu_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_menu_hover")
-theme_override_styles/focus = SubResource("StyleBoxFlat_btn_menu_focus")
-text = "📜 Lịch sử "
-path_scene_den = ExtResource("3_um4pu")
-metadata/_edit_pinned_properties_ = [&"path_scene_den"]
-
 [node name="cai_datt" parent="DanhSachNut" unique_id=304146953 instance=ExtResource("1_t2k7j")]
 custom_minimum_size = Vector2(300, 95)
 layout_mode = 2
@@ -400,13 +386,15 @@ theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_normal")
 text = "📚 Quản lý Chương & Ghép Danh Sách Bài"
 
-[node name="Spacer" type="Control" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=52932425]
+[node name="Space" type="Control" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=52932425]
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="Btn_DongPanel" type="Button" parent="PanelChonLoaiBaiHoc/PanelChinh/VBox" unique_id=1393039762]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
 theme_override_fonts/font = ExtResource("1_vmede")
 theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_menu_pressed")

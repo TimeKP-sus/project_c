@@ -30,6 +30,7 @@ mod tao_tap_sheet;
 mod tao_tim_not;
 // mod phim_dan;
 pub mod thong_bao;
+pub mod ham_phu;
 
 use godot::prelude::*;
 

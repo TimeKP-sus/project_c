@@ -532,7 +532,7 @@ impl TaoTapLuyenSheet {
         let ten_bai: String = self.get_ten_bai_hoc().to_string().trim().replace(" ", "_").to_lowercase();
 
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
-            d.set_current_dir("res://bai_hoc/choi_sheet");
+            d.set_current_dir(&GString::from(format!("{}bai_hoc/choi_sheet", crate::ham_phu::lay_duong_dan_goc())));
             
             let id_ngau_nhien: u64 = SystemTime::now().duration_since(std::time::UNIX_EPOCH).unwrap_or_default().as_secs();
             
@@ -566,7 +566,7 @@ impl IControl for TaoTapLuyenSheet {
         Self {
             base,
             ten_bai_hoc: GString::new(),
-            duong_dan_sheet: GString::from("res://bai_hoc/choi_sheet/test.json"),
+            duong_dan_sheet: GString::from(format!("{}bai_hoc/choi_sheet/test.json", crate::ham_phu::lay_duong_dan_goc())),
             khuong: GString::from("12"),
             cho_phep_cho: true,
             nhip_bat_dau: 1.5,

@@ -48,7 +48,7 @@ impl CheckFPS {
         }
     }
 
-    /// Đọc lại trạng thái `hien_thi_fps` từ file `res://du_lieu_nguoi_dung/cai_dat.json`
+    /// Đọc lại trạng thái `hien_thi_fps` từ file cài đặt của game.
     #[func]
     pub fn tai_lai_tu_cai_dat(&mut self) {
         let cai_dat = CaiDatGameJson::doc_cai_dat();

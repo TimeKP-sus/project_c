@@ -219,11 +219,11 @@ custom_minimum_size = Vector2(210, 44)
 layout_mode = 2
 selected = 0
 item_count = 3
-popup/item_0/text = "12 - Cả hai tay (K1 & K2)"
+popup/item_0/text = "Cả hai tay"
 popup/item_0/id = 0
-popup/item_1/text = "1 - Chỉ tay phải (K1)"
+popup/item_1/text = "Chỉ tay phải"
 popup/item_1/id = 1
-popup/item_2/text = "2 - Chỉ tay trái (K2)"
+popup/item_2/text = "Chỉ tay trái"
 popup/item_2/id = 2
 
 [node name="NhanBPM" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=2022315560]

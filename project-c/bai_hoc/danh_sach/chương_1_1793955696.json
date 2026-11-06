@@ -1,0 +1,25 @@
+{
+  "ten_chuong": "Chương 1",
+  "bai_hoc": [
+    {
+      "ten_bai_hoc": "Bài 2: Làm quen phím đàn",
+      "loai_bai_hoc": "tim_not",
+      "duong_dan": "res://bai_hoc/tim_not/bai_2_tim_not.json"
+    },
+    {
+      "ten_bai_hoc": "Bài 3: Đánh thức thính giác",
+      "loai_bai_hoc": "nghe_va_doan_not",
+      "duong_dan": "res://bai_hoc/nghe_va_doan_not/bai_3_nghe_not.json"
+    },
+    {
+      "ten_bai_hoc": "Bài 4: Luyện tập Kìa vì sao sáng",
+      "loai_bai_hoc": "tap_luyen_sheet",
+      "duong_dan": "res://bai_hoc/luyen_tap_sheet/bai_4_luyen_sao_sang.json"
+    },
+    {
+      "ten_bai_hoc": "Kìa vì sao sáng",
+      "loai_bai_hoc": "choi_sheet",
+      "duong_dan": "res://bai_hoc/choi_sheet/bai_5_choi_sao_sang.json"
+    }
+  ]
+}

@@ -21,6 +21,7 @@ use godot::{
 
 use crate::{
     doc_sheet_json::{ BaiHocVideoJson, MocThoiGianJson, doc_file_video_json, luu_file_video_json },
+    ham_phu::lay_duong_dan_goc,
     thong_bao,
 };
 
@@ -367,14 +368,15 @@ impl TaoVideo {
         let duong_dan_goc: String = self.get_duong_dan_video().to_string().trim().to_string();
 
         // 1. NẾU VIDEO ĐÃ NẰM SẴN TRONG THƯ MỤC CHUẨN: Giữ nguyên đường dẫn, không copy
-        if duong_dan_goc.is_empty() || duong_dan_goc.starts_with("res://bai_hoc/video") {
+        let thu_muc_video = format!("{}bai_hoc/video", lay_duong_dan_goc());
+        if duong_dan_goc.is_empty() || duong_dan_goc.starts_with(&thu_muc_video) {
             return self.thuc_hien_luu_json(path, GString::from(duong_dan_goc));
         }
 
         // 2. NẾU VIDEO TỪ BÊN NGOÀI: Copy vào và đổi tên thành mã random
         self.hien_thong_bao("Đang tiến hành sao chép video, vui lòng đợi...", "thong_tin");
 
-        let thu_muc_dich = "res://bai_hoc/video";
+        let thu_muc_dich = thu_muc_video;
         
         // Tạo mã ID ngẫu nhiên từ thời gian thực
         let id_ngau_nhien: u64 = SystemTime::now()
@@ -507,9 +509,9 @@ impl TaoVideo {
 
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
             // Đảm bảo thư mục đích TỒN TẠI trước khi mở hộp thoại
-            let thu_muc_json = "res://bai_hoc/xem_video";
-            let _ = DirAccess::make_dir_recursive_absolute(&GString::from(thu_muc_json));
-            d.set_current_dir(thu_muc_json);
+            let thu_muc_json = format!("{}bai_hoc/xem_video", lay_duong_dan_goc());
+            let _ = DirAccess::make_dir_recursive_absolute(&GString::from(&thu_muc_json));
+            d.set_current_dir(&GString::from(&thu_muc_json));
             d.set_current_file(&GString::from(&ten_file_moi));
             d.popup_centered();
         }
@@ -519,9 +521,9 @@ impl TaoVideo {
     fn _mo_popup_mo(&mut self) {
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiMoJson") {
 
-            let thu_muc_json = "res://bai_hoc/xem_video";
-            let _ = DirAccess::make_dir_recursive_absolute(&GString::from(thu_muc_json));
-            d.set_current_dir(thu_muc_json);
+            let thu_muc_json = format!("{}bai_hoc/xem_video", lay_duong_dan_goc());
+            let _ = DirAccess::make_dir_recursive_absolute(&GString::from(&thu_muc_json));
+            d.set_current_dir(&GString::from(&thu_muc_json));
             d.popup_centered();
         }
     }
@@ -541,7 +543,7 @@ impl IControl for TaoVideo {
             base,
             ten_bai_hoc: GString::new(),
             nguoi_tao: GString::from("timekp"),
-            duong_dan_video: GString::from("res://bai_hoc/video/v1.mp4"),
+            duong_dan_video: GString::from(format!("{}bai_hoc/video/v1.mp4", lay_duong_dan_goc())),
             che_do_sua: false,
             vi_tri_dang_sua: -1,
             cac_moc: Vec::new(),

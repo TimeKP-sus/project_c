@@ -8,6 +8,7 @@ use godot::{
 use serde::Deserialize;
 
 use crate::du_lieu_lich_su::DuLieuLichSu;
+use crate::ham_phu::lay_duong_dan_goc;
 
 #[derive(Deserialize, Debug)]
 pub struct ChuongJson {
@@ -39,7 +40,8 @@ impl DanhSachBaiHoc {
         let mut danh_sach = Array::<Dictionary>::new();
         let mut ds_ten_file: Vec<String> = Vec::new();
 
-        if let Some(mut dir) = DirAccess::open("res://bai_hoc/danh_sach") {
+        let thu_muc = format!("{}bai_hoc/danh_sach", lay_duong_dan_goc());
+        if let Some(mut dir) = DirAccess::open(&thu_muc) {
             dir.list_dir_begin();
             let mut ten_file: GString = dir.get_next();
 
@@ -56,7 +58,7 @@ impl DanhSachBaiHoc {
         ds_ten_file.sort();
 
         for ten_file in ds_ten_file {
-            let duong_dan: String = format!("res://bai_hoc/danh_sach/{}", ten_file);
+            let duong_dan: String = format!("{}bai_hoc/danh_sach/{}", lay_duong_dan_goc(), ten_file);
             let file_text: GString = FileAccess::get_file_as_string(&duong_dan);
 
             if let Ok(data) = serde_json::from_str::<ChuongJson>(&file_text.to_string()) {
@@ -73,7 +75,7 @@ impl DanhSachBaiHoc {
     /// ten_bai_hoc, loai_bai_hoc, duong_dan, nguoi_tao, diem_cao_nhat, ti_le_hoan_thanh, so_lan_choi, hang_tot_nhat
     pub fn lay_json_bai_hoc(&self, ten_chuong: GString) -> Array<Dictionary> {
         let mut danh_sach_bai_hoc: Array<Dictionary> = Array::<Dictionary>::new();
-        let duong_dan = format!("res://bai_hoc/danh_sach/{}", ten_chuong);
+        let duong_dan = format!("{}bai_hoc/danh_sach/{}", lay_duong_dan_goc(), ten_chuong);
         godot_print!("Đang đọc file JSON: {}", duong_dan);
         let chuong_json: GString = FileAccess::get_file_as_string(&duong_dan);
         let lich_su: DuLieuLichSu = DuLieuLichSu::doc_lich_su();

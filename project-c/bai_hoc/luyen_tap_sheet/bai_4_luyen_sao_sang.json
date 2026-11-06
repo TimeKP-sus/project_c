@@ -1,0 +1,14 @@
+{
+  "ten_bai_hoc": "Bài 4: Luyện tập Kìa vì sao sáng",
+  "duong_dan_sheet": "res://bai_hoc/choi_sheet/bai_5_choi_sao_sang.json",
+  "khuong": "1",
+  "cho_phep_cho": true,
+  "phan_thoi_gian": "0-8",
+  "bpm_tuy_chinh": 60.0,
+  "cac_ghi_chu": {
+    "0": "Đặt ngón cái (1) vào nốt Đô (C4)",
+    "2": "Mở rộng ngón áp út (4) lên nốt Son (G4)",
+    "4": "Dùng ngón út (5) đánh nốt La (A4)",
+    "6": "Giữ nốt Son dài 2 nhịp nhé!"
+  }
+}

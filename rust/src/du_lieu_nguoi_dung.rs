@@ -2,9 +2,11 @@ use godot::classes::{file_access::ModeFlags, DirAccess, FileAccess};
 use godot::global::godot_print;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use crate::ham_phu::lay_duong_dan_goc;
 
-
-pub const DUONG_DAN_CAI_DAT: &str = "res://du_lieu_nguoi_dung/cai_dat.json";
+pub fn duong_dan_cai_dat() -> String {
+    format!("{}du_lieu_nguoi_dung/cai_dat.json", lay_duong_dan_goc())
+}
 
 // =========================================================================
 // 1. DỮ LIỆU NGƯỜI DÙNG & LỊCH SỬ BÀI HÁT (Giữ nguyên 100% các hàm & trường cũ)
@@ -28,10 +30,10 @@ pub struct DuLieuNguoiDung {
 }
 
 impl DuLieuNguoiDung {
-    /// Đọc file JSON của người chơi bằng FileAccess của Godot (hỗ trợ trực tiếp đường dẫn res://)
+    /// Đọc file JSON của người chơi từ thư mục gốc của Editor hoặc file thực thi.
     /// 
     pub fn doc_thong_tin_nguoi_choi(ten_nguoi_choi: &str) -> Option<Self> {
-        let duong_dan: String = format!("res://du_lieu_nguoi_dung/{}.json", ten_nguoi_choi);
+        let duong_dan: String = format!("{}du_lieu_nguoi_dung/{}.json", lay_duong_dan_goc(), ten_nguoi_choi);
         let file_text: String = FileAccess::get_file_as_string(&duong_dan).to_string();
         if file_text.trim().is_empty() {
             return None;
@@ -45,10 +47,11 @@ impl DuLieuNguoiDung {
         }
     }
 
-    /// Lưu thông tin người chơi vào thư mục res://du_lieu_nguoi_dung/{ten_nguoi_choi}.json
+    /// Lưu thông tin người chơi vào thư mục dữ liệu cạnh file thực thi khi đã xuất game.
     pub fn luu_thong_tin_nguoi_choi(&self) -> bool {
-        let _ = DirAccess::make_dir_recursive_absolute("res://du_lieu_nguoi_dung");
-        let duong_dan: String = format!("res://du_lieu_nguoi_dung/{}.json", self.ten_nguoi_choi);
+        let thu_muc = format!("{}du_lieu_nguoi_dung", lay_duong_dan_goc());
+        let _ = DirAccess::make_dir_recursive_absolute(&thu_muc);
+        let duong_dan: String = format!("{}/{}.json", thu_muc, self.ten_nguoi_choi);
         match serde_json::to_string_pretty(self) {
             Ok(noi_dung) => {
                 if let Some(mut file) = FileAccess::open(&duong_dan, ModeFlags::WRITE) {
@@ -107,7 +110,7 @@ impl DuLieuNguoiDung {
 }
 
 // =========================================================================
-// 2. CLASS JSON CÀI ĐẶT GAME & ĐỒ HỌA RIÊNG (res://du_lieu_nguoi_dung/cai_dat.json)
+// 2. CLASS JSON CÀI ĐẶT GAME & ĐỒ HỌA RIÊNG
 // =========================================================================
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -145,9 +148,10 @@ impl Default for CaiDatGameJson {
 }
 
 impl CaiDatGameJson {
-    /// Đọc cài đặt từ `res://du_lieu_nguoi_dung/cai_dat.json` (tự tạo file mặc định nếu chưa có)
+    /// Đọc cài đặt (tự tạo file mặc định nếu chưa có).
     pub fn doc_cai_dat() -> Self {
-        let txt = FileAccess::get_file_as_string(DUONG_DAN_CAI_DAT).to_string();
+        let duong_dan = duong_dan_cai_dat();
+        let txt = FileAccess::get_file_as_string(&duong_dan).to_string();
         if !txt.trim().is_empty() {
             if let Ok(cfg) = serde_json::from_str::<CaiDatGameJson>(&txt) {
                 return cfg;
@@ -158,17 +162,19 @@ impl CaiDatGameJson {
         mac_dinh
     }
 
-    /// Lưu cài đặt ngay trong thư mục game `res://du_lieu_nguoi_dung/cai_dat.json`
+    /// Lưu cài đặt trong thư mục dữ liệu cạnh file thực thi khi đã xuất game.
     pub fn luu_cai_dat(&self) -> bool {
-        let _ = DirAccess::make_dir_recursive_absolute("res://du_lieu_nguoi_dung");
+        let thu_muc = format!("{}du_lieu_nguoi_dung", lay_duong_dan_goc());
+        let _ = DirAccess::make_dir_recursive_absolute(&thu_muc);
+        let duong_dan = duong_dan_cai_dat();
         match serde_json::to_string_pretty(self) {
             Ok(noi_dung) => {
-                if let Some(mut file) = FileAccess::open(DUONG_DAN_CAI_DAT, ModeFlags::WRITE) {
+                if let Some(mut file) = FileAccess::open(&duong_dan, ModeFlags::WRITE) {
                     file.store_string(&noi_dung);
-                    godot_print!("Đã lưu cài đặt game tại: {}", DUONG_DAN_CAI_DAT);
+                    godot_print!("Đã lưu cài đặt game tại: {}", duong_dan);
                     true
                 } else {
-                    godot_print!("Lỗi: Không thể ghi file cài đặt tại {}", DUONG_DAN_CAI_DAT);
+                    godot_print!("Lỗi: Không thể ghi file cài đặt tại {}", duong_dan);
                     false
                 }
             }

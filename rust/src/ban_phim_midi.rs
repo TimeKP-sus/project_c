@@ -1,4 +1,5 @@
 use std::collections::HashSet;
+use crate::ham_phu::lay_duong_dan_goc;
 use std::thread;
 use std::time::Duration;
 
@@ -425,7 +426,7 @@ impl IHBoxContainer for BanPhimMidi {
             cum_5: None,
             cum_6: None,
             cum_7: None,
-            path_sf2: GString::from("res://sf2/Florestan_Basic_GM_GS_Plus.sf2"),
+            path_sf2: GString::from(format!("{}sf2/Florestan_Basic_GM_GS_Plus.sf2", lay_duong_dan_goc())),
             hop_am: GString::from(""),
             danh_sach_phim_bam: HashSet::new(),
 

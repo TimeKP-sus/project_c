@@ -8,7 +8,7 @@ use godot::{
     prelude::{godot_api, GodotClass},
 };
 
-use crate::du_lieu_nguoi_dung::{CaiDatGameJson, DUONG_DAN_CAI_DAT};
+use crate::du_lieu_nguoi_dung::{CaiDatGameJson, duong_dan_cai_dat};
 
 const DANH_SACH_FPS: [i32; 6] = [0, 60, 90,120, 144, 240];
 
@@ -233,7 +233,7 @@ impl ManHinhCaiDat {
             if ok {
                 lbl.set_text(&format!(
                     "✔ Đã lưu & áp dụng thành công vào: {} (Tốc độ: {:.2}x | Độ trễ: {:.0}ms)",
-                    DUONG_DAN_CAI_DAT, toc_do_choi, do_tre_phim_ms
+                    duong_dan_cai_dat(), toc_do_choi, do_tre_phim_ms
                 ));
             } else {
                 lbl.set_text("❌ Lỗi: Không thể lưu file cài đặt!");

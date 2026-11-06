@@ -70,6 +70,14 @@ impl HocTimNot {
     pub fn get_diem_cu(&self) -> i32 {
         self.diem_ky_luc
     }
+    #[func]
+    pub fn get_so_lan_dung(&self) -> i32 {
+        self.so_lan_dung
+    }
+    #[func]
+    pub fn get_so_lan_sai(&self) -> i32 {
+        self.so_lan_sai
+    }
 
     // ================= TÍNH NĂNG TÔ MÀU GỢI Ý =================
     fn lay_mau_sac_cho_phim(so_phim: i32) -> Color {

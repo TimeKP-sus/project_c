@@ -1,0 +1,13 @@
+{
+  "danh_sach_ket_qua": {
+    "tim_not|res://bai_hoc/tim_not/bai_2_tim_not.json": {
+      "loai_che_do": "tim_not",
+      "duong_dan_bai": "res://bai_hoc/tim_not/bai_2_tim_not.json",
+      "diem_cao_nhat": 400,
+      "ti_le_hoan_thanh": 80.0,
+      "so_lan_choi": 1,
+      "da_hoan_thanh": true,
+      "hang_tot_nhat": "B"
+    }
+  }
+}
