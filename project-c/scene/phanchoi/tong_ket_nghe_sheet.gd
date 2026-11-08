@@ -58,7 +58,7 @@ func _on_hoc_nghe_not_xong_het_bai() -> void:
 
 	diem_cu.text = "Điểm kỷ lục: " + str(ky_luc_cu)
 	if diem_so > ky_luc_cu:
-		diem.text = str(diem_so) + " (Kỷ lục mới!)"
+		diem.text = "Tổng điểm: " + str(diem_so) + " (Kỷ lục mới!)"
 	else:
 		diem.text = str(diem_so)
 

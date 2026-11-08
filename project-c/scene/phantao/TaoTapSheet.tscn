@@ -58,7 +58,7 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_lbl"]
 font = ExtResource("1_6iejc")
-font_size = 20
+font_size = 18
 font_color = Color(0.88, 0.96, 1, 1)
 outline_size = 4
 outline_color = Color(0, 0, 0, 1)
@@ -83,9 +83,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
 [node name="ThanhTren" type="Panel" parent="." unique_id=292259929]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.04
+anchor_left = 0.03
 anchor_top = 0.03
-anchor_right = 0.96
+anchor_right = 0.97
 anchor_bottom = 0.12
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
@@ -109,6 +109,7 @@ label_settings = SubResource("LabelSettings_title")
 [node name="ChoiThu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1897317008]
 custom_minimum_size = Vector2(210, 48)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
@@ -117,6 +118,7 @@ text = "▶ Chơi thử đoạn này"
 [node name="MoJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=42183345]
 custom_minimum_size = Vector2(140, 48)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
@@ -125,6 +127,7 @@ text = "📂 Mở JSON"
 [node name="LuuJson_Btn" type="Button" parent="ThanhTren/HBox" unique_id=1435785278]
 custom_minimum_size = Vector2(150, 48)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
@@ -133,6 +136,7 @@ text = "💾 Lưu JSON"
 [node name="VeMenu_Btn" type="Button" parent="ThanhTren/HBox" unique_id=5112177]
 custom_minimum_size = Vector2(130, 48)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 20
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
@@ -141,59 +145,60 @@ text = "✖ Về Menu"
 [node name="KhungChinh" type="Panel" parent="." unique_id=544639313]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.08
-anchor_top = 0.15
-anchor_right = 0.92
-anchor_bottom = 0.94
+anchor_left = 0.03
+anchor_top = 0.14
+anchor_right = 0.97
+anchor_bottom = 0.96
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+metadata/_edit_use_anchors_ = true
 
 [node name="VBox" type="VBoxContainer" parent="KhungChinh" unique_id=32638393]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 30.0
-offset_top = 22.0
-offset_right = -30.0
-offset_bottom = -22.0
+offset_left = 24.0
+offset_top = 18.0
+offset_right = -24.0
+offset_bottom = -18.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 12
 
 [node name="HangTen" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=309993375]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 14
 
 [node name="NhanTen" type="Label" parent="KhungChinh/VBox/HangTen" unique_id=319544786]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Tên bài tập:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="TenBai_Input" type="LineEdit" parent="KhungChinh/VBox/HangTen" unique_id=2051727224]
-custom_minimum_size = Vector2(0, 44)
+custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "VD: Luyện tập đoạn điệp khúc tay phải..."
 
 [node name="HangSheet" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1263364519]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 14
 
 [node name="NhanSheet" type="Label" parent="KhungChinh/VBox/HangSheet" unique_id=429123084]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Sheet nhạc gốc:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="DuongDanSheet_Input" type="LineEdit" parent="KhungChinh/VBox/HangSheet" unique_id=1465260405]
-custom_minimum_size = Vector2(0, 44)
+custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "res://bai_hoc/choi_sheet/test.json"
 
 [node name="ChonSheet_Btn" type="Button" parent="KhungChinh/VBox/HangSheet" unique_id=1392393286]
-custom_minimum_size = Vector2(170, 44)
+custom_minimum_size = Vector2(165, 42)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 18
@@ -207,15 +212,16 @@ label_settings = SubResource("LabelSettings_lbl")
 
 [node name="HangCauHinh" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1652157138]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 10
+alignment = 1
 
 [node name="NhanKhuong" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=14408804]
 layout_mode = 2
-text = "Khuông luyện:"
+text = "Khuông:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="Khuong_Option" type="OptionButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1055109593]
-custom_minimum_size = Vector2(210, 44)
+custom_minimum_size = Vector2(150, 40)
 layout_mode = 2
 selected = 0
 item_count = 3
@@ -232,22 +238,45 @@ text = "BPM:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="Bpm_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=1275135758]
-custom_minimum_size = Vector2(100, 44)
+custom_minimum_size = Vector2(85, 40)
 layout_mode = 2
 max_value = 300.0
 
 [node name="ChoPhepCho_Check" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1198098388]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 16
 button_pressed = true
-text = "Dừng nhịp chờ bấm đúng phím"
+text = "Chờ phím"
+
+[node name="ChoPhepAmThanhNhip" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=528614101]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Gõ nhịp"
+
+[node name="BatTenKhac" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1045015166]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Tên khác"
+
+[node name="ToMauPhim" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1045015167]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Tô màu phím"
 
 [node name="NhanTu" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=1600142900]
 layout_mode = 2
-text = "Từ nhịp:"
+text = "Từ:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="NhipBatDau_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=314347199]
-custom_minimum_size = Vector2(120, 44)
+custom_minimum_size = Vector2(90, 40)
 layout_mode = 2
 max_value = 2000.0
 step = 0.25
@@ -255,11 +284,11 @@ value = 1.5
 
 [node name="NhanDen" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=2022315559]
 layout_mode = 2
-text = "Đến nhịp:"
+text = "Đến:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="NhipKetThuc_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=1275135757]
-custom_minimum_size = Vector2(120, 44)
+custom_minimum_size = Vector2(90, 40)
 layout_mode = 2
 max_value = 2000.0
 step = 0.25
@@ -267,28 +296,28 @@ value = 10.0
 
 [node name="HangGhiChu" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1676387057]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 14
 
 [node name="NhanGC" type="Label" parent="KhungChinh/VBox/HangGhiChu" unique_id=1779471525]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(145, 0)
 layout_mode = 2
 text = "Ghi chú ở nhịp:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="NhipGhiChu_Spin" type="SpinBox" parent="KhungChinh/VBox/HangGhiChu" unique_id=831904607]
-custom_minimum_size = Vector2(120, 44)
+custom_minimum_size = Vector2(110, 42)
 layout_mode = 2
 max_value = 2000.0
 step = 0.25
 
 [node name="NoiDungGhiChu_Input" type="LineEdit" parent="KhungChinh/VBox/HangGhiChu" unique_id=608346177]
-custom_minimum_size = Vector2(0, 44)
+custom_minimum_size = Vector2(0, 42)
 layout_mode = 2
 size_flags_horizontal = 3
 placeholder_text = "Nhập lời nhắc hiển thị tại nhịp này..."
 
 [node name="ThemGhiChu_Btn" type="Button" parent="KhungChinh/VBox/HangGhiChu" unique_id=956679891]
-custom_minimum_size = Vector2(150, 44)
+custom_minimum_size = Vector2(145, 42)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 18
@@ -296,7 +325,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
 text = "➕ Thêm nhắc"
 
 [node name="XoaGhiChu_Btn" type="Button" parent="KhungChinh/VBox/HangGhiChu" unique_id=643226375]
-custom_minimum_size = Vector2(140, 44)
+custom_minimum_size = Vector2(135, 42)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_6iejc")
 theme_override_font_sizes/font_size = 18
@@ -323,7 +352,7 @@ title = "Lưu bài Tập Luyện Sheet JSON"
 initial_position = 2
 size = Vector2i(750, 500)
 access = 2
-root_subfolder = "bai_hoc"
+root_subfolder = "bai_hoc/luyen_tap_sheet"
 filters = PackedStringArray("*.json ; Practice Sheet JSON")
 
 [node name="HopThoaiMoJson" type="FileDialog" parent="." unique_id=1300158292]
@@ -333,7 +362,7 @@ size = Vector2i(750, 500)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-root_subfolder = "bai_hoc"
+root_subfolder = "bai_hoc/luyen_tap_sheet"
 filters = PackedStringArray("*.json ; Practice Sheet JSON")
 
 [node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("3_1gcn3")]

@@ -76,8 +76,6 @@ pub struct TaoSheet {
     bpm_spin: Option<Gd<SpinBox>>,
     mien_k1_spin: Option<Gd<SpinBox>>,
     mien_k2_spin: Option<Gd<SpinBox>>,
-
-    // Các Node UI ở Thanh Công Cụ Soạn (Dưới)
     // Các Node UI ở Thanh Công Cụ Soạn (Dưới)
     nhip_label: Option<Gd<Label>>,
     thanh_tua: Option<Gd<HSlider>>,

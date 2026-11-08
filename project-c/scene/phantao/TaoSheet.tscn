@@ -257,8 +257,10 @@ texture = ExtResource("1_mffsp")
 [node name="QuanLySheet" parent="." unique_id=101082986 instance=ExtResource("2_0iuma")]
 toc_do = 80.0
 hien_thi_thoi_gian = true
-clip_contents = true
 layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.04375
+metadata/_edit_use_anchors_ = true
 
 [node name="ThanhThongTin" type="Panel" parent="." unique_id=1484156686]
 layout_mode = 0
@@ -810,6 +812,13 @@ text = "▶ Nghe thử"
 [node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("6_jn0q5")]
 layout_mode = 0
 anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 460.0
+offset_bottom = 76.0
+grow_horizontal = 1
 metadata/_edit_lock_ = true
 
 [connection signal="button_down" from="ThanhThongTin/HBox/VeMenu_Btn" to="." method="_on_ve_menu_btn_button_down"]

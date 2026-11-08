@@ -1,6 +1,5 @@
 extends RichTextLabel
 
-# Đã sửa int thành String để nhận chuỗi chứa nhiều nốt (VD: "36_40_43")
 @export var chuoi_id: String
 @export var ten_not: String
 
@@ -8,36 +7,34 @@ func _ready() -> void:
 	an_not()
 	if "_" in chuoi_id:
 		thiet_lap_vien_hop_am()
+		
 	self.scale = Vector2.ZERO
+	# Tăng thời gian lên 0.35s để nốt nhạc nở ra mềm mại hơn
 	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.35).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func an_not() -> void:
 	self.text = "[center]?[/center]"
-	self.modulate = Color.WHITE # Đảm bảo Node không bị ám màu
-	self.add_theme_color_override("default_color", Color.WHITE) # Chữ màu trắng
+	self.modulate = Color.WHITE
+	self.add_theme_color_override("default_color", Color.WHITE)
 
 func hieu_ung_sai() -> void:
-	# Chỉ đổi màu chữ thành Đỏ, không ảnh hưởng đến viền
 	self.add_theme_color_override("default_color", Color.RED)
-	
-	# Hiệu ứng rung lắc trái phải (Giữ nguyên)
 	var tween = create_tween()
 	var x_goc = self.position.x
-	tween.tween_property(self, "position:x", x_goc + 5, 0.05)
-	tween.tween_property(self, "position:x", x_goc - 5, 0.05)
-	tween.tween_property(self, "position:x", x_goc, 0.05)
+	# Rung lắc mượt dần đều
+	tween.tween_property(self, "position:x", x_goc + 5, 0.05).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "position:x", x_goc - 3, 0.05).set_trans(Tween.TRANS_SINE)
+	tween.tween_property(self, "position:x", x_goc, 0.05).set_trans(Tween.TRANS_SINE)
 
 func hien_not_dung() -> void:
-	# Chỉ đổi màu chữ thành Xanh lá, viền Vàng Đồng của hợp âm vẫn sẽ rực rỡ
 	self.add_theme_color_override("default_color", Color.GREEN)
 	self.text = ten_not
 
-	self.scale = Vector2(1.5, 1.5)
+	# Hiệu ứng "Nhịp đập" (Pulse): Phóng lên 1.25 rồi thu về 1.0
 	var tween = create_tween()
-	tween.tween_property(self, "scale", Vector2.ONE, 0.2).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(self, "scale", Vector2(1.25, 1.25), 0.1).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func thiet_lap_vien_hop_am() -> void:
-	# Đổi màu viền chữ thành Vàng Đồng (hoặc màu bất kỳ bạn thích)
 	self.add_theme_color_override("font_outline_color", Color.DEEP_SKY_BLUE)
-	#self.add_theme_color_override("default_color", Color.BLUE)

@@ -451,11 +451,22 @@ pub struct LuyenTapJson {
     pub duong_dan_sheet: String,
     pub khuong: String,
     pub cho_phep_cho: bool,
+
+    #[serde(default = "bool_true")]
+    pub cho_phep_am_thanh_nhip: bool,
+    #[serde(default = "bool_true")]
+    pub hien_thi_ten_khac: bool,
+    #[serde(default = "bool_true")]
+    pub to_mau_phim: bool,
+    
     pub phan_thoi_gian: String,
     #[serde(default)]
     pub bpm_tuy_chinh: Option<f32>,
     #[serde(default)]
     pub cac_ghi_chu: BTreeMap<String, String>,
+}
+fn bool_true() -> bool {
+    true
 }
 
 pub fn doc_file_luyen_tap(duong_dan: &str) -> Option<LuyenTapJson> {

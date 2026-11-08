@@ -24,14 +24,14 @@ func _ready() -> void:
 func _on_nut_menu_button_down() -> void:
 	var tween = create_tween()
 	if not dang_mo:
-		if get_node("../QuanLySheet") != null:
+		if get_node_or_null("../QuanLySheet") != null:
 			get_node("../QuanLySheet").da_dung = true
 		tween.tween_property(menu, "position", vt_dang_mo, 0.5)\
 			.set_trans(Tween.TRANS_ELASTIC)\
 			.set_ease(Tween.EASE_OUT)
 		dang_mo = true
 	else:
-		if get_node("../QuanLySheet") != null:
+		if get_node_or_null("../QuanLySheet") != null:
 			get_node("../QuanLySheet").da_dung = false
 		tween.tween_property(menu, "position", vt_ban_dau, 0.3)\
 			.set_trans(Tween.TRANS_CUBIC)\

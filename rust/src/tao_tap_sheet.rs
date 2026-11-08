@@ -29,6 +29,9 @@ pub struct TaoTapLuyenSheet {
     duong_dan_sheet: GString,
     khuong: GString,
     cho_phep_cho: bool,
+    cho_phep_am_thanh_nhip: bool,
+    hien_thi_ten_khac: bool,
+    to_mau_phim: bool,
     nhip_bat_dau: f32,
     nhip_ket_thuc: f32,
 
@@ -128,6 +131,32 @@ impl TaoTapLuyenSheet {
             return input.get_text();
         }
         self.duong_dan_sheet.clone()
+    }
+    #[func]
+    pub fn set_hien_thi_ten_khac(&mut self, bat: bool) {
+        self.hien_thi_ten_khac = bat;
+        // Cập nhật lại UI CheckBox
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/BatTenKhac") {
+            chk.set_pressed(bat);
+        }
+        
+        // Cập nhật QuanLySheet nếu nó đang mở
+        if let Some(mut qls) = self.base().try_get_node_as::<crate::quan_ly_sheet::QuanLySheet>("QuanLySheet") {
+            qls.bind_mut().bat_tat_hien_thi_ten_khac(bat);
+        }
+    }
+
+    #[func]
+    pub fn get_hien_thi_ten_khac(&self) -> bool {
+        if let Some(chk) = self.base().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/BatTenKhac") {
+            return chk.is_pressed();
+        }
+        self.hien_thi_ten_khac
+    }
+
+    #[func]
+    fn _khi_bat_tat_ten_khac(&mut self, bat: bool) {
+        self.set_hien_thi_ten_khac(bat);
     }
 
     #[func]
@@ -406,6 +435,52 @@ impl TaoTapLuyenSheet {
             self.cap_nhat_ui_ghi_chu();
         }
     }
+    #[func]
+    pub fn set_cho_phep_am_thanh_nhip(&mut self, bat: bool) {
+        self.cho_phep_am_thanh_nhip = bat;
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/ChoPhepAmThanhNhip_Check") {
+            chk.set_pressed(bat);
+        }
+        
+        // Nếu có Node QuanLySheet đang chạy, đồng bộ luôn
+        if let Some(mut qls) = self.base().try_get_node_as::<crate::quan_ly_sheet::QuanLySheet>("QuanLySheet") {
+            qls.bind_mut().bat_tat_am_thanh_nhip(bat);
+        }
+    }
+
+    #[func]
+    pub fn get_cho_phep_am_thanh_nhip(&self) -> bool {
+        if let Some(chk) = self.base().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/ChoPhepAmThanhNhip_Check") {
+            return chk.is_pressed();
+        }
+        self.cho_phep_am_thanh_nhip
+    }
+    
+    // Thêm hàm trung gian để nối với tín hiệu "toggled" của giao diện
+    #[func]
+    fn _khi_bat_tat_am_thanh(&mut self, bat: bool) {
+        self.set_cho_phep_am_thanh_nhip(bat);
+    }
+    #[func]
+    pub fn set_to_mau_phim(&mut self, bat: bool) {
+        self.to_mau_phim = bat;
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/ToMauPhim") {
+            chk.set_pressed(bat);
+        }
+    }
+
+    #[func]
+    pub fn get_to_mau_phim(&self) -> bool {
+        if let Some(chk) = self.base().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/ToMauPhim") {
+            return chk.is_pressed();
+        }
+        self.to_mau_phim
+    }
+
+    #[func]
+    fn _khi_bat_tat_to_mau_phim(&mut self, bat: bool) {
+        self.set_to_mau_phim(bat);
+    }
 
     // ==================== LƯU / MỞ / CHƠI THỬ ĐOẠN LUYỆN TẬP ====================
     #[func]
@@ -418,6 +493,9 @@ impl TaoTapLuyenSheet {
             duong_dan_sheet: self.get_duong_dan_sheet().to_string().trim().to_string(),
             khuong: self.get_khuong().to_string(),
             cho_phep_cho: self.get_cho_phep_cho(),
+            cho_phep_am_thanh_nhip: self.get_cho_phep_am_thanh_nhip(),
+            hien_thi_ten_khac: self.get_hien_thi_ten_khac(),
+            to_mau_phim: self.get_to_mau_phim(),
             phan_thoi_gian: self.get_phan_thoi_gian().to_string(),
             bpm_tuy_chinh: bpm_opt,
             cac_ghi_chu: self.cac_ghi_chu.clone(),
@@ -438,7 +516,9 @@ impl TaoTapLuyenSheet {
             self.set_duong_dan_sheet(GString::from(data.duong_dan_sheet));
             self.set_khuong(GString::from(data.khuong));
             self.set_cho_phep_cho(data.cho_phep_cho);
-
+            self.set_cho_phep_am_thanh_nhip(data.cho_phep_am_thanh_nhip);
+            self.set_hien_thi_ten_khac(data.hien_thi_ten_khac);
+            self.set_to_mau_phim(data.to_mau_phim);
             let parts: Vec<&str> = data.phan_thoi_gian.split('-').collect();
             if parts.len() == 2 {
                 let bd = parts[0].parse::<f32>().unwrap_or(0.0);
@@ -569,6 +649,9 @@ impl IControl for TaoTapLuyenSheet {
             duong_dan_sheet: GString::from(format!("{}bai_hoc/choi_sheet/test.json", crate::ham_phu::lay_duong_dan_goc())),
             khuong: GString::from("12"),
             cho_phep_cho: true,
+            cho_phep_am_thanh_nhip: true,
+            hien_thi_ten_khac: true,
+            to_mau_phim: true,
             nhip_bat_dau: 1.5,
             nhip_ket_thuc: 10.0,
             che_do_sua: false,
@@ -622,6 +705,9 @@ impl IControl for TaoTapLuyenSheet {
         {
             b.connect("pressed", &Callable::from_object_method(&obj, "_khi_bam_xoa_ghi_chu"));
         }
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/ChoPhepAmThanhNhip") {
+            chk.connect("toggled", &Callable::from_object_method(&obj, "_khi_bat_tat_am_thanh"));
+        }
         if
             let Some(mut list) = self
                 .base_mut()
@@ -631,6 +717,12 @@ impl IControl for TaoTapLuyenSheet {
         }
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiChonSheet") {
             d.connect("file_selected", &Callable::from_object_method(&obj, "_khi_chon_file_sheet"));
+        }
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/BatTenKhac") {
+            chk.connect("toggled", &Callable::from_object_method(&obj, "_khi_bat_tat_ten_khac"));
+        }
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>("KhungChinh/VBox/HangCauHinh/ToMauPhim") {
+            chk.connect("toggled", &Callable::from_object_method(&obj, "_khi_bat_tat_to_mau_phim"));
         }
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
             d.connect("file_selected", &Callable::from_object_method(&obj, "luu_bai_luyen_tap"));

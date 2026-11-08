@@ -34,6 +34,8 @@ pub struct QuanLySheet {
     cho_phep_cho: bool,
     #[export]
     hien_thi_ten_khac: bool,
+    #[export]
+    cho_phep_to_mau_phim: bool,
     dang_luyen_tap_mode: bool,
 
     #[export]
@@ -72,6 +74,11 @@ pub struct QuanLySheet {
 impl QuanLySheet {
     #[signal]
     fn bai_hat_ket_thuc();
+
+    #[func]
+    pub fn bat_tat_to_mau_phim(&mut self, bat: bool) {
+        self.cho_phep_to_mau_phim = bat && self.dang_luyen_tap_mode;
+    }
 
     #[func]
     pub fn bat_tat_cho_phep_xoa_not(&mut self, bat: bool) {
@@ -405,6 +412,38 @@ impl QuanLySheet {
         self.mien_not_k2 = mien_2;
         self.cap_nhat_hien_thi_mien(self.mien_not_k1, self.mien_not_k2);
     }
+    #[func]
+    fn phat_am_thanh_nhip(&mut self, phach_hien_tai: i32) {
+        if !self.cho_phep_am_thanh_nhip {
+            return;
+        }
+
+        let nhip_moi_o: i32 = match self.loai_vach_nhip.as_str() {
+            "4/4" => 4, // Nên dùng số phách thực tế thay vì 8 (như trước kia)
+            "3/4" => 3,
+            "2/4" => 2,
+            "3/8" => 3,
+            "6/8" => 6,
+            _ => 4,
+        };
+
+        if let Some(am_thanh) = self.am_thanh_nhip.as_mut() {
+            // Xác định phách đầu tiên của ô nhịp (Phách mạnh)
+            let la_phach_manh = phach_hien_tai.rem_euclid(nhip_moi_o) == 0;
+
+            if la_phach_manh {
+                am_thanh.set_pitch_scale(1.5); // Âm thanh cao hơn cho phách mạnh (Ting!)
+                am_thanh.set_volume_db(0.0);
+            } else {
+                am_thanh.set_pitch_scale(1.0); // Âm thanh thấp hơn cho phách nhẹ (Tóc)
+                am_thanh.set_volume_db(-5.0);  // Giảm âm lượng phách nhẹ xuống 1 chút
+            }
+
+            // Ép dừng âm thanh cũ nếu đang phát lỡ dở và phát lại ngay lập tức để không bị đục âm
+            am_thanh.stop();
+            am_thanh.play();
+        }
+    }
 }
 
 #[godot_api]
@@ -444,35 +483,13 @@ impl IControl for QuanLySheet {
 
         self.thoi_gian += delta as f32;
         let nhip_hien_tai: f32 = (self.thoi_gian * self.bpm) / 60.0;
+        let nhip_nguyen_ht: i32 = nhip_hien_tai.floor() as i32;
 
-        // ================= XỬ LÝ PHÁT ÂM THANH NHỊP =================
-        let nhip_nguyen: i32 = nhip_hien_tai.floor() as i32;
-
-        if nhip_nguyen > self.nhip_nguyen_truoc {
-            // CHỈ PHÁT ÂM THANH KHI BIẾN NÀY LÀ TRUE
-            if self.cho_phep_am_thanh_nhip {
-                if let Some(am_thanh) = self.am_thanh_nhip.as_mut() {
-                    let nhip_moi_o = match self.loai_vach_nhip.as_str() {
-                        "4/4" => 8,
-                        "3/4" => 6,
-                        "3/8" => 6,
-                        "2/4" => 4,
-                        "6/8" => 12,
-                        _ => 8, // Mặc định
-                    };
-                    // Xử lý bù trừ số âm: rem_euclid giúp % số âm vẫn ra phách mạnh chuẩn xác.
-                    if nhip_nguyen.rem_euclid(nhip_moi_o) == 0 {
-                        am_thanh.set_pitch_scale(1.5);
-                    } else {
-                        am_thanh.set_pitch_scale(1.0);
-                    }
-
-                    am_thanh.play();
-                }
-            }
-            self.nhip_nguyen_truoc = nhip_nguyen;
+        // Chỉ gọi hàm phát âm thanh nếu đã chuyển sang một nhịp mới (phách mới)
+        if nhip_nguyen_ht > self.nhip_nguyen_truoc {
+            self.phat_am_thanh_nhip(nhip_nguyen_ht);
+            self.nhip_nguyen_truoc = nhip_nguyen_ht;
         }
-
         // KIỂM TRA HẾT THỜI GIAN LUYỆN TẬP
         if let Some(ket_thuc_da_dich) = self.thoi_gian_ket_thuc_luyen_tap {
             if nhip_hien_tai > ket_thuc_da_dich + 1.5 {

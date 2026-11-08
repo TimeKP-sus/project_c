@@ -350,20 +350,20 @@ vertical_alignment = 1
 
 [node name="diem_cu" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=2034454112]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 250.0
-offset_right = 1040.0
-offset_bottom = 310.0
+offset_left = 182.40002
+offset_top = 275.88
+offset_right = 642.4
+offset_bottom = 335.88
 text = "Điểm kỷ lục: 0"
 label_settings = SubResource("LabelSettings_7d2hr")
 vertical_alignment = 1
 
 [node name="diem" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1434641284]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 320.0
-offset_right = 1040.0
-offset_bottom = 385.0
+offset_left = 182.40002
+offset_top = 345.88
+offset_right = 642.4
+offset_bottom = 410.88
 text = "Tổng điểm: 0"
 label_settings = SubResource("LabelSettings_fkudg")
 vertical_alignment = 1
@@ -379,30 +379,30 @@ vertical_alignment = 1
 
 [node name="tot" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=722266548]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 420.0
-offset_right = 880.0
-offset_bottom = 472.0
+offset_left = 182.40002
+offset_top = 445.88
+offset_right = 482.40002
+offset_bottom = 497.88
 text = "Tốt: 0"
 label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1
 
 [node name="kha" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=1899844430]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 468.0
-offset_right = 880.0
-offset_bottom = 520.0
+offset_left = 182.40002
+offset_top = 493.88
+offset_right = 482.40002
+offset_bottom = 545.88
 text = "Khá: 0"
 label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1
 
 [node name="trat" type="Label" parent="nen_tong_ket/tong_ket_choi_sheet" unique_id=421593834]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 516.0
-offset_right = 880.0
-offset_bottom = 568.0
+offset_left = 182.40002
+offset_top = 541.88
+offset_right = 482.40002
+offset_bottom = 593.88
 text = "Trượt: 0"
 label_settings = SubResource("LabelSettings_1i2qx")
 vertical_alignment = 1

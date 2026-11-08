@@ -57,6 +57,12 @@ impl KhuongNhac {
     #[signal]
     fn cap_nhat_mien_not(gia_tri_chuyen: i32);
 
+    #[signal]
+    fn not_vao_area(id_not: i32, mau_not: GString);
+
+    #[signal]
+    fn not_ra_area(id_not: i32);
+
     #[func]
     pub fn da_het_not(&self) -> bool {
         self.cac_not_trong_khuong.is_empty()
@@ -131,7 +137,7 @@ impl KhuongNhac {
         id_not: i32,
         mien_bat_dau: i32,
         chuyen_not: i32,
-        dung_giang: bool,
+        dung_giang: bool
     ) -> (String, f32) {
         if id_not == 100 {
             let ten: String = Self::dinh_dang_chuyen_mien(chuyen_not);
@@ -301,17 +307,20 @@ impl KhuongNhac {
             return;
         };
 
-        // KIỂM TRA NẾU LÀ NỐT CHUYỂN MIỀN (ID 100)
         let id: i32 = not_nhac.bind().get_id_not();
         if id == 100 && self.cho_phep_xoa_not {
-            // Lấy trực tiếp độ lệch bán âm đã lưu trong chuyen_not của NotNhac
             let gia_tri_chuyen: i32 = not_nhac.bind().get_chuyen_not();
             if gia_tri_chuyen != 0 {
                 self.base_mut().emit_signal("cap_nhat_mien_not", &[gia_tri_chuyen.to_variant()]);
             }
         }
 
+        let mau_str = GString::from(not_nhac.bind().get_mau_not());
         self.cac_not_trong_area.push(not_nhac);
+
+        if id != 100 {
+            self.base_mut().emit_signal("not_vao_area", &[id.to_variant(), mau_str.to_variant()]);
+        }
     }
 
     #[func]
@@ -319,6 +328,8 @@ impl KhuongNhac {
         let Some(mut not_nhac) = area.try_get_node_as::<NotNhac>(".") else {
             return;
         };
+        let id: i32 = not_nhac.bind().get_id_not();
+
         if self.cho_phep_xoa_not && !not_nhac.bind().get_da_duoc_danh() {
             not_nhac.bind_mut().da_danh_trat();
             self.base_mut().emit_signal("not_bi_truot", &[]);
@@ -327,6 +338,10 @@ impl KhuongNhac {
             if let Some(index) = self.cac_not_trong_area.iter().position(|node| node == &not_nhac) {
                 self.cac_not_trong_area.swap_remove(index);
             }
+        }
+
+        if id != 100 {
+            self.base_mut().emit_signal("not_ra_area", &[id.to_variant()]);
         }
     }
     // 1. Xóa sạch các node nốt nhạc cũ trên khuông trước khi vẽ lại

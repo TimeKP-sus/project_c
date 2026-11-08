@@ -1,5 +1,5 @@
 use godot::builtin::{ Callable, Color, GString, NodePath, Variant };
-use godot::classes::{ Button, Control, IControl, Label, Object};
+use godot::classes::{ Button, CheckButton, Control, IControl, Label, Object };
 
 use godot::obj::{ Gd, GdRef, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
@@ -138,6 +138,7 @@ impl ChoiSheet {
 
             if id_not == so_phim && !da_danh {
                 not_node.bind_mut().bat_dau_giu();
+                self.xu_ly_not_ra_area(so_phim);
 
                 let vi_tri_x: f32 = not_node.get_position().x;
                 let chieu_dai_duoi: f32 = not_node.bind().get_chieu_dai_duoi();
@@ -208,17 +209,12 @@ impl ChoiSheet {
         self.cat_nhat_diem_label(self.diem);
     }
     pub fn lay_ten_che_do_luu(&self) -> &'static str {
-        if self.phan_luyen_tap {
-            "luyen_tap_sheet"
-        } else {
-            "choi_sheet"
-        }
+        if self.phan_luyen_tap { "luyen_tap_sheet" } else { "choi_sheet" }
     }
 
     #[func]
     pub fn lay_ti_le_hoan_thanh(&self) -> f32 {
-        let tong_not = self
-            .quan_ly_sheet_node
+        let tong_not = self.quan_ly_sheet_node
             .as_ref()
             .map(|q| q.bind().get_tong_so_not_sheet())
             .unwrap_or(0);
@@ -227,7 +223,7 @@ impl ChoiSheet {
         if mau_so <= 0 {
             return 0.0;
         }
-        ((da_danh_trung as f32 / mau_so as f32) * 100.0).clamp(0.0, 100.0)
+        (((da_danh_trung as f32) / (mau_so as f32)) * 100.0).clamp(0.0, 100.0)
     }
 
     #[func]
@@ -256,13 +252,90 @@ impl ChoiSheet {
             .map(|kq| kq.diem_cao_nhat)
             .unwrap_or(0);
 
-        ls.cap_nhat_ket_qua(
-            che_do,
-            &self.duong_dan_bai_hoc.to_string(),
-            self.diem,
-            ti_le,
-            hang,
-        );
+        ls.cap_nhat_ket_qua(che_do, &self.duong_dan_bai_hoc.to_string(), self.diem, ti_le, hang);
+    }
+    fn lay_mau_to_phim(mau: &str) -> Color {
+        match mau {
+            "1" => Color::from_rgba(0.85, 0.25, 0.25, 0.75),
+            "2" => Color::from_rgba(0.2, 0.75, 0.35, 0.75),
+            "3" => Color::from_rgba(0.25, 0.55, 0.9, 0.75),
+            "4" => Color::from_rgba(0.95, 0.75, 0.15, 0.75),
+            "5" => Color::from_rgba(0.6, 0.3, 0.8, 0.75),
+            _ => Color::from_rgba(0.2, 0.85, 1.0, 0.75),
+        }
+    }
+
+    #[func]
+    pub fn bat_tat_to_mau_phim(&mut self, bat: bool) {
+        let cho_phep = bat && self.phan_luyen_tap;
+        if let Some(mut qls) = self.quan_ly_sheet_node.clone() {
+            qls.bind_mut().bat_tat_to_mau_phim(cho_phep);
+        }
+
+        if let Some(mut midi) = self.ban_phim_midi_node.clone() {
+            if !cho_phep {
+                for id in 0..84 {
+                    midi.bind_mut().dung_to_phim(id);
+                }
+            } else if let Some(mut qls) = self.quan_ly_sheet_node.clone() {
+                let ds = qls.bind_mut().get_danh_sach_not_trong_area();
+                for not in ds {
+                    let b = not.bind();
+                    if b.get_id_not() != 100 && !b.get_da_duoc_danh() {
+                        let mau: Color = Self::lay_mau_to_phim(&b.get_mau_not());
+                        midi.bind_mut().to_phim(b.get_id_not(), mau);
+                    }
+                }
+            }
+        }
+    }
+
+    #[func]
+    pub fn xu_ly_not_vao_area(&mut self, id_not: i32, mau_not: GString) {
+        let cho_phep = self.quan_ly_sheet_node
+            .as_ref()
+            .map(|q| q.bind().get_cho_phep_to_mau_phim())
+            .unwrap_or(false);
+        if !cho_phep || id_not == 100 {
+            return;
+        }
+        if let Some(mut midi) = self.ban_phim_midi_node.clone() {
+            let mau = Self::lay_mau_to_phim(&mau_not.to_string());
+            midi.bind_mut().to_phim(id_not, mau);
+        }
+    }
+
+    #[func]
+    pub fn xu_ly_not_ra_area(&mut self, id_not: i32) {
+        if id_not == 100 {
+            return;
+        }
+        // Kiểm tra xem trong vùng Area còn nốt nào khác cùng phím chưa được đánh không
+        let mut con_not_cung_phim = false;
+        let mut mau_con_lai = String::new();
+        if let Some(mut qls) = self.quan_ly_sheet_node.clone() {
+            let ds = qls.bind_mut().get_danh_sach_not_trong_area();
+            for not in ds {
+                let b = not.bind();
+                if b.get_id_not() == id_not && !b.get_da_duoc_danh() {
+                    con_not_cung_phim = true;
+                    mau_con_lai = b.get_mau_not();
+                    break;
+                }
+            }
+        }
+
+        if let Some(mut midi) = self.ban_phim_midi_node.clone() {
+            let cho_phep = self.quan_ly_sheet_node
+                .as_ref()
+                .map(|q| q.bind().get_cho_phep_to_mau_phim())
+                .unwrap_or(false);
+            if con_not_cung_phim && cho_phep {
+                midi.bind_mut().to_phim(id_not, Self::lay_mau_to_phim(&mau_con_lai));
+            } else {
+                midi.bind_mut().dung_to_phim(id_not);
+            }
+        }
     }
 }
 
@@ -282,16 +355,21 @@ impl IControl for ChoiSheet {
         }
 
         let callable_truot = self.base().callable("xu_ly_not_bi_truot");
+        let callable_vao = self.base().callable("xu_ly_not_vao_area");
+        let callable_ra = self.base().callable("xu_ly_not_ra_area");
 
-        // Trỏ thẳng đường dẫn xuyên qua QuanLySheet để lấy K1 và K2
         let khuong_1 = self.base().try_get_node_as::<KhuongNhac>("QuanLySheet/K1");
         let khuong_2 = self.base().try_get_node_as::<KhuongNhac>("QuanLySheet/K2");
 
         if let Some(mut k1) = khuong_1 {
             k1.connect("not_bi_truot", &callable_truot);
+            k1.connect("not_vao_area", &callable_vao);
+            k1.connect("not_ra_area", &callable_ra);
         }
         if let Some(mut k2) = khuong_2 {
             k2.connect("not_bi_truot", &callable_truot);
+            k2.connect("not_vao_area", &callable_vao);
+            k2.connect("not_ra_area", &callable_ra);
         }
 
         let duong_dan: GString = self.duong_dan_bai_hoc.clone();
@@ -316,16 +394,51 @@ impl IControl for ChoiSheet {
 
                         quan_ly_sheet
                             .bind_mut()
+                            .bat_tat_am_thanh_nhip(du_lieu_lt.cho_phep_am_thanh_nhip);
+                        quan_ly_sheet
+                            .bind_mut()
+                            .bat_tat_hien_thi_ten_khac(du_lieu_lt.hien_thi_ten_khac);
+
+                        quan_ly_sheet
+                            .bind_mut()
                             .khoi_tao_sheet(
                                 du_lieu_lt.duong_dan_sheet.into(),
                                 du_lieu_lt.khuong.into(),
                                 du_lieu_lt.phan_thoi_gian.into()
                             );
-                            if let Some(bpm_moi) = du_lieu_lt.bpm_tuy_chinh {
+                        if let Some(bpm_moi) = du_lieu_lt.bpm_tuy_chinh {
                             if bpm_moi > 0.0 {
                                 // Ghi đè biến bpm nội bộ của QuanLySheet
                                 quan_ly_sheet.bind_mut().bpm = bpm_moi;
                             }
+                        }
+                        if
+                            let Some(mut chk) = self
+                                .base()
+                                .try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_nhip")
+                        {
+                            chk.set_pressed_no_signal(du_lieu_lt.cho_phep_am_thanh_nhip);
+                        }
+                        if
+                            let Some(mut chk) = self
+                                .base()
+                                .try_get_node_as::<CheckButton>("NutMenu/Menu/che_do_cho")
+                        {
+                            chk.set_pressed_no_signal(du_lieu_lt.cho_phep_cho);
+                        }
+                        if
+                            let Some(mut chk) = self
+                                .base()
+                                .try_get_node_as::<CheckButton>("NutMenu/Menu/hien_ten_khac")
+                        {
+                            chk.set_pressed_no_signal(du_lieu_lt.hien_thi_ten_khac);
+                        }
+                        if
+                            let Some(mut chk) = self
+                                .base()
+                                .try_get_node_as::<CheckButton>("NutMenu/Menu/to_mau_phim")
+                        {
+                            chk.set_pressed_no_signal(du_lieu_lt.to_mau_phim);
                         }
                     }
 
@@ -344,7 +457,6 @@ impl IControl for ChoiSheet {
                 }
                 // Lấy trọn bộ thông tin từ file test.json gốc
                 self.set_thong_tin_bai_hat();
-                
             }
         }
         // Hiện nút Thoát chơi thử nếu đi từ TaoTapSheet sang
@@ -355,6 +467,5 @@ impl IControl for ChoiSheet {
                 btn_thoat.connect("button_down", &callable_thoat);
             }
         }
-
     }
 }

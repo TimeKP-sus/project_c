@@ -345,50 +345,50 @@ vertical_alignment = 1
 
 [node name="diem_cu" type="Label" parent="nen_tong_ket/tong_ket_tim_not" unique_id=770045719]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 240.0
-offset_right = 1040.0
-offset_bottom = 300.0
+offset_left = 182.40002
+offset_top = 246.88
+offset_right = 642.4
+offset_bottom = 306.88
 text = "Điểm cũ: 0"
 label_settings = SubResource("LabelSettings_dq1tu")
 vertical_alignment = 1
 
 [node name="diem" type="Label" parent="nen_tong_ket/tong_ket_tim_not" unique_id=871934055]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 310.0
-offset_right = 1040.0
-offset_bottom = 375.0
+offset_left = 182.40002
+offset_top = 316.88
+offset_right = 642.4
+offset_bottom = 381.88
 text = "Tổng điểm: 0"
 label_settings = SubResource("LabelSettings_usfia")
 vertical_alignment = 1
 
 [node name="so_lan_dung" type="Label" parent="nen_tong_ket/tong_ket_tim_not" unique_id=851538323]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 410.0
-offset_right = 960.0
-offset_bottom = 465.0
+offset_left = 182.40002
+offset_top = 416.88
+offset_right = 562.4
+offset_bottom = 471.88
 text = "✔ Số lần đúng: 0"
 label_settings = SubResource("LabelSettings_gh8vj")
 vertical_alignment = 1
 
 [node name="so_lan_sai" type="Label" parent="nen_tong_ket/tong_ket_tim_not" unique_id=132297995]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 465.0
-offset_right = 960.0
-offset_bottom = 520.0
+offset_left = 182.40002
+offset_top = 471.88
+offset_right = 562.4
+offset_bottom = 526.88
 text = "✖ Số lần sai: 0"
 label_settings = SubResource("LabelSettings_gh8vj")
 vertical_alignment = 1
 
 [node name="so_lan_doan" type="Label" parent="nen_tong_ket/tong_ket_tim_not" unique_id=1662148404]
 layout_mode = 0
-offset_left = 580.0
-offset_top = 520.0
-offset_right = 960.0
-offset_bottom = 575.0
+offset_left = 182.40002
+offset_top = 526.88
+offset_right = 562.4
+offset_bottom = 581.88
 text = "🎯 Số lần đoán:"
 label_settings = SubResource("LabelSettings_gh8vj")
 vertical_alignment = 1
