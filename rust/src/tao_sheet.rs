@@ -1393,11 +1393,11 @@ impl TaoSheet {
                 0.0
             };
 
-            let path_nhac = self.nhac_input
+            let path_nhac: String = self.nhac_input
                 .as_ref()
                 .map(|i| i.get_text().to_string())
                 .unwrap_or_default();
-            let path_loi = self.loi_input
+            let path_loi: String = self.loi_input
                 .as_ref()
                 .map(|i| i.get_text().to_string())
                 .unwrap_or_default();
@@ -1476,7 +1476,7 @@ impl TaoSheet {
 
     #[func]
     pub fn khi_chon_file_nhac(&mut self, path: GString) {
-        let local = ProjectSettings::singleton().localize_path(&path);
+        let local: GString = ProjectSettings::singleton().localize_path(&path);
         if let Some(mut input) = self.nhac_input.clone() {
             input.set_text(&local);
         }
@@ -1497,6 +1497,12 @@ impl TaoSheet {
         if let Some(mut input) = self.nhac_input.clone() {
             input.set_text("");
         }
+        // Ép nhạc đang phát (nếu có) phải dừng lại ngay lập tức
+        if let Some(mut np) = self.nhac_player.clone() {
+            np.stop();
+            np.set_stream(None::<&Gd<AudioStream>>);
+        }
+        self.hien_thong_bao("Đã xóa nhạc nền.", "thanh_cong");
     }
 
     #[func]
@@ -1504,6 +1510,12 @@ impl TaoSheet {
         if let Some(mut input) = self.loi_input.clone() {
             input.set_text("");
         }
+        // Ép lời đang phát (nếu có) phải dừng lại ngay lập tức
+        if let Some(mut lp) = self.loi_player.clone() {
+            lp.stop();
+            lp.set_stream(None::<&Gd<AudioStream>>);
+        }
+        self.hien_thong_bao("Đã xóa lời (vocal).", "thanh_cong");
     }
 
     #[func]

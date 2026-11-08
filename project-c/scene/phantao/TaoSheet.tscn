@@ -854,7 +854,7 @@ theme_override_constants/separation = 12
 
 [node name="TieuDe" type="Label" parent="PanelAmThanh/VBox" unique_id=1892347302]
 layout_mode = 2
-text = "🎵 THIẾT LẬP NHẠC NỀN & LỜI (VOCAL)"
+text = "🎵 THIẾT LẬP NHẠC NỀN & LỜI"
 label_settings = SubResource("LabelSettings_tieu_de_panel")
 horizontal_alignment = 1
 
@@ -897,7 +897,7 @@ theme_override_constants/separation = 8
 [node name="NhanLoi" type="Label" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347309]
 custom_minimum_size = Vector2(110, 0)
 layout_mode = 2
-text = "Lời (Vocal):"
+text = "Lời:"
 label_settings = SubResource("LabelSettings_nhan")
 
 [node name="Loi_Input" type="LineEdit" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347310]
@@ -949,6 +949,7 @@ size = Vector2i(750, 500)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+root_subfolder = "bai_hoc/nhac"
 filters = PackedStringArray("*.mp3, *.ogg, *.wav ; Audio Files")
 
 [node name="nhac" type="AudioStreamPlayer2D" parent="." unique_id=587984295]
