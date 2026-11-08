@@ -30,6 +30,10 @@ pub struct QuanLySheet {
     #[export]
     toc_do: f32,
     pub bpm: f32,
+    pub bpm_goc: f32,
+    pub nhip_bat_dau_luyen_tap: f32,
+    pub duong_dan_nhac: String,
+    pub duong_dan_loi: String,
     #[export]
     cho_phep_cho: bool,
     #[export]
@@ -78,6 +82,26 @@ impl QuanLySheet {
     #[func]
     pub fn bat_tat_to_mau_phim(&mut self, bat: bool) {
         self.cho_phep_to_mau_phim = bat && self.dang_luyen_tap_mode;
+    }
+
+    #[func]
+    pub fn get_duong_dan_nhac(&self) -> GString {
+        GString::from(&self.duong_dan_nhac)
+    }
+
+    #[func]
+    pub fn get_duong_dan_loi(&self) -> GString {
+        GString::from(&self.duong_dan_loi)
+    }
+
+    #[func]
+    pub fn get_nhip_bat_dau_luyen_tap(&self) -> f32 {
+        self.nhip_bat_dau_luyen_tap
+    }
+
+    #[func]
+    pub fn get_bpm_goc(&self) -> f32 {
+        if self.bpm_goc > 0.0 { self.bpm_goc } else { self.bpm }
     }
 
     #[func]
@@ -238,6 +262,7 @@ impl QuanLySheet {
             self.loai_vach_nhip = bai_hat.loai_vach_nhip.clone().into();
             self.cat_nhat_nhip_label(self.loai_vach_nhip.clone().as_str().into());
             self.bpm = bai_hat.bpm;
+            self.bpm_goc = bai_hat.bpm;
             let khoang_cach_nhip = self.toc_do;
 
             let nhip_moi_o = match self.loai_vach_nhip.as_str() {
@@ -270,6 +295,7 @@ impl QuanLySheet {
                     }
                 }
             }
+            self.nhip_bat_dau_luyen_tap = nhip_bat_dau;
 
             let (mien_k1_moi, ds_not_k1) = tien_xu_ly_khuong(
                 bai_hat.khuong_1,

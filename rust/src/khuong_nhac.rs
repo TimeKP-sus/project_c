@@ -41,9 +41,9 @@ pub struct KhuongNhac {
     toc_do_chung: f32,
     pub nhip_moi_o: i32,
 
-    pub mien_goc: i32,
-    pub mien_hien_tai: i32,
-    cac_moc_chuyen_mien: Vec<(f32, i32)>,
+    // pub mien_goc: i32,
+    // pub mien_hien_tai: i32,
+    // cac_moc_chuyen_mien: Vec<(f32, i32)>,
 }
 
 #[godot_api]

@@ -1,8 +1,10 @@
 use godot::builtin::{ Callable, GString, PackedStringArray };
 use godot::classes::{
+    AudioStream, AudioStreamMp3, AudioStreamOggVorbis, AudioStreamPlayer2D,
     Button,
     CheckButton,
     Control,
+    FileAccess,
     FileDialog,
     HSlider,
     IControl,
@@ -10,11 +12,13 @@ use godot::classes::{
     LineEdit,
     OptionButton,
     Panel,
+    ProjectSettings,
+    ResourceLoader,
     SpinBox,
     VBoxContainer,
 };
 use godot::global::godot_print;
-use godot::obj::{ Base, Gd, WithBaseField };
+use godot::obj::{ Base, Gd, NewGd, WithBaseField };
 use godot::prelude::{ godot_api, GodotClass };
 
 use crate::ban_phim_midi::BanPhimMidi;
@@ -67,6 +71,8 @@ pub struct TaoSheet {
     khuong_1: Option<Gd<KhuongNhac>>,
     khuong_2: Option<Gd<KhuongNhac>>,
     quan_ly_tao_sheet: Option<Gd<QuanLyTaoSheet>>,
+    nhac_player: Option<Gd<AudioStreamPlayer2D>>,
+    loi_player: Option<Gd<AudioStreamPlayer2D>>,
 
     // Các Node UI ở Thanh Thông Tin (Trên)
     ten_input: Option<Gd<LineEdit>>,
@@ -108,6 +114,11 @@ pub struct TaoSheet {
     // Hộp thoại File
     hop_thoai_luu: Option<Gd<FileDialog>>,
     hop_thoai_mo: Option<Gd<FileDialog>>,
+    panel_am_thanh: Option<Gd<Panel>>,
+    nhac_input: Option<Gd<LineEdit>>,
+    loi_input: Option<Gd<LineEdit>>,
+    hop_thoai_chon_nhac: Option<Gd<FileDialog>>,
+    hop_thoai_chon_loi: Option<Gd<FileDialog>>,
 
     // Dữ liệu nốt của 2 khuông (bao gồm cả nốt thường và vạch ID 100)
     ds_not_k1: Vec<NotNhacJson>,
@@ -132,6 +143,29 @@ pub struct TaoSheet {
 
 #[godot_api]
 impl TaoSheet {
+    fn tai_audio_stream(duong_dan: &str) -> Option<Gd<AudioStream>> {
+        let p = duong_dan.trim();
+        if p.is_empty() {
+            return None;
+        }
+        let lower = p.to_lowercase();
+        if lower.ends_with(".mp3") {
+            let bytes = FileAccess::get_file_as_bytes(p);
+            if !bytes.is_empty() {
+                let mut stream: Gd<AudioStreamMp3> = AudioStreamMp3::new_gd();
+                stream.set_data(&bytes);
+                return Some(stream.upcast::<AudioStream>());
+            }
+        } else if lower.ends_with(".ogg") {
+            if let Some(stream) = AudioStreamOggVorbis::load_from_file(p) {
+                return Some(stream.upcast::<AudioStream>());
+            }
+        }
+        ResourceLoader::singleton()
+            .load(p)
+            .and_then(|res| res.try_cast::<AudioStream>().ok())
+    }
+
     fn hien_thong_bao(&self, noi_dung: &str, loai: &str) {
         if let Some(mut tb) = self
             .base()
@@ -1190,6 +1224,33 @@ impl TaoSheet {
             slider.set_max(max_tua as f64);
         }
         self.cap_nhat_mien_theo_vi_tri_nhip();
+
+        if self.dang_nghe_thu {
+            let bpm = self.bpm_spin
+                .as_ref()
+                .map(|s| s.get_value() as f32)
+                .unwrap_or(120.0);
+            let giay_ht = if self.nhip_hien_tai > 0.0 {
+                (self.nhip_hien_tai * 60.0) / bpm
+            } else {
+                0.0
+            };
+
+            if let Some(mut np) = self.nhac_player.clone() {
+                if self.nhip_hien_tai >= 0.0 {
+                    np.play_ex().from_position(giay_ht).done();
+                } else {
+                    np.stop();
+                }
+            }
+            if let Some(mut lp) = self.loi_player.clone() {
+                if self.nhip_hien_tai >= 0.0 {
+                    lp.play_ex().from_position(giay_ht).done();
+                } else {
+                    lp.stop();
+                }
+            }
+        }
     }
 
     #[func]
@@ -1317,14 +1378,61 @@ impl TaoSheet {
 
         self.dang_nghe_thu = !self.dang_nghe_thu;
 
-        if self.dang_nghe_thu && self.nhip_hien_tai <= 0.0 && self.nhip_hien_tai > NHIP_CHO_DAU {
-            self.dat_nhip_hien_tai(NHIP_CHO_DAU);
-        }
+        if self.dang_nghe_thu {
+            if self.nhip_hien_tai <= 0.0 && self.nhip_hien_tai > NHIP_CHO_DAU {
+                self.dat_nhip_hien_tai(NHIP_CHO_DAU);
+            }
 
-        if let Some(mut btn) = self.nghe_thu_btn.clone() {
-            if self.dang_nghe_thu {
-                btn.set_text("⏸ Tạm dừng");
+            let bpm = self.bpm_spin
+                .as_ref()
+                .map(|s| s.get_value() as f32)
+                .unwrap_or(120.0);
+            let giay_ht = if self.nhip_hien_tai > 0.0 {
+                (self.nhip_hien_tai * 60.0) / bpm
             } else {
+                0.0
+            };
+
+            let path_nhac = self.nhac_input
+                .as_ref()
+                .map(|i| i.get_text().to_string())
+                .unwrap_or_default();
+            let path_loi = self.loi_input
+                .as_ref()
+                .map(|i| i.get_text().to_string())
+                .unwrap_or_default();
+
+            if let Some(mut np) = self.nhac_player.clone() {
+                np.stop();
+                if let Some(stream) = Self::tai_audio_stream(&path_nhac) {
+                    np.set_stream(&stream);
+                    if self.nhip_hien_tai >= 0.0 {
+                        np.play_ex().from_position(giay_ht).done();
+                    }
+                }
+            }
+            if let Some(mut lp) = self.loi_player.clone() {
+                lp.stop();
+                if let Some(stream) = Self::tai_audio_stream(&path_loi) {
+                    lp.set_stream(&stream);
+                    if self.nhip_hien_tai >= 0.0 {
+                        lp.play_ex().from_position(giay_ht).done();
+                    }
+                }
+            }
+
+            if let Some(mut btn) = self.nghe_thu_btn.clone() {
+                btn.set_text("⏸ Tạm dừng");
+            }
+        } else {
+            if let Some(mut np) = self.nhac_player.clone() {
+                np.stop();
+            }
+            if let Some(mut lp) = self.loi_player.clone() {
+                lp.stop();
+            }
+
+            if let Some(mut btn) = self.nghe_thu_btn.clone() {
                 btn.set_text("▶ Nghe thử");
             }
         }
@@ -1341,6 +1449,60 @@ impl TaoSheet {
     pub fn mo_hop_thoai_mo(&mut self) {
         if let Some(mut dialog) = self.hop_thoai_mo.clone() {
             dialog.popup_centered();
+        }
+    }
+
+    #[func]
+    pub fn bat_tat_panel_am_thanh(&mut self) {
+        if let Some(mut p) = self.panel_am_thanh.clone() {
+            let hien = !p.is_visible();
+            p.set_visible(hien);
+        }
+    }
+
+    #[func]
+    pub fn mo_hop_thoai_chon_nhac(&mut self) {
+        if let Some(mut d) = self.hop_thoai_chon_nhac.clone() {
+            d.popup_centered();
+        }
+    }
+
+    #[func]
+    pub fn mo_hop_thoai_chon_loi(&mut self) {
+        if let Some(mut d) = self.hop_thoai_chon_loi.clone() {
+            d.popup_centered();
+        }
+    }
+
+    #[func]
+    pub fn khi_chon_file_nhac(&mut self, path: GString) {
+        let local = ProjectSettings::singleton().localize_path(&path);
+        if let Some(mut input) = self.nhac_input.clone() {
+            input.set_text(&local);
+        }
+        self.hien_thong_bao("Đã chọn file nhạc nền.", "thanh_cong");
+    }
+
+    #[func]
+    pub fn khi_chon_file_loi(&mut self, path: GString) {
+        let local = ProjectSettings::singleton().localize_path(&path);
+        if let Some(mut input) = self.loi_input.clone() {
+            input.set_text(&local);
+        }
+        self.hien_thong_bao("Đã chọn file lời (vocal).", "thanh_cong");
+    }
+
+    #[func]
+    pub fn xoa_duong_dan_nhac(&mut self) {
+        if let Some(mut input) = self.nhac_input.clone() {
+            input.set_text("");
+        }
+    }
+
+    #[func]
+    pub fn xoa_duong_dan_loi(&mut self) {
+        if let Some(mut input) = self.loi_input.clone() {
+            input.set_text("");
         }
     }
 
@@ -1371,6 +1533,14 @@ impl TaoSheet {
             .as_ref()
             .map(|s| s.get_value() as i32)
             .unwrap_or(24);
+        let duong_dan_nhac = self.nhac_input
+            .as_ref()
+            .map(|i| i.get_text().to_string().trim().to_string())
+            .unwrap_or_default();
+        let duong_dan_loi = self.loi_input
+            .as_ref()
+            .map(|i| i.get_text().to_string().trim().to_string())
+            .unwrap_or_default();
 
         let (mien_not_bat_dau_k1, khuong_1) = sap_xep_khuong_giu_nguyen(
             self.ds_not_k1.clone(),
@@ -1389,6 +1559,8 @@ impl TaoSheet {
             bpm,
             mien_not_bat_dau_k1,
             mien_not_bat_dau_k2,
+            duong_dan_nhac,
+            duong_dan_loi,
             khuong_1,
             khuong_2,
         };
@@ -1407,6 +1579,12 @@ impl TaoSheet {
             }
             if let Some(mut input) = self.nguoi_tao_input.clone() {
                 input.set_text(&bai_hat.nguoi_tao_sheet);
+            }
+            if let Some(mut input) = self.nhac_input.clone() {
+                input.set_text(&bai_hat.duong_dan_nhac);
+            }
+            if let Some(mut input) = self.loi_input.clone() {
+                input.set_text(&bai_hat.duong_dan_loi);
             }
 
             if let Some(mut spin) = self.bpm_spin.clone() {
@@ -1562,6 +1740,8 @@ impl IControl for TaoSheet {
         }
     }
     fn ready(&mut self) {
+        self.nhac_player = self.base().try_get_node_as::<AudioStreamPlayer2D>("nhac");
+        self.loi_player = self.base().try_get_node_as::<AudioStreamPlayer2D>("loi");
         self.ban_phim_midi = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
         self.quan_ly_sheet = self.base().try_get_node_as::<QuanLySheet>("QuanLySheet");
         self.sua_ten_khac_input = self
@@ -1694,6 +1874,11 @@ impl IControl for TaoSheet {
 
         self.hop_thoai_luu = self.base().try_get_node_as::<FileDialog>("HopThoaiLuuFile");
         self.hop_thoai_mo = self.base().try_get_node_as::<FileDialog>("HopThoaiMoFile");
+        self.panel_am_thanh = self.base().try_get_node_as::<Panel>("PanelAmThanh");
+        self.nhac_input = self.base().try_get_node_as::<LineEdit>("PanelAmThanh/VBox/HangNhac/Nhac_Input");
+        self.loi_input = self.base().try_get_node_as::<LineEdit>("PanelAmThanh/VBox/HangLoi/Loi_Input");
+        self.hop_thoai_chon_nhac = self.base().try_get_node_as::<FileDialog>("HopThoaiChonNhac");
+        self.hop_thoai_chon_loi = self.base().try_get_node_as::<FileDialog>("HopThoaiChonLoi");
 
         // Kết nối tín hiệu thay đổi chọn nốt từ QuanLyTaoSheet
         let call_chon: Callable = self.base().callable("khi_thay_doi_chon_not");
@@ -1854,6 +2039,41 @@ impl IControl for TaoSheet {
             dialog.connect("file_selected", &call_mo_xong);
         }
 
+        let call_panel_at = self.base().callable("bat_tat_panel_am_thanh");
+        if let Some(mut btn) = self.base().try_get_node_as::<Button>("ThanhThongTin/HBox/AmThanh_Btn") {
+            btn.connect("pressed", &call_panel_at);
+        }
+        if let Some(mut btn) = self.base().try_get_node_as::<Button>("PanelAmThanh/VBox/HangNut/DongAmThanh_Btn") {
+            btn.connect("pressed", &call_panel_at);
+        }
+
+        let call_mo_nhac = self.base().callable("mo_hop_thoai_chon_nhac");
+        if let Some(mut btn) = self.base().try_get_node_as::<Button>("PanelAmThanh/VBox/HangNhac/ChonNhac_Btn") {
+            btn.connect("pressed", &call_mo_nhac);
+        }
+        let call_xoa_nhac = self.base().callable("xoa_duong_dan_nhac");
+        if let Some(mut btn) = self.base().try_get_node_as::<Button>("PanelAmThanh/VBox/HangNhac/XoaNhac_Btn") {
+            btn.connect("pressed", &call_xoa_nhac);
+        }
+
+        let call_mo_loi = self.base().callable("mo_hop_thoai_chon_loi");
+        if let Some(mut btn) = self.base().try_get_node_as::<Button>("PanelAmThanh/VBox/HangLoi/ChonLoi_Btn") {
+            btn.connect("pressed", &call_mo_loi);
+        }
+        let call_xoa_loi = self.base().callable("xoa_duong_dan_loi");
+        if let Some(mut btn) = self.base().try_get_node_as::<Button>("PanelAmThanh/VBox/HangLoi/XoaLoi_Btn") {
+            btn.connect("pressed", &call_xoa_loi);
+        }
+
+        let call_chon_nhac = self.base().callable("khi_chon_file_nhac");
+        if let Some(mut d) = self.hop_thoai_chon_nhac.clone() {
+            d.connect("file_selected", &call_chon_nhac);
+        }
+        let call_chon_loi = self.base().callable("khi_chon_file_loi");
+        if let Some(mut d) = self.hop_thoai_chon_loi.clone() {
+            d.connect("file_selected", &call_chon_loi);
+        }
+
         self.ve_lai_sheet_tuy_chon(false);
     }
 
@@ -1903,6 +2123,15 @@ impl IControl for TaoSheet {
         let nhip_truoc = self.nhip_hien_tai;
         let nhip_moi = nhip_truoc + (dt * bpm) / 60.0;
 
+        if nhip_truoc < 0.0 && nhip_moi >= 0.0 {
+            if let Some(mut np) = self.nhac_player.clone() {
+                np.play_ex().from_position(0.0).done();
+            }
+            if let Some(mut lp) = self.loi_player.clone() {
+                lp.play_ex().from_position(0.0).done();
+            }
+        }
+
         if let Some(mut midi) = self.ban_phim_midi.clone() {
             let mut midi_bind = midi.bind_mut();
             for not in self.ds_not_k1.iter().chain(self.ds_not_k2.iter()) {
@@ -1921,6 +2150,12 @@ impl IControl for TaoSheet {
 
         if self.nhip_hien_tai >= self.tinh_max_thanh_tua() {
             self.dang_nghe_thu = false;
+            if let Some(mut np) = self.nhac_player.clone() {
+                np.stop();
+            }
+            if let Some(mut lp) = self.loi_player.clone() {
+                lp.stop();
+            }
             if let Some(mut btn) = self.nghe_thu_btn.clone() {
                 btn.set_text("▶ Nghe thử");
             }

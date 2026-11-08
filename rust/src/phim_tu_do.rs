@@ -143,7 +143,7 @@ impl PhimTuDo {
 
     #[func]
     pub fn luu_ban_ghi(&self, duong_dan: GString) -> bool {
-        let du_lieu = BanGhiJson {
+        let du_lieu: BanGhiJson = BanGhiJson {
             cac_su_kien: self.ban_ghi.clone(),
         };
         if let Ok(json_str) = serde_json::to_string_pretty(&du_lieu) {

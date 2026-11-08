@@ -35,9 +35,22 @@ impl HopAm {
         
         const POWER5: u16   = (1 << 0) | (1 << 7);
         const DOM7_NO5: u16 = (1 << 0) | (1 << 4) | (1 << 10); 
+        const MAJ6: u16 = MAJOR | (1 << 9);
+        const MIN6: u16 = MINOR | (1 << 9);
+        const DIM7: u16 = DIM | (1 << 9);
+        const ADD9: u16 = MAJOR | (1 << 2);
+        const MINADD9: u16 = MINOR | (1 << 2);
+        const MMAJ7: u16 = MINOR | (1 << 11);
 
-        // 3. THỬ TỪNG NỐT LÀM GỐC
-        for &not_goc in &cac_not_co_ban {
+        // 3. ƯU TIÊN NỐT BASS LÀM GỐC ĐỂ GIẢI QUYẾT HỢP ÂM TRÙNG NỐT
+        let mut cac_not_uu_tien = vec![not_bass];
+        for &not in &cac_not_co_ban {
+            if not != not_bass {
+                cac_not_uu_tien.push(not);
+            }
+        }
+
+        for not_goc in cac_not_uu_tien {
             let mut bitmask: u16 = 0;
             
             for &not in &cac_not_co_ban {
@@ -58,20 +71,21 @@ impl HopAm {
                 M7B5 => "m7b5",
                 POWER5 => "5",
                 DOM7_NO5 => "7(no5)",
+                MAJ6 => "6",
+                MIN6 => "m6",
+                DIM7 => "dim7",
+                ADD9 => "add9",
+                MINADD9 => "madd9",
+                MMAJ7 => "mmaj7",
                 _ => continue,
             };
 
             let ten_goc = ten_not[not_goc as usize];
             
-            // --- TÌM QUÃNG CỦA NỐT GỐC ---
-            let mut id_goc_thuc_te = 0;
-            for &id in danh_sach_phim {
-                if id % 12 == not_goc {
-                    id_goc_thuc_te = id;
-                    break;
-                }
-            }
-            // Tính số quãng (ID 0 -> 11 là quãng 1, 12 -> 23 là quãng 2...)
+            let id_goc_thuc_te = *danh_sach_phim
+                .iter()
+                .find(|&&id| id % 12 == not_goc)
+                .unwrap_or(&0);
             let quang = (id_goc_thuc_te / 12) + 1;
             
             // 4. KIỂM TRA HỢP ÂM ĐẢO (SLASH CHORD)

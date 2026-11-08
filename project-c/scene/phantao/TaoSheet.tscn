@@ -84,6 +84,34 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_purple"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.48, 0.2, 0.75, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.72, 0.42, 0.98, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_purple_hover"]
+content_margin_left = 10.0
+content_margin_right = 10.0
+bg_color = Color(0.6, 0.28, 0.88, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 2
+border_color = Color(0.85, 0.6, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_blue"]
 content_margin_left = 10.0
 content_margin_right = 10.0
@@ -212,34 +240,6 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_purple"]
-content_margin_left = 10.0
-content_margin_right = 10.0
-bg_color = Color(0.48, 0.2, 0.75, 0.95)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.72, 0.42, 0.98, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_purple_hover"]
-content_margin_left = 10.0
-content_margin_right = 10.0
-bg_color = Color(0.6, 0.28, 0.88, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 2
-border_color = Color(0.85, 0.6, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [node name="TaoSheet" type="TaoSheet" unique_id=671872958]
 anchors_preset = 15
 anchor_right = 1.0
@@ -285,21 +285,21 @@ theme_override_constants/separation = 10
 alignment = 1
 
 [node name="TenBaiHat_Input" type="LineEdit" parent="ThanhThongTin/HBox" unique_id=943565500]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(185, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Tên bài hát..."
 
 [node name="TacGia_Input" type="LineEdit" parent="ThanhThongTin/HBox" unique_id=1229035913]
-custom_minimum_size = Vector2(165, 0)
+custom_minimum_size = Vector2(135, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
 placeholder_text = "Tác giả..."
 
 [node name="NguoiTao_Input" type="LineEdit" parent="ThanhThongTin/HBox" unique_id=1428849580]
-custom_minimum_size = Vector2(165, 0)
+custom_minimum_size = Vector2(135, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
 theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
@@ -362,6 +362,14 @@ custom_minimum_size = Vector2(85, 0)
 layout_mode = 2
 max_value = 67.0
 value = 24.0
+
+[node name="AmThanh_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=1696477270]
+custom_minimum_size = Vector2(115, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_purple")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_purple")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_purple_hover")
+text = "🎵 Nhạc & Lời"
 
 [node name="MoFile_Btn" type="Button" parent="ThanhThongTin/HBox" unique_id=1696477269]
 custom_minimum_size = Vector2(105, 0)
@@ -708,9 +716,9 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_input_focus")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_nav_hover")
 selected = 0
 item_count = 2
-popup/item_0/text = "Khuông 1 (Tay phải)"
+popup/item_0/text = "Trên"
 popup/item_0/id = 0
-popup/item_1/text = "Khuông 2 (Tay trái)"
+popup/item_1/text = "Dưới"
 popup/item_1/id = 1
 
 [node name="NhanBuoc" type="Label" parent="ThanhCongCuSoan/VBox/HangCongCu" unique_id=883470279]
@@ -820,5 +828,131 @@ offset_right = 460.0
 offset_bottom = 76.0
 grow_horizontal = 1
 metadata/_edit_lock_ = true
+
+[node name="PanelAmThanh" type="Panel" parent="." unique_id=1892347300]
+visible = false
+z_index = 30
+layout_mode = 0
+offset_left = 1180.0
+offset_top = 102.0
+offset_right = 1880.0
+offset_bottom = 310.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel_inspector")
+
+[node name="VBox" type="VBoxContainer" parent="PanelAmThanh" unique_id=1892347301]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = -18.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="TieuDe" type="Label" parent="PanelAmThanh/VBox" unique_id=1892347302]
+layout_mode = 2
+text = "🎵 THIẾT LẬP NHẠC NỀN & LỜI (VOCAL)"
+label_settings = SubResource("LabelSettings_tieu_de_panel")
+horizontal_alignment = 1
+
+[node name="HangNhac" type="HBoxContainer" parent="PanelAmThanh/VBox" unique_id=1892347303]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NhanNhac" type="Label" parent="PanelAmThanh/VBox/HangNhac" unique_id=1892347304]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Nhạc nền:"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="Nhac_Input" type="LineEdit" parent="PanelAmThanh/VBox/HangNhac" unique_id=1892347305]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
+placeholder_text = "Đường dẫn file nhạc (.mp3, .ogg, .wav)..."
+
+[node name="ChonNhac_Btn" type="Button" parent="PanelAmThanh/VBox/HangNhac" unique_id=1892347306]
+custom_minimum_size = Vector2(90, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_blue")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_blue_hover")
+text = "📁 Chọn"
+
+[node name="XoaNhac_Btn" type="Button" parent="PanelAmThanh/VBox/HangNhac" unique_id=1892347307]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_red")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_red_hover")
+text = "🗑"
+
+[node name="HangLoi" type="HBoxContainer" parent="PanelAmThanh/VBox" unique_id=1892347308]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NhanLoi" type="Label" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347309]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "Lời (Vocal):"
+label_settings = SubResource("LabelSettings_nhan")
+
+[node name="Loi_Input" type="LineEdit" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347310]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_input_normal")
+theme_override_styles/focus = SubResource("StyleBoxFlat_input_focus")
+placeholder_text = "Đường dẫn file vocal (.mp3, .ogg, .wav)..."
+
+[node name="ChonLoi_Btn" type="Button" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347311]
+custom_minimum_size = Vector2(90, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_blue")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_blue_hover")
+text = "📁 Chọn"
+
+[node name="XoaLoi_Btn" type="Button" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347312]
+custom_minimum_size = Vector2(42, 38)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_red")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_red_hover")
+text = "🗑"
+
+[node name="HangNut" type="HBoxContainer" parent="PanelAmThanh/VBox" unique_id=1892347313]
+layout_mode = 2
+alignment = 2
+
+[node name="DongAmThanh_Btn" type="Button" parent="PanelAmThanh/VBox/HangNut" unique_id=1892347314]
+custom_minimum_size = Vector2(110, 36)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_green_hover")
+text = "✔ Xong"
+
+[node name="HopThoaiChonNhac" type="FileDialog" parent="." unique_id=1892347315]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.mp3, *.ogg, *.wav ; Audio Files")
+
+[node name="HopThoaiChonLoi" type="FileDialog" parent="." unique_id=1892347316]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(750, 500)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.mp3, *.ogg, *.wav ; Audio Files")
+
+[node name="nhac" type="AudioStreamPlayer2D" parent="." unique_id=587984295]
+
+[node name="loi" type="AudioStreamPlayer2D" parent="." unique_id=1816502101]
 
 [connection signal="button_down" from="ThanhThongTin/HBox/VeMenu_Btn" to="." method="_on_ve_menu_btn_button_down"]

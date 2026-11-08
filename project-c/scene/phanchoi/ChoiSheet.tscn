@@ -505,7 +505,7 @@ mouse_filter = 2
 layout_mode = 0
 offset_left = 72.0
 offset_top = 4.0
-offset_right = 1601.0
+offset_right = 1880.0
 offset_bottom = 74.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_thanh_menu")
 
@@ -575,6 +575,42 @@ theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
 theme_override_fonts/font = ExtResource("3_4c48n")
 theme_override_font_sizes/font_size = 19
 text = "🏷 Tên gợi ý"
+
+[node name="to_mau_phim" type="CheckButton" parent="NutMenu/Menu" unique_id=591124190]
+layout_mode = 0
+offset_left = 1245.0
+offset_top = 14.0
+offset_right = 1415.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 18
+button_pressed = true
+text = "🎹 Tô phím"
+
+[node name="bat_tat_nhac" type="CheckButton" parent="NutMenu/Menu" unique_id=591124191]
+layout_mode = 0
+offset_left = 1420.0
+offset_top = 14.0
+offset_right = 1580.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 18
+button_pressed = true
+text = "🎵 Nhạc"
+
+[node name="bat_tat_loi" type="CheckButton" parent="NutMenu/Menu" unique_id=591124192]
+layout_mode = 0
+offset_left = 1585.0
+offset_top = 14.0
+offset_right = 1745.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(0.95, 0.98, 1, 1)
+theme_override_fonts/font = ExtResource("3_4c48n")
+theme_override_font_sizes/font_size = 18
+button_pressed = true
+text = "🎤 Vocal"
 
 [node name="nut_menu" type="Button" parent="NutMenu" unique_id=680074442]
 layout_mode = 0

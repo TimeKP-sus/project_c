@@ -1,7 +1,9 @@
 use godot::builtin::{ Callable, Color, GString, NodePath, Variant };
-use godot::classes::{ Button, CheckButton, Control, IControl, Label, Object };
-
-use godot::obj::{ Gd, GdRef, WithBaseField };
+use godot::classes::{
+    AudioStream, AudioStreamMp3, AudioStreamOggVorbis, AudioStreamPlayer2D,
+    Button, CheckButton, Control, FileAccess, IControl, Label, Object, ResourceLoader,
+};
+use godot::obj::{ Gd, GdRef, NewGd, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, godot_api } };
 
 use crate::ban_phim_midi::BanPhimMidi;
@@ -20,6 +22,9 @@ pub struct ChoiSheet {
     diem_ky_luc: i32,
     ban_phim_midi_node: Option<Gd<BanPhimMidi>>,
     quan_ly_sheet_node: Option<Gd<QuanLySheet>>,
+    nhac_player: Option<Gd<AudioStreamPlayer2D>>,
+    loi_player: Option<Gd<AudioStreamPlayer2D>>,
+
     #[export]
     ten_bai_hat_label: Option<Gd<Label>>,
     #[export]
@@ -28,12 +33,16 @@ pub struct ChoiSheet {
     nguoi_tao_label: Option<Gd<Label>>,
     #[export]
     che_do_choi_thu: bool,
-
     #[export]
     phan_luyen_tap: bool,
-
     #[export]
     duong_dan_bai_hoc: GString,
+
+    cho_phep_phat_nhac: bool,
+    cho_phep_phat_loi: bool,
+    co_stream_nhac: bool,
+    co_stream_loi: bool,
+    da_bat_dau_audio: bool,
 
     so_phim_tot: i32,
     so_phim_kha: i32,
@@ -59,12 +68,126 @@ impl ChoiSheet {
         self.so_phim_truot
     }
 
+    /// Tải file âm thanh hỗ trợ cả file trong gói res:// và file nằm ngoài thư mục khi xuất game
+    fn tai_audio_stream(duong_dan: &str) -> Option<Gd<AudioStream>> {
+        let p = duong_dan.trim();
+        if p.is_empty() {
+            return None;
+        }
+        let lower = p.to_lowercase();
+        if lower.ends_with(".mp3") {
+            let bytes = FileAccess::get_file_as_bytes(p);
+            if !bytes.is_empty() {
+                let mut stream = AudioStreamMp3::new_gd();
+                stream.set_data(&bytes);
+                return Some(stream.upcast::<AudioStream>());
+            }
+        } else if lower.ends_with(".ogg") {
+            if let Some(stream) = AudioStreamOggVorbis::load_from_file(p) {
+                return Some(stream.upcast::<AudioStream>());
+            }
+        }
+        ResourceLoader::singleton()
+            .load(p)
+            .and_then(|res| res.try_cast::<AudioStream>().ok())
+    }
+
+    fn thiet_lap_am_thanh_bai_hat(&mut self) {
+        self.co_stream_nhac = false;
+        self.co_stream_loi = false;
+        self.da_bat_dau_audio = false;
+
+        let (path_nhac, path_loi, bpm_ht, bpm_goc) = if let Some(qls) = self.quan_ly_sheet_node.as_ref() {
+            let b = qls.bind();
+            (
+                b.get_duong_dan_nhac().to_string(),
+                b.get_duong_dan_loi().to_string(),
+                b.bpm,
+                b.get_bpm_goc(),
+            )
+        } else {
+            return;
+        };
+
+        let ti_le_toc_do = if bpm_goc > 0.0 && bpm_ht > 0.0 {
+            (bpm_ht / bpm_goc).clamp(0.25, 4.0)
+        } else {
+            1.0
+        };
+
+        if let Some(mut np) = self.nhac_player.clone() {
+            np.stop();
+            if let Some(stream) = Self::tai_audio_stream(&path_nhac) {
+                np.set_stream(&stream);
+                np.set_pitch_scale(ti_le_toc_do);
+                self.co_stream_nhac = true;
+            }
+        }
+
+        if let Some(mut lp) = self.loi_player.clone() {
+            lp.stop();
+            if let Some(stream) = Self::tai_audio_stream(&path_loi) {
+                lp.set_stream(&stream);
+                lp.set_pitch_scale(ti_le_toc_do);
+                self.co_stream_loi = true;
+            }
+        }
+    }
+
+    fn tinh_vi_tri_audio_hien_tai(&self) -> f32 {
+        if let Some(qls) = self.quan_ly_sheet_node.as_ref() {
+            let b = qls.bind();
+            let tg = b.get_thoi_gian().max(0.0);
+            let bpm_ht = b.bpm;
+            let bpm_goc = b.get_bpm_goc();
+            let nhip_bd = b.get_nhip_bat_dau_luyen_tap();
+            let ti_le = if bpm_goc > 0.0 && bpm_ht > 0.0 { bpm_ht / bpm_goc } else { 1.0 };
+            let giay_bat_dau_goc = if bpm_goc > 0.0 { (nhip_bd * 60.0) / bpm_goc } else { 0.0 };
+            giay_bat_dau_goc + tg * ti_le
+        } else {
+            0.0
+        }
+    }
+
+    #[func]
+    pub fn bat_tat_phat_nhac(&mut self, bat: bool) {
+        self.cho_phep_phat_nhac = bat;
+        let vi_tri = self.tinh_vi_tri_audio_hien_tai();
+        let dang_dung = self.quan_ly_sheet_node.as_ref().map(|q| q.bind().get_da_dung()).unwrap_or(false);
+
+        if let Some(mut np) = self.nhac_player.clone() {
+            if !bat {
+                np.stop();
+            } else if self.co_stream_nhac && self.da_bat_dau_audio {
+                np.play_ex().from_position(vi_tri).done();
+                np.set_stream_paused(dang_dung);
+            }
+        }
+    }
+
+    #[func]
+    pub fn bat_tat_phat_loi(&mut self, bat: bool) {
+        self.cho_phep_phat_loi = bat;
+        let vi_tri = self.tinh_vi_tri_audio_hien_tai();
+        let dang_dung = self.quan_ly_sheet_node.as_ref().map(|q| q.bind().get_da_dung()).unwrap_or(false);
+
+        if let Some(mut lp) = self.loi_player.clone() {
+            if !bat {
+                lp.stop();
+            } else if self.co_stream_loi && self.da_bat_dau_audio {
+                lp.play_ex().from_position(vi_tri).done();
+                lp.set_stream_paused(dang_dung);
+            }
+        }
+    }
+
     #[func]
     pub fn bat_tat_che_do_cho(&mut self, bat: bool) {
         if let Some(mut node) = self.quan_ly_sheet_node.clone() {
             node.bind_mut().set_cho_phep_cho(bat);
         }
     }
+
     pub fn set_thong_tin_bai_hat(&mut self) {
         let ten_bai_hat: Option<GString> = self.quan_ly_sheet_node.as_ref().map(|node| {
             let sheet_bind: GdRef<'_, QuanLySheet> = node.bind();
@@ -72,17 +195,14 @@ impl ChoiSheet {
         });
 
         if let Some(ten_bai_hat) = ten_bai_hat {
-            // let tac_gia = sheet_bind.get_tac_gia();
-            // let nguoi_tao_sheet = sheet_bind.get_nguoi_tao_sheet();
-
             if let Some(mut label) = self.ten_bai_hat_label.clone() {
                 label.set_text(&ten_bai_hat);
                 self.hieu_ung_xuat_hien_label(&mut label);
             }
         }
     }
+
     pub fn hieu_ung_xuat_hien_label(&mut self, label: &mut Gd<Label>) {
-        // 1. Bật hiển thị và đặt độ trong suốt (alpha) ban đầu về 0.0
         label.set_visible(true);
         let mut mau_goc: Color = label.get_modulate();
         mau_goc.a = 0.0;
@@ -93,40 +213,36 @@ impl ChoiSheet {
         let mut mau_an: Color = mau_goc;
         mau_an.a = 0.0;
 
-        // Ép kiểu sang Object để truyền vào Tween
         let doi_tuong: Gd<Object> = label.clone().upcast::<Object>();
 
-        // 2. Tạo chuỗi hiệu ứng chạy nối tiếp nhau
         if let Some(mut tween) = self.base_mut().create_tween() {
-            // Bước 1: Hiện rõ dần lên trong 0.3 giây
             tween.tween_property(
                 &doi_tuong,
                 &NodePath::from("modulate"),
                 &Variant::from(mau_hien),
-                0.3
+                0.3,
             );
-
-            // Bước 2: Đứng yên hiển thị trong đúng 4 giây
             tween.tween_interval(4.0);
-
-            // Bước 3: Mờ dần và biến mất trong 0.5 giây
             tween.tween_property(
                 &doi_tuong,
                 &NodePath::from("modulate"),
                 &Variant::from(mau_an),
-                0.5
+                0.5,
             );
         }
     }
+
     pub fn cat_nhat_diem_label(&mut self, diem_moi: i32) {
         self.diem = diem_moi;
         if let Some(mut label) = self.base().try_get_node_as::<Label>("diem") {
             label.set_text(&format!("Điểm: {}", self.diem));
         }
     }
+
     #[func]
     pub fn kiem_tra_phim(&mut self, so_phim: i32) {
-        let cac_not_trong_area: Vec<Gd<NotNhac>> = self.quan_ly_sheet_node
+        let cac_not_trong_area: Vec<Gd<NotNhac>> = self
+            .quan_ly_sheet_node
             .as_mut()
             .unwrap()
             .bind_mut()
@@ -162,7 +278,8 @@ impl ChoiSheet {
 
     #[func]
     pub fn xu_ly_nha_phim(&mut self, so_phim: i32) {
-        let tat_ca_not = self.quan_ly_sheet_node
+        let tat_ca_not = self
+            .quan_ly_sheet_node
             .as_mut()
             .unwrap()
             .bind_mut()
@@ -194,27 +311,37 @@ impl ChoiSheet {
             }
         }
     }
+
     #[func]
     pub fn xu_ly_not_bi_truot(&mut self) {
         self.so_phim_truot += 1;
-        // godot_print!("Bỏ lỡ nốt! Tổng trượt: {}", self.so_phim_truot);
         self.cat_nhat_diem_label(self.diem);
     }
+
     #[func]
     pub fn reset_diem(&mut self) {
         self.diem = 0;
         self.so_phim_tot = 0;
         self.so_phim_kha = 0;
         self.so_phim_truot = 0;
+        self.da_bat_dau_audio = false;
+        if let Some(mut np) = self.nhac_player.clone() {
+            np.stop();
+        }
+        if let Some(mut lp) = self.loi_player.clone() {
+            lp.stop();
+        }
         self.cat_nhat_diem_label(self.diem);
     }
+
     pub fn lay_ten_che_do_luu(&self) -> &'static str {
         if self.phan_luyen_tap { "luyen_tap_sheet" } else { "choi_sheet" }
     }
 
     #[func]
     pub fn lay_ti_le_hoan_thanh(&self) -> f32 {
-        let tong_not = self.quan_ly_sheet_node
+        let tong_not = self
+            .quan_ly_sheet_node
             .as_ref()
             .map(|q| q.bind().get_tong_so_not_sheet())
             .unwrap_or(0);
@@ -238,7 +365,13 @@ impl ChoiSheet {
 
     #[func]
     pub fn tong_ket(&mut self) {
-        // Không lưu điểm vào lich_su.json nếu đang ở chế độ Chơi thử
+        if let Some(mut np) = self.nhac_player.clone() {
+            np.stop();
+        }
+        if let Some(mut lp) = self.loi_player.clone() {
+            lp.stop();
+        }
+
         if self.duong_dan_bai_hoc.is_empty() || self.che_do_choi_thu {
             return;
         }
@@ -254,6 +387,7 @@ impl ChoiSheet {
 
         ls.cap_nhat_ket_qua(che_do, &self.duong_dan_bai_hoc.to_string(), self.diem, ti_le, hang);
     }
+
     fn lay_mau_to_phim(mau: &str) -> Color {
         match mau {
             "1" => Color::from_rgba(0.85, 0.25, 0.25, 0.75),
@@ -292,7 +426,8 @@ impl ChoiSheet {
 
     #[func]
     pub fn xu_ly_not_vao_area(&mut self, id_not: i32, mau_not: GString) {
-        let cho_phep = self.quan_ly_sheet_node
+        let cho_phep = self
+            .quan_ly_sheet_node
             .as_ref()
             .map(|q| q.bind().get_cho_phep_to_mau_phim())
             .unwrap_or(false);
@@ -310,7 +445,6 @@ impl ChoiSheet {
         if id_not == 100 {
             return;
         }
-        // Kiểm tra xem trong vùng Area còn nốt nào khác cùng phím chưa được đánh không
         let mut con_not_cung_phim = false;
         let mut mau_con_lai = String::new();
         if let Some(mut qls) = self.quan_ly_sheet_node.clone() {
@@ -326,7 +460,8 @@ impl ChoiSheet {
         }
 
         if let Some(mut midi) = self.ban_phim_midi_node.clone() {
-            let cho_phep = self.quan_ly_sheet_node
+            let cho_phep = self
+                .quan_ly_sheet_node
                 .as_ref()
                 .map(|q| q.bind().get_cho_phep_to_mau_phim())
                 .unwrap_or(false);
@@ -344,6 +479,10 @@ impl IControl for ChoiSheet {
     fn ready(&mut self) {
         self.ban_phim_midi_node = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
         self.quan_ly_sheet_node = self.base().try_get_node_as::<QuanLySheet>("QuanLySheet");
+        self.nhac_player = self.base().try_get_node_as::<AudioStreamPlayer2D>("nhac");
+        self.loi_player = self.base().try_get_node_as::<AudioStreamPlayer2D>("loi");
+        self.cho_phep_phat_nhac = true;
+        self.cho_phep_phat_loi = true;
 
         self.quan_ly_sheet_node.as_mut().unwrap().bind_mut().bat_tat_cho_phep_xoa_not(true);
         let check_phim_midi: Callable = self.base().callable("kiem_tra_phim");
@@ -372,99 +511,151 @@ impl IControl for ChoiSheet {
             k2.connect("not_ra_area", &callable_ra);
         }
 
+        // Kết nối các nút bật/tắt trên thanh Menu của ChoiSheet (nếu có)
+        let call_to_phim = self.base().callable("bat_tat_to_mau_phim");
+        if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/to_mau_phim") {
+            if !chk.is_connected("toggled", &call_to_phim) {
+                chk.connect("toggled", &call_to_phim);
+            }
+        }
+        let call_nhac = self.base().callable("bat_tat_phat_nhac");
+        if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_nhac") {
+            if !chk.is_connected("toggled", &call_nhac) {
+                chk.connect("toggled", &call_nhac);
+            }
+        }
+        let call_loi = self.base().callable("bat_tat_phat_loi");
+        if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_loi") {
+            if !chk.is_connected("toggled", &call_loi) {
+                chk.connect("toggled", &call_loi);
+            }
+        }
+
         let duong_dan: GString = self.duong_dan_bai_hoc.clone();
         if !duong_dan.is_empty() {
             if self.phan_luyen_tap {
-                if self.quan_ly_sheet_node.as_mut().unwrap().bind().get_cho_phep_cho() == true {
-                    self.quan_ly_sheet_node
-                        .as_mut()
-                        .unwrap()
-                        .bind_mut()
-                        .bat_tat_am_thanh_nhip(false);
-                }
+                if let Some(du_lieu_lt) = doc_sheet_json::doc_file_luyen_tap(&duong_dan.to_string()) {
+                    self.cho_phep_phat_nhac = du_lieu_lt.phat_nhac;
+                    self.cho_phep_phat_loi = du_lieu_lt.phat_loi;
 
-                // Đọc file luyen_tap.json
-                if
-                    let Some(du_lieu_lt) = doc_sheet_json::doc_file_luyen_tap(
-                        &duong_dan.to_string()
-                    )
-                {
                     if let Some(mut quan_ly_sheet) = self.quan_ly_sheet_node.clone() {
+                        quan_ly_sheet.bind_mut().set_che_do_luyen_tap(true);
                         quan_ly_sheet.bind_mut().set_cho_phep_cho(du_lieu_lt.cho_phep_cho);
+                        quan_ly_sheet.bind_mut().bat_tat_am_thanh_nhip(du_lieu_lt.cho_phep_am_thanh_nhip);
+                        quan_ly_sheet.bind_mut().bat_tat_hien_thi_ten_khac(du_lieu_lt.hien_thi_ten_khac);
+                        quan_ly_sheet.bind_mut().bat_tat_to_mau_phim(du_lieu_lt.to_mau_phim);
 
-                        quan_ly_sheet
-                            .bind_mut()
-                            .bat_tat_am_thanh_nhip(du_lieu_lt.cho_phep_am_thanh_nhip);
-                        quan_ly_sheet
-                            .bind_mut()
-                            .bat_tat_hien_thi_ten_khac(du_lieu_lt.hien_thi_ten_khac);
-
-                        quan_ly_sheet
-                            .bind_mut()
-                            .khoi_tao_sheet(
-                                du_lieu_lt.duong_dan_sheet.into(),
-                                du_lieu_lt.khuong.into(),
-                                du_lieu_lt.phan_thoi_gian.into()
-                            );
+                        quan_ly_sheet.bind_mut().khoi_tao_sheet(
+                            du_lieu_lt.duong_dan_sheet.into(),
+                            du_lieu_lt.khuong.into(),
+                            du_lieu_lt.phan_thoi_gian.into(),
+                        );
                         if let Some(bpm_moi) = du_lieu_lt.bpm_tuy_chinh {
                             if bpm_moi > 0.0 {
-                                // Ghi đè biến bpm nội bộ của QuanLySheet
                                 quan_ly_sheet.bind_mut().bpm = bpm_moi;
                             }
                         }
-                        if
-                            let Some(mut chk) = self
-                                .base()
-                                .try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_nhip")
-                        {
-                            chk.set_pressed_no_signal(du_lieu_lt.cho_phep_am_thanh_nhip);
-                        }
-                        if
-                            let Some(mut chk) = self
-                                .base()
-                                .try_get_node_as::<CheckButton>("NutMenu/Menu/che_do_cho")
-                        {
-                            chk.set_pressed_no_signal(du_lieu_lt.cho_phep_cho);
-                        }
-                        if
-                            let Some(mut chk) = self
-                                .base()
-                                .try_get_node_as::<CheckButton>("NutMenu/Menu/hien_ten_khac")
-                        {
-                            chk.set_pressed_no_signal(du_lieu_lt.hien_thi_ten_khac);
-                        }
-                        if
-                            let Some(mut chk) = self
-                                .base()
-                                .try_get_node_as::<CheckButton>("NutMenu/Menu/to_mau_phim")
-                        {
-                            chk.set_pressed_no_signal(du_lieu_lt.to_mau_phim);
-                        }
                     }
 
-                    // 1. Lấy thông tin Tác giả, Người tạo sheet từ file test.json gốc
+                    if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_nhip") {
+                        chk.set_pressed_no_signal(du_lieu_lt.cho_phep_am_thanh_nhip);
+                    }
+                    if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/che_do_cho") {
+                        chk.set_pressed_no_signal(du_lieu_lt.cho_phep_cho);
+                    }
+                    if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/hien_ten_khac") {
+                        chk.set_pressed_no_signal(du_lieu_lt.hien_thi_ten_khac);
+                    }
+                    if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/to_mau_phim") {
+                        chk.set_pressed_no_signal(du_lieu_lt.to_mau_phim);
+                    }
+                    if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_nhac") {
+                        chk.set_pressed_no_signal(du_lieu_lt.phat_nhac);
+                    }
+                    if let Some(mut chk) = self.base().try_get_node_as::<CheckButton>("NutMenu/Menu/bat_tat_loi") {
+                        chk.set_pressed_no_signal(du_lieu_lt.phat_loi);
+                    }
+
+                    self.thiet_lap_am_thanh_bai_hat();
                     self.set_thong_tin_bai_hat();
 
-                    // 2. GHI ĐÈ tên bài hát trên UI bằng tên bài học luyện tập
                     if let Some(mut label) = self.ten_bai_hat_label.clone() {
                         label.set_text(&GString::from(du_lieu_lt.ten_bai_hoc));
                     }
                 }
             } else {
-                // Chế độ chơi bình thường
+                // Chế độ chơi bình thường: luôn bật nhạc và lời nếu file sheet có gắn
+                self.cho_phep_phat_nhac = true;
+                self.cho_phep_phat_loi = true;
                 if let Some(mut quan_ly_sheet) = self.quan_ly_sheet_node.clone() {
                     quan_ly_sheet.bind_mut().khoi_tao_sheet(duong_dan, "".into(), "".into());
                 }
-                // Lấy trọn bộ thông tin từ file test.json gốc
+                self.thiet_lap_am_thanh_bai_hat();
                 self.set_thong_tin_bai_hat();
             }
         }
-        // Hiện nút Thoát chơi thử nếu đi từ TaoTapSheet sang
+
         if let Some(mut btn_thoat) = self.base().try_get_node_as::<Button>("thoat_choi_thu") {
             btn_thoat.set_visible(self.che_do_choi_thu);
             let callable_thoat = self.base().callable("thoat_choi_thu");
             if !btn_thoat.is_connected("button_down", &callable_thoat) {
                 btn_thoat.connect("button_down", &callable_thoat);
+            }
+        }
+    }
+
+    fn process(&mut self, _delta: f64) {
+        let Some(qls) = self.quan_ly_sheet_node.as_ref() else {
+            return;
+        };
+        let (thoi_gian, da_dung) = {
+            let b = qls.bind();
+            (b.get_thoi_gian(), b.get_da_dung())
+        };
+
+        // 1. Nếu vẫn đang trong 10 giây đếm ngược đầu bài (thoi_gian < 0.0)
+        if thoi_gian < 0.0 {
+            if self.da_bat_dau_audio {
+                self.da_bat_dau_audio = false;
+                if let Some(mut np) = self.nhac_player.clone() {
+                    np.stop();
+                }
+                if let Some(mut lp) = self.loi_player.clone() {
+                    lp.stop();
+                }
+            }
+            return;
+        }
+
+        // 2. Ngay khi chạm mốc 0.0 giây -> Bắt đầu phát từ đúng vị trí nhịp
+        if !self.da_bat_dau_audio {
+            self.da_bat_dau_audio = true;
+            let vi_tri_bd = self.tinh_vi_tri_audio_hien_tai();
+            if self.co_stream_nhac && self.cho_phep_phat_nhac {
+                if let Some(mut np) = self.nhac_player.clone() {
+                    np.play_ex().from_position(vi_tri_bd).done();
+                }
+            }
+            if self.co_stream_loi && self.cho_phep_phat_loi {
+                if let Some(mut lp) = self.loi_player.clone() {
+                    lp.play_ex().from_position(vi_tri_bd).done();
+                }
+            }
+        }
+
+        // 3. Đồng bộ Tạm dừng / Tiếp tục khi bấm nút Menu hoặc khi dừng chờ phím
+        if self.co_stream_nhac && self.cho_phep_phat_nhac {
+            if let Some(mut np) = self.nhac_player.clone() {
+                if np.get_stream_paused() != da_dung {
+                    np.set_stream_paused(da_dung);
+                }
+            }
+        }
+        if self.co_stream_loi && self.cho_phep_phat_loi {
+            if let Some(mut lp) = self.loi_player.clone() {
+                if lp.get_stream_paused() != da_dung {
+                    lp.set_stream_paused(da_dung);
+                }
             }
         }
     }

@@ -11,6 +11,8 @@ extends TaoTapLuyenSheet
 @onready var cho_phep_am_thanh_nhip_chk: CheckButton = $KhungChinh/VBox/HangCauHinh/ChoPhepAmThanhNhip
 @onready var hien_thi_ten_khac_chk: CheckButton = $KhungChinh/VBox/HangCauHinh/BatTenKhac
 @onready var to_mau_phim_chk: CheckButton = $KhungChinh/VBox/HangCauHinh/ToMauPhim
+@onready var phat_nhac_chk: CheckButton = $KhungChinh/VBox/HangCauHinh/PhatNhac
+@onready var phat_loi_chk: CheckButton = $KhungChinh/VBox/HangCauHinh/PhatLoi
 
 
 func _on_duong_dan_submitted(new_text: String) -> void:
@@ -35,12 +37,17 @@ func cap_nhat_thong_tin_giao_dien() -> void:
 
 	if cho_phep_am_thanh_nhip_chk:
 		cho_phep_am_thanh_nhip_chk.button_pressed = get_cho_phep_am_thanh_nhip()
-	
+
 	if hien_thi_ten_khac_chk:
 		hien_thi_ten_khac_chk.button_pressed = get_hien_thi_ten_khac()
-	
+
 	if to_mau_phim_chk:
 		to_mau_phim_chk.button_pressed = get_to_mau_phim()
+
+	if phat_nhac_chk:
+		phat_nhac_chk.button_pressed = get_phat_nhac()
+	if phat_loi_chk:
+		phat_loi_chk.button_pressed = get_phat_loi()
 
 	if bpm_spin:
 		bpm_spin.value = get_bpm_tuy_chinh()

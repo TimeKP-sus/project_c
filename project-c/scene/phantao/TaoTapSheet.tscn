@@ -212,16 +212,16 @@ label_settings = SubResource("LabelSettings_lbl")
 
 [node name="HangCauHinh" type="HBoxContainer" parent="KhungChinh/VBox" unique_id=1652157138]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 6
 alignment = 1
 
 [node name="NhanKhuong" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=14408804]
 layout_mode = 2
-text = "Khuông:"
+text = "Tay:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="Khuong_Option" type="OptionButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1055109593]
-custom_minimum_size = Vector2(150, 40)
+custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
 selected = 0
 item_count = 3
@@ -238,7 +238,7 @@ text = "BPM:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="Bpm_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=1275135758]
-custom_minimum_size = Vector2(85, 40)
+custom_minimum_size = Vector2(78, 40)
 layout_mode = 2
 max_value = 300.0
 
@@ -252,23 +252,37 @@ text = "Chờ phím"
 [node name="ChoPhepAmThanhNhip" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=528614101]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_6iejc")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 15
 button_pressed = true
 text = "Gõ nhịp"
 
 [node name="BatTenKhac" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1045015166]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_6iejc")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 15
 button_pressed = true
 text = "Tên khác"
 
 [node name="ToMauPhim" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1045015167]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_6iejc")
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 15
 button_pressed = true
-text = "Tô màu phím"
+text = "Tô phím"
+
+[node name="PhatNhac" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1045015168]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 15
+button_pressed = true
+text = "Nhạc nền"
+
+[node name="PhatLoi" type="CheckButton" parent="KhungChinh/VBox/HangCauHinh" unique_id=1045015169]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_6iejc")
+theme_override_font_sizes/font_size = 15
+button_pressed = true
+text = "Vocal"
 
 [node name="NhanTu" type="Label" parent="KhungChinh/VBox/HangCauHinh" unique_id=1600142900]
 layout_mode = 2
@@ -276,7 +290,7 @@ text = "Từ:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="NhipBatDau_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=314347199]
-custom_minimum_size = Vector2(90, 40)
+custom_minimum_size = Vector2(82, 40)
 layout_mode = 2
 max_value = 2000.0
 step = 0.25
@@ -288,7 +302,7 @@ text = "Đến:"
 label_settings = SubResource("LabelSettings_lbl")
 
 [node name="NhipKetThuc_Spin" type="SpinBox" parent="KhungChinh/VBox/HangCauHinh" unique_id=1275135757]
-custom_minimum_size = Vector2(90, 40)
+custom_minimum_size = Vector2(82, 40)
 layout_mode = 2
 max_value = 2000.0
 step = 0.25
