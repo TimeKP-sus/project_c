@@ -43,6 +43,7 @@ pub struct TaoTapLuyenSheet {
 
     cac_ghi_chu: BTreeMap<String, String>,
     bpm_tuy_chinh: f32,
+    do_tre_nhac_spin: Option<Gd<SpinBox>>,
     #[export]
     tu_choi_thu_quay_ve: bool,
 }
@@ -542,6 +543,10 @@ impl TaoTapLuyenSheet {
             to_mau_phim: self.get_to_mau_phim(),
             phat_nhac: self.get_phat_nhac(),
             phat_loi: self.get_phat_loi(),
+            do_tre_nhac_ms: self.do_tre_nhac_spin
+                .as_ref()
+                .map(|s| s.get_value() as f32)
+                .unwrap_or(0.0),
             phan_thoi_gian: self.get_phan_thoi_gian().to_string(),
             bpm_tuy_chinh: bpm_opt,
             cac_ghi_chu: self.cac_ghi_chu.clone(),
@@ -567,6 +572,9 @@ impl TaoTapLuyenSheet {
             self.set_to_mau_phim(data.to_mau_phim);
             self.set_phat_nhac(data.phat_nhac);
             self.set_phat_loi(data.phat_loi);
+            if let Some(mut spin) = self.do_tre_nhac_spin.clone() {
+                spin.set_value_no_signal(data.do_tre_nhac_ms as f64);
+            }
             let parts: Vec<&str> = data.phan_thoi_gian.split('-').collect();
             if parts.len() == 2 {
                 let bd = parts[0].parse::<f32>().unwrap_or(0.0);
@@ -708,11 +716,15 @@ impl IControl for TaoTapLuyenSheet {
             khoa_dang_sua: String::new(),
             cac_ghi_chu: BTreeMap::new(),
             bpm_tuy_chinh: 0.0,
+            do_tre_nhac_spin: None,
             tu_choi_thu_quay_ve: false,
         }
     }
 
     fn ready(&mut self) {
+        self.do_tre_nhac_spin = self.base().try_get_node_as::<SpinBox>(
+            "KhungChinh/VBox/HangDoTreNhac/DoTreNhac_Spin"
+        );
         let obj: Gd<TaoTapLuyenSheet> = self.to_gd();
         if
             let Some(mut b) = self

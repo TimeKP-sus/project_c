@@ -627,8 +627,10 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_nut_mo_hover")
 text = "☰"
 
 [node name="nhac" type="AudioStreamPlayer2D" parent="." unique_id=587984294]
+bus = &"Nhac"
 
 [node name="loi" type="AudioStreamPlayer2D" parent="." unique_id=1816502100]
+bus = &"Loi"
 
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="." method="tong_ket"]
 [connection signal="bai_hat_ket_thuc" from="QuanLySheet" to="nen_tong_ket/tong_ket_choi_sheet" method="_on_quan_ly_sheet_bai_hat_ket_thuc" flags=3]

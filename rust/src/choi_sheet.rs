@@ -42,7 +42,8 @@ pub struct ChoiSheet {
     cho_phep_phat_loi: bool,
     co_stream_nhac: bool,
     co_stream_loi: bool,
-    da_bat_dau_audio: bool,
+    da_bat_dau_nhac: bool,
+    da_bat_dau_loi: bool,
 
     so_phim_tot: i32,
     so_phim_kha: i32,
@@ -95,7 +96,8 @@ impl ChoiSheet {
     fn thiet_lap_am_thanh_bai_hat(&mut self) {
         self.co_stream_nhac = false;
         self.co_stream_loi = false;
-        self.da_bat_dau_audio = false;
+        self.da_bat_dau_nhac = false;
+        self.da_bat_dau_loi = false;
 
         let (path_nhac, path_loi, bpm_ht, bpm_goc) = if let Some(qls) = self.quan_ly_sheet_node.as_ref() {
             let b = qls.bind();
@@ -134,31 +136,36 @@ impl ChoiSheet {
         }
     }
 
-    fn tinh_vi_tri_audio_hien_tai(&self) -> f32 {
+    fn tinh_vi_tri_audio(&self, do_tre_ms: f32) -> f32 {
         if let Some(qls) = self.quan_ly_sheet_node.as_ref() {
             let b = qls.bind();
-            let tg = b.get_thoi_gian().max(0.0);
+            let tg = b.get_thoi_gian();
             let bpm_ht = b.bpm;
             let bpm_goc = b.get_bpm_goc();
             let nhip_bd = b.get_nhip_bat_dau_luyen_tap();
             let ti_le = if bpm_goc > 0.0 && bpm_ht > 0.0 { bpm_ht / bpm_goc } else { 1.0 };
             let giay_bat_dau_goc = if bpm_goc > 0.0 { (nhip_bd * 60.0) / bpm_goc } else { 0.0 };
-            giay_bat_dau_goc + tg * ti_le
+            let do_tre_giay = do_tre_ms / 1000.0;
+            giay_bat_dau_goc + (tg - do_tre_giay) * ti_le
         } else {
-            0.0
+            -1.0
         }
     }
 
     #[func]
     pub fn bat_tat_phat_nhac(&mut self, bat: bool) {
         self.cho_phep_phat_nhac = bat;
-        let vi_tri = self.tinh_vi_tri_audio_hien_tai();
+        let vi_tri = self
+            .quan_ly_sheet_node
+            .as_ref()
+            .map(|q| self.tinh_vi_tri_audio(q.bind().get_do_tre_nhac_ms()))
+            .unwrap_or(-1.0);
         let dang_dung = self.quan_ly_sheet_node.as_ref().map(|q| q.bind().get_da_dung()).unwrap_or(false);
 
         if let Some(mut np) = self.nhac_player.clone() {
             if !bat {
                 np.stop();
-            } else if self.co_stream_nhac && self.da_bat_dau_audio {
+            } else if self.co_stream_nhac && self.da_bat_dau_nhac {
                 np.play_ex().from_position(vi_tri).done();
                 np.set_stream_paused(dang_dung);
             }
@@ -168,13 +175,17 @@ impl ChoiSheet {
     #[func]
     pub fn bat_tat_phat_loi(&mut self, bat: bool) {
         self.cho_phep_phat_loi = bat;
-        let vi_tri = self.tinh_vi_tri_audio_hien_tai();
+        let vi_tri = self
+            .quan_ly_sheet_node
+            .as_ref()
+            .map(|q| self.tinh_vi_tri_audio(q.bind().get_do_tre_loi_ms()))
+            .unwrap_or(-1.0);
         let dang_dung = self.quan_ly_sheet_node.as_ref().map(|q| q.bind().get_da_dung()).unwrap_or(false);
 
         if let Some(mut lp) = self.loi_player.clone() {
             if !bat {
                 lp.stop();
-            } else if self.co_stream_loi && self.da_bat_dau_audio {
+            } else if self.co_stream_loi && self.da_bat_dau_loi {
                 lp.play_ex().from_position(vi_tri).done();
                 lp.set_stream_paused(dang_dung);
             }
@@ -324,7 +335,8 @@ impl ChoiSheet {
         self.so_phim_tot = 0;
         self.so_phim_kha = 0;
         self.so_phim_truot = 0;
-        self.da_bat_dau_audio = false;
+        self.da_bat_dau_nhac = false;
+        self.da_bat_dau_loi = false;
         if let Some(mut np) = self.nhac_player.clone() {
             np.stop();
         }
@@ -608,50 +620,49 @@ impl IControl for ChoiSheet {
         let Some(qls) = self.quan_ly_sheet_node.as_ref() else {
             return;
         };
-        let (thoi_gian, da_dung) = {
+        let (da_dung, tre_nhac_ms, tre_loi_ms) = {
             let b = qls.bind();
-            (b.get_thoi_gian(), b.get_da_dung())
+            (b.get_da_dung(), b.get_do_tre_nhac_ms(), b.get_do_tre_loi_ms())
         };
 
-        // 1. Nếu vẫn đang trong 10 giây đếm ngược đầu bài (thoi_gian < 0.0)
-        if thoi_gian < 0.0 {
-            if self.da_bat_dau_audio {
-                self.da_bat_dau_audio = false;
+        let vi_tri_nhac = self.tinh_vi_tri_audio(tre_nhac_ms);
+        let vi_tri_loi = self.tinh_vi_tri_audio(tre_loi_ms);
+
+        if vi_tri_nhac < 0.0 {
+            if self.da_bat_dau_nhac {
+                self.da_bat_dau_nhac = false;
                 if let Some(mut np) = self.nhac_player.clone() {
                     np.stop();
                 }
-                if let Some(mut lp) = self.loi_player.clone() {
-                    lp.stop();
-                }
             }
-            return;
-        }
-
-        // 2. Ngay khi chạm mốc 0.0 giây -> Bắt đầu phát từ đúng vị trí nhịp
-        if !self.da_bat_dau_audio {
-            self.da_bat_dau_audio = true;
-            let vi_tri_bd = self.tinh_vi_tri_audio_hien_tai();
-            if self.co_stream_nhac && self.cho_phep_phat_nhac {
+        } else if self.co_stream_nhac && self.cho_phep_phat_nhac {
+            if !self.da_bat_dau_nhac {
+                self.da_bat_dau_nhac = true;
                 if let Some(mut np) = self.nhac_player.clone() {
-                    np.play_ex().from_position(vi_tri_bd).done();
+                    np.play_ex().from_position(vi_tri_nhac).done();
                 }
             }
-            if self.co_stream_loi && self.cho_phep_phat_loi {
-                if let Some(mut lp) = self.loi_player.clone() {
-                    lp.play_ex().from_position(vi_tri_bd).done();
-                }
-            }
-        }
-
-        // 3. Đồng bộ Tạm dừng / Tiếp tục khi bấm nút Menu hoặc khi dừng chờ phím
-        if self.co_stream_nhac && self.cho_phep_phat_nhac {
             if let Some(mut np) = self.nhac_player.clone() {
                 if np.get_stream_paused() != da_dung {
                     np.set_stream_paused(da_dung);
                 }
             }
         }
-        if self.co_stream_loi && self.cho_phep_phat_loi {
+
+        if vi_tri_loi < 0.0 {
+            if self.da_bat_dau_loi {
+                self.da_bat_dau_loi = false;
+                if let Some(mut lp) = self.loi_player.clone() {
+                    lp.stop();
+                }
+            }
+        } else if self.co_stream_loi && self.cho_phep_phat_loi {
+            if !self.da_bat_dau_loi {
+                self.da_bat_dau_loi = true;
+                if let Some(mut lp) = self.loi_player.clone() {
+                    lp.play_ex().from_position(vi_tri_loi).done();
+                }
+            }
             if let Some(mut lp) = self.loi_player.clone() {
                 if lp.get_stream_paused() != da_dung {
                     lp.set_stream_paused(da_dung);

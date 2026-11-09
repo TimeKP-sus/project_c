@@ -34,6 +34,8 @@ pub struct QuanLySheet {
     pub nhip_bat_dau_luyen_tap: f32,
     pub duong_dan_nhac: String,
     pub duong_dan_loi: String,
+    pub do_tre_nhac_ms: f32,
+    pub do_tre_loi_ms: f32,
     #[export]
     cho_phep_cho: bool,
     #[export]
@@ -92,6 +94,16 @@ impl QuanLySheet {
     #[func]
     pub fn get_duong_dan_loi(&self) -> GString {
         GString::from(&self.duong_dan_loi)
+    }
+
+    #[func]
+    pub fn get_do_tre_nhac_ms(&self) -> f32 {
+        self.do_tre_nhac_ms
+    }
+
+    #[func]
+    pub fn get_do_tre_loi_ms(&self) -> f32 {
+        self.do_tre_loi_ms
     }
 
     #[func]
@@ -263,6 +275,8 @@ impl QuanLySheet {
             self.cat_nhat_nhip_label(self.loai_vach_nhip.clone().as_str().into());
             self.bpm = bai_hat.bpm;
             self.bpm_goc = bai_hat.bpm;
+            self.do_tre_nhac_ms = bai_hat.do_tre_nhac_ms;
+            self.do_tre_loi_ms = bai_hat.do_tre_loi_ms;
             let khoang_cach_nhip = self.toc_do;
 
             let nhip_moi_o = match self.loai_vach_nhip.as_str() {

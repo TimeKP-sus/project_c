@@ -439,6 +439,9 @@ impl IHBoxContainer for BanPhimMidi {
 
     fn ready(&mut self) {
         godot_print!("BanPhimMidi is ready!");
+        sf2_read::cap_nhat_am_luong_piano(
+            crate::du_lieu_nguoi_dung::CaiDatGameJson::doc_cai_dat().am_luong_piano,
+        );
         self.cum_1 = self.base().try_get_node_as::<CumPhimDan>("1");
         self.cum_2 = self.base().try_get_node_as::<CumPhimDan>("2");
         self.cum_3 = self.base().try_get_node_as::<CumPhimDan>("3");

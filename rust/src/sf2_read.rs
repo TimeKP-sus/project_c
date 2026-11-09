@@ -2,7 +2,10 @@ use std::{
     collections::HashMap,
     fs::File,
     io::BufReader,
-    sync::{Arc, Mutex, OnceLock},
+    sync::{
+        atomic::{AtomicU32, Ordering},
+        Arc, Mutex, OnceLock,
+    },
     thread,
     time::Duration,
 };
@@ -58,6 +61,16 @@ impl BoDocSf2 {
 // Các biến tĩnh toàn cục (Singleton) lưu trữ trạng thái của engine và các nốt nhạc
 static BODOC: OnceLock<Mutex<Option<BoDocSf2>>> = OnceLock::new();
 static THE_HE_NOT_NHAC: OnceLock<Mutex<HashMap<i32, u64>>> = OnceLock::new();
+static HE_SO_AM_LUONG: AtomicU32 = AtomicU32::new(1.0_f32.to_bits());
+
+pub fn cap_nhat_am_luong_piano(am_luong_pct: f32) {
+    let he_so = (am_luong_pct / 100.0).clamp(0.0, 1.0);
+    HE_SO_AM_LUONG.store(he_so.to_bits(), Ordering::Relaxed);
+}
+
+fn lay_he_so_am_luong() -> f32 {
+    f32::from_bits(HE_SO_AM_LUONG.load(Ordering::Relaxed))
+}
 
 // Lấy tham chiếu đến biến toàn cục của engine
 fn khe_cam_bo_doc() -> &'static Mutex<Option<BoDocSf2>> {
@@ -248,6 +261,14 @@ fn xuat_khoi_am_thanh(bo_tong_hop: &Arc<Mutex<Synthesizer>>, so_mau: usize) -> (
 
     if let Ok(mut bth) = bo_tong_hop.lock() {
         bth.render(&mut kenh_trai, &mut kenh_phai);
+    }
+
+    let he_so = lay_he_so_am_luong();
+    for mau in &mut kenh_trai {
+        *mau *= he_so;
+    }
+    for mau in &mut kenh_phai {
+        *mau *= he_so;
     }
 
     (kenh_trai, kenh_phai)

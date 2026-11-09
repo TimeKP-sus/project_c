@@ -21,6 +21,10 @@ pub struct BaiHatJson {
     pub duong_dan_nhac: String,
     #[serde(default)]
     pub duong_dan_loi: String,
+    #[serde(default)]
+    pub do_tre_nhac_ms: f32,
+    #[serde(default)]
+    pub do_tre_loi_ms: f32,
     pub khuong_1: Vec<NotNhacJson>,
     pub khuong_2: Vec<NotNhacJson>,
 }
@@ -466,6 +470,8 @@ pub struct LuyenTapJson {
     pub phat_nhac: bool, // <--- THÊM DÒNG NÀY
     #[serde(default = "bool_true")]
     pub phat_loi: bool,  // <--- THÊM DÒNG NÀY
+    #[serde(default)]
+    pub do_tre_nhac_ms: f32,
     
     pub phan_thoi_gian: String,
     #[serde(default)]
@@ -607,5 +613,3 @@ pub fn luu_file_chuong_json(duong_dan: &str, data: &ChuongJson) -> bool {
     }
     false
 }
-
-

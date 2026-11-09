@@ -1,10 +1,10 @@
 use godot::{
-    builtin::{Callable, GString, Variant, Vector2i},
+    builtin::{Callable, GString, StringName, Variant, Vector2i},
     classes::{
         AudioServer, Button, CheckButton, Control, DisplayServer, Engine, HSlider, IControl,
         Label, OptionButton,
     },
-    obj::{Base, WithBaseField},
+    obj::{Base, Gd, WithBaseField},
     prelude::{godot_api, GodotClass},
 };
 
@@ -77,7 +77,7 @@ impl ManHinhCaiDat {
         if let Some(mut s) = self.base_mut().try_get_node_as::<HSlider>(
             "KhungChinh/HBox/CotChoiNhac/VBox/HangAmLuong/AmLuong_Slider",
         ) {
-            s.set_value(am_luong_chung as f64);
+            s.set_value_no_signal(am_luong_chung as f64);
         }
         if let Some(mut lbl) = self
             .base_mut()
@@ -85,11 +85,98 @@ impl ManHinhCaiDat {
         {
             lbl.set_text(&format!("{:.0}%", am_luong_chung));
         }
+        self.ap_dung_am_luong();
     }
 
     #[func]
     pub fn get_am_luong_chung(&self) -> f32 {
         self.cai_dat.am_luong_chung
+    }
+
+    fn ap_dung_bus_am_luong(audio: &mut Gd<AudioServer>, bus_name: &str, volume_pct: f32) {
+        let ten_bus = StringName::from(bus_name);
+        let bus_idx = audio.get_bus_index(&ten_bus);
+        if bus_idx < 0 {
+            return;
+        }
+        if volume_pct <= 1.0 {
+            audio.set_bus_mute(bus_idx, true);
+        } else {
+            audio.set_bus_mute(bus_idx, false);
+            audio.set_bus_volume_db(bus_idx, (volume_pct - 100.0) * 0.4);
+        }
+    }
+
+    fn ap_dung_am_luong(&self) {
+        let mut audio = AudioServer::singleton();
+        Self::ap_dung_bus_am_luong(&mut audio, "Master", self.cai_dat.am_luong_chung);
+        Self::ap_dung_bus_am_luong(&mut audio, "Nhac", self.cai_dat.am_luong_nhac);
+        Self::ap_dung_bus_am_luong(&mut audio, "Loi", self.cai_dat.am_luong_loi);
+        crate::sf2_read::cap_nhat_am_luong_piano(self.cai_dat.am_luong_piano);
+    }
+
+    fn cap_nhat_thanh_am_luong(&mut self, ten_hang: &str, ten_slider: &str, ten_label: &str, am_luong: f32) {
+        let am_luong = am_luong.clamp(0.0, 100.0);
+        match ten_hang {
+            "piano" => self.cai_dat.am_luong_piano = am_luong,
+            "nhac" => self.cai_dat.am_luong_nhac = am_luong,
+            "loi" => self.cai_dat.am_luong_loi = am_luong,
+            _ => return,
+        }
+        if let Some(mut slider) = self.base_mut().try_get_node_as::<HSlider>(ten_slider) {
+            slider.set_value_no_signal(am_luong as f64);
+        }
+        if let Some(mut label) = self.base_mut().try_get_node_as::<Label>(ten_label) {
+            label.set_text(&format!("{:.0}%", am_luong));
+        }
+    }
+
+    #[func]
+    pub fn set_am_luong_piano(&mut self, am_luong: f32) {
+        self.cap_nhat_thanh_am_luong(
+            "piano",
+            "KhungChinh/HBox/CotChoiNhac/VBox/HangAmPiano/AmPiano_Slider",
+            "KhungChinh/HBox/CotChoiNhac/VBox/HangAmPiano/AmPiano_Val",
+            am_luong,
+        );
+        self.ap_dung_am_luong();
+    }
+
+    #[func]
+    pub fn get_am_luong_piano(&self) -> f32 {
+        self.cai_dat.am_luong_piano
+    }
+
+    #[func]
+    pub fn set_am_luong_nhac(&mut self, am_luong: f32) {
+        self.cap_nhat_thanh_am_luong(
+            "nhac",
+            "KhungChinh/HBox/CotChoiNhac/VBox/HangAmNhac/AmNhac_Slider",
+            "KhungChinh/HBox/CotChoiNhac/VBox/HangAmNhac/AmNhac_Val",
+            am_luong,
+        );
+        self.ap_dung_am_luong();
+    }
+
+    #[func]
+    pub fn get_am_luong_nhac(&self) -> f32 {
+        self.cai_dat.am_luong_nhac
+    }
+
+    #[func]
+    pub fn set_am_luong_loi(&mut self, am_luong: f32) {
+        self.cap_nhat_thanh_am_luong(
+            "loi",
+            "KhungChinh/HBox/CotChoiNhac/VBox/HangAmLoi/AmLoi_Slider",
+            "KhungChinh/HBox/CotChoiNhac/VBox/HangAmLoi/AmLoi_Val",
+            am_luong,
+        );
+        self.ap_dung_am_luong();
+    }
+
+    #[func]
+    pub fn get_am_luong_loi(&self) -> f32 {
+        self.cai_dat.am_luong_loi
     }
 
     #[func]
@@ -178,15 +265,8 @@ impl ManHinhCaiDat {
         // 1. Áp dụng giới hạn FPS
         Engine::singleton().set_max_fps(self.cai_dat.gioi_han_fps);
 
-        // 2. Áp dụng Âm lượng tổng (Bus 0 - Master)
-        let mut audio = AudioServer::singleton();
-        if self.cai_dat.am_luong_chung <= 0.5 {
-            audio.set_bus_mute(0, true);
-        } else {
-            audio.set_bus_mute(0, false);
-            let db = (self.cai_dat.am_luong_chung - 80.0) * 0.4;
-            audio.set_bus_volume_db(0, db);
-        }
+        // 2. Áp dụng âm lượng Godot và âm lượng Piano của Rustysynth
+        self.ap_dung_am_luong();
 
         // 3. Áp dụng VSync (0 = Disabled, 1 = Enabled)
         let vsync_val = if self.cai_dat.bat_vsync { 1 } else { 0 };
@@ -212,6 +292,9 @@ impl ManHinhCaiDat {
         self.set_toc_do_choi(cfg.toc_do_choi);
         self.set_do_tre_phim_ms(cfg.do_tre_phim_ms);
         self.set_am_luong_chung(cfg.am_luong_chung);
+        self.set_am_luong_piano(cfg.am_luong_piano);
+        self.set_am_luong_nhac(cfg.am_luong_nhac);
+        self.set_am_luong_loi(cfg.am_luong_loi);
         self.set_toan_man_hinh(cfg.toan_man_hinh);
         self.set_bat_vsync(cfg.bat_vsync);
         self.set_gioi_han_fps(cfg.gioi_han_fps);
@@ -274,6 +357,18 @@ impl ManHinhCaiDat {
     #[func]
     fn _khi_keo_am_luong(&mut self, val: f64) {
         self.set_am_luong_chung(val as f32);
+    }
+    #[func]
+    fn _khi_keo_am_piano(&mut self, val: f64) {
+        self.set_am_luong_piano(val as f32);
+    }
+    #[func]
+    fn _khi_keo_am_nhac(&mut self, val: f64) {
+        self.set_am_luong_nhac(val as f32);
+    }
+    #[func]
+    fn _khi_keo_am_loi(&mut self, val: f64) {
+        self.set_am_luong_loi(val as f32);
     }
     #[func]
     fn _khi_bam_toan_man_hinh(&mut self, pressed: bool) {
@@ -371,6 +466,15 @@ impl IControl for ManHinhCaiDat {
                 "value_changed",
                 &Callable::from_object_method(&obj, "_khi_keo_am_luong"),
             );
+        }
+        for (path, method) in [
+            ("KhungChinh/HBox/CotChoiNhac/VBox/HangAmPiano/AmPiano_Slider", "_khi_keo_am_piano"),
+            ("KhungChinh/HBox/CotChoiNhac/VBox/HangAmNhac/AmNhac_Slider", "_khi_keo_am_nhac"),
+            ("KhungChinh/HBox/CotChoiNhac/VBox/HangAmLoi/AmLoi_Slider", "_khi_keo_am_loi"),
+        ] {
+            if let Some(mut slider) = self.base_mut().try_get_node_as::<HSlider>(path) {
+                slider.connect("value_changed", &Callable::from_object_method(&obj, method));
+            }
         }
 
         if let Some(mut chk) = self

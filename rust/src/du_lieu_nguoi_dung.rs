@@ -122,6 +122,13 @@ pub struct CaiDatGameJson {
     /// Âm lượng tổng (0.0 -> 100.0, mặc định: 80.0)
     pub am_luong_chung: f32,
 
+    #[serde(default = "macdinh_am_luong_100")]
+    pub am_luong_piano: f32,
+    #[serde(default = "macdinh_am_luong_100")]
+    pub am_luong_nhac: f32,
+    #[serde(default = "macdinh_am_luong_100")]
+    pub am_luong_loi: f32,
+
     // --- Cài đặt đồ họa ---
     pub toan_man_hinh: bool,
     pub bat_vsync: bool,
@@ -131,13 +138,17 @@ pub struct CaiDatGameJson {
     pub do_phan_giai_idx: i32,
     pub hien_thi_fps: bool,
 }
+fn macdinh_am_luong_100() -> f32 { 100.0 }
 
 impl Default for CaiDatGameJson {
     fn default() -> Self {
         Self {
             toc_do_choi: 1.0,
             do_tre_phim_ms: 0.0,
-            am_luong_chung: 80.0,
+            am_luong_chung: 100.0,
+            am_luong_piano: 100.0,
+            am_luong_nhac: 100.0,  
+            am_luong_loi: 100.0,
             toan_man_hinh: false,
             bat_vsync: true,
             gioi_han_fps: 60,

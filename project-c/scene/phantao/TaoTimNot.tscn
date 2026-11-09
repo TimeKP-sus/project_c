@@ -274,7 +274,7 @@ title = "Lưu bài Tìm & Đánh Nốt JSON"
 initial_position = 2
 size = Vector2i(750, 500)
 access = 2
-root_subfolder = "bai_hoc"
+root_subfolder = "bai_hoc/tim_not"
 filters = PackedStringArray("*.json ; Find Note Lesson JSON")
 
 [node name="HopThoaiMoJson" type="FileDialog" parent="." unique_id=1849150254]
@@ -284,7 +284,7 @@ size = Vector2i(750, 500)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-root_subfolder = "bai_hoc"
+root_subfolder = "bai_hoc/tim_not"
 filters = PackedStringArray("*.json ; Find Note Lesson JSON")
 
 [node name="ThongBao" parent="." unique_id=2034747976 instance=ExtResource("3_1cvi5")]

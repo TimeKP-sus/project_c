@@ -21,7 +21,11 @@ func _on_ve_ds_button_down() -> void:
 	get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
 
 func _on_choi_lai_button_down() -> void:
-	var scene_hien_tai = get_tree().current_scene
+	# Lưu lại cây thư mục gốc trước khi bị gỡ
+	var cay_thu_muc = get_tree()
+	var goc = cay_thu_muc.root
+	var scene_hien_tai = cay_thu_muc.current_scene
+
 	var duong_dan_da_luu = scene_hien_tai.duong_dan_bai_hoc
 
 	var hoc_tim_not_scene = load("res://scene/phanchoi/HocTimNot.tscn")
@@ -29,9 +33,13 @@ func _on_choi_lai_button_down() -> void:
 
 	scene_moi.duong_dan_bai_hoc = duong_dan_da_luu
 
-	get_tree().root.add_child(scene_moi)
-	get_tree().current_scene = scene_moi
+	# Ép gỡ Scene cũ ra khỏi cây ngay lập tức để ngắt MIDI cũ
+	goc.remove_child(scene_hien_tai)
 	scene_hien_tai.queue_free()
+
+	# Thêm Scene mới vào để kết nối lại MIDI an toàn
+	goc.add_child(scene_moi)
+	cay_thu_muc.current_scene = scene_moi
 
 func _on_hoc_tim_not_xong_het_bai() -> void:
 	nen_tong_ket.show()

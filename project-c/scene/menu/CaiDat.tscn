@@ -259,12 +259,81 @@ label_settings = SubResource("LabelSettings_lbl")
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
-value = 80.0
+value = 100.0
 
 [node name="AmLuong_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLuong" unique_id=1247916433]
-custom_minimum_size = Vector2(90, 0)
+custom_minimum_size = Vector2(60, 0)
 layout_mode = 2
-text = "80%"
+text = "100%"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+
+[node name="HangAmPiano" type="HBoxContainer" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=1387316230]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmPiano" unique_id=361418410]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Âm lượng Piano:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="AmPiano_Slider" type="HSlider" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmPiano" unique_id=180116968]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="AmPiano_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmPiano" unique_id=1247916434]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100%"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+
+[node name="HangAmNhac" type="HBoxContainer" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=1387316231]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmNhac" unique_id=361418411]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Âm lượng Nhạc nền:"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="AmNhac_Slider" type="HSlider" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmNhac" unique_id=180116969]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="AmNhac_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmNhac" unique_id=1247916435]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100%"
+label_settings = SubResource("LabelSettings_lbl")
+horizontal_alignment = 2
+
+[node name="HangAmLoi" type="HBoxContainer" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=1387316232]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Nhan" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLoi" unique_id=361418412]
+custom_minimum_size = Vector2(210, 0)
+layout_mode = 2
+text = "Âm lượng Lời (Vocal):"
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="AmLoi_Slider" type="HSlider" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLoi" unique_id=180116970]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+value = 100.0
+
+[node name="AmLoi_Val" type="Label" parent="KhungChinh/HBox/CotChoiNhac/VBox/HangAmLoi" unique_id=1247916436]
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "100%"
 label_settings = SubResource("LabelSettings_lbl")
 horizontal_alignment = 2
 

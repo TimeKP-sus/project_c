@@ -17,10 +17,6 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 boot_splash/bg_color=Color(0.11764706, 0.11764706, 0.11764706, 0)
 config/icon="res://icon.svg"
 
-[audio]
-
-buses/default_bus_layout=""
-
 [clef]
 
 default_soundfont="C:/DuAnGodot/rust/gameC/game/project-c/addons/clef/sound_front/YDP-GrandPiano-SF2-20160804/YDP-GrandPiano-20160804.sf2"

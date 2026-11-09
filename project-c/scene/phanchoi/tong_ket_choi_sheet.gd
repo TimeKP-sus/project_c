@@ -20,9 +20,16 @@ func _ready() -> void:
 	nen_tong_ket.hide()
 
 func _on_choi_lai_button_down() -> void:
+	var cay_thu_muc = get_tree()
+	var goc = cay_thu_muc.root
+	
 	if choi_sheet.che_do_choi_thu:
-		var tao_tap_scene = get_tree().current_scene
+		var tao_tap_scene = cay_thu_muc.current_scene
+		
+		# Gỡ an toàn bằng biến đã lưu
+		goc.remove_child(choi_sheet)
 		choi_sheet.queue_free()
+		
 		if tao_tap_scene and tao_tap_scene.has_method("choi_thu_doan_luyen_tap"):
 			tao_tap_scene.call_deferred("choi_thu_doan_luyen_tap")
 		return
@@ -37,9 +44,13 @@ func _on_choi_lai_button_down() -> void:
 	scene_moi.duong_dan_bai_hoc = duong_dan_da_luu
 	scene_moi.phan_luyen_tap = la_luyen_tap
 
-	get_tree().root.add_child(scene_moi)
-	get_tree().current_scene = scene_moi
+	# Gỡ an toàn bằng biến đã lưu
+	goc.remove_child(choi_sheet)
 	choi_sheet.queue_free()
+
+	# Thêm Scene mới
+	goc.add_child(scene_moi)
+	cay_thu_muc.current_scene = scene_moi
 
 func _on_ve_ds_button_down() -> void:
 	if choi_sheet.che_do_choi_thu:
