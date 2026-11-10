@@ -56,6 +56,7 @@ impl TaoTapLuyenSheet {
             match loai {
                 "loi" => tb.bind_mut().thong_bao_loi(noi_dung),
                 "canh_bao" => tb.bind_mut().thong_bao_canh_bao(noi_dung),
+                "thong_tin" => tb.bind_mut().thong_bao_thong_tin(noi_dung),
                 _ => tb.bind_mut().thong_bao_thanh_cong(noi_dung),
             }
         }

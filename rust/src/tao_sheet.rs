@@ -1806,6 +1806,10 @@ impl TaoSheet {
 
             self.dat_nhip_hien_tai(0.0);
             self.ve_lai_sheet_tuy_chon(true);
+            self.hien_thong_bao("Đã mở file bài nhạc thành công!", "thanh_cong");
+        }
+        else {
+            self.hien_thong_bao("Có lỗi xảy ra khi mở file JSON.", "loi");
         }
     }
 
@@ -1856,6 +1860,10 @@ impl TaoSheet {
             self.dat_nhip_hien_tai(0.0);
             self.ve_lai_sheet_tuy_chon(false);
             godot_print!("Nhập file MIDI thành công: {}", midi.ten_bai_hat);
+            self.hien_thong_bao("Đã nhập file MIDI thành công!", "thanh_cong");
+        } else {
+            godot_print!("Nhập file MIDI thất bại: {}", midi.ten_bai_hat);
+            self.hien_thong_bao("Có lỗi xảy ra khi nhập file MIDI.", "loi");
         }
     }
 

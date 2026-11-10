@@ -890,10 +890,10 @@ label_settings = SubResource("LabelSettings_nhan")
 [node name="DoTreNhac_Spin" type="SpinBox" parent="PanelAmThanh/VBox/HangNhac" unique_id=1892347321]
 custom_minimum_size = Vector2(95, 38)
 layout_mode = 2
+tooltip_text = "Số dương (+): Nhạc phát trễ hơn | Số âm (-): Nhạc phát sớm hơn"
 min_value = -20000.0
 max_value = 20000.0
 step = 10.0
-tooltip_text = "Số dương (+): Nhạc phát trễ hơn | Số âm (-): Nhạc phát sớm hơn"
 
 [node name="ChonNhac_Btn" type="Button" parent="PanelAmThanh/VBox/HangNhac" unique_id=1892347306]
 custom_minimum_size = Vector2(85, 38)
@@ -935,10 +935,10 @@ label_settings = SubResource("LabelSettings_nhan")
 [node name="DoTreLoi_Spin" type="SpinBox" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347323]
 custom_minimum_size = Vector2(95, 38)
 layout_mode = 2
+tooltip_text = "Số dương (+): Lời phát trễ hơn | Số âm (-): Lời phát sớm hơn"
 min_value = -20000.0
 max_value = 20000.0
 step = 10.0
-tooltip_text = "Số dương (+): Lời phát trễ hơn | Số âm (-): Lời phát sớm hơn"
 
 [node name="ChonLoi_Btn" type="Button" parent="PanelAmThanh/VBox/HangLoi" unique_id=1892347311]
 custom_minimum_size = Vector2(85, 38)
