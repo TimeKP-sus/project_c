@@ -573,9 +573,9 @@ impl TaoTapLuyenSheet {
             self.set_to_mau_phim(data.to_mau_phim);
             self.set_phat_nhac(data.phat_nhac);
             self.set_phat_loi(data.phat_loi);
-            if let Some(mut spin) = self.do_tre_nhac_spin.clone() {
-                spin.set_value_no_signal(data.do_tre_nhac_ms as f64);
-            }
+            // if let Some(mut spin) = self.do_tre_nhac_spin.clone() {
+            //     spin.set_value_no_signal(data.do_tre_nhac_ms as f64);
+            // }
             let parts: Vec<&str> = data.phan_thoi_gian.split('-').collect();
             if parts.len() == 2 {
                 let bd = parts[0].parse::<f32>().unwrap_or(0.0);

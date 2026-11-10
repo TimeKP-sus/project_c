@@ -467,9 +467,9 @@ pub struct LuyenTapJson {
     #[serde(default = "bool_true")]
     pub to_mau_phim: bool,
     #[serde(default = "bool_true")]
-    pub phat_nhac: bool, // <--- THÊM DÒNG NÀY
+    pub phat_nhac: bool, 
     #[serde(default = "bool_true")]
-    pub phat_loi: bool,  // <--- THÊM DÒNG NÀY
+    pub phat_loi: bool,
     #[serde(default)]
     pub do_tre_nhac_ms: f32,
     

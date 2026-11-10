@@ -406,10 +406,9 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_btn_red_hover")
 text = "✖ Về Menu"
 
 [node name="PanelSuaNot" type="Panel" parent="." unique_id=1892347102]
-visible = false
 z_index = 25
 layout_mode = 0
-offset_left = 1485.0
+offset_left = 1330.0
 offset_top = 105.0
 offset_right = 1900.0
 offset_bottom = 465.0
@@ -966,6 +965,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_btn_green_hover")
 text = "✔ Xong"
 
 [node name="HopThoaiChonNhac" type="FileDialog" parent="." unique_id=1892347315]
+oversampling_override = 1.0
 title = "Open a File"
 initial_position = 2
 size = Vector2i(750, 500)
