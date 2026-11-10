@@ -262,8 +262,6 @@ anchors_preset = -1
 anchor_right = 1.04375
 metadata/_edit_use_anchors_ = true
 
-[node name="nhac" type="AudioStreamPlayer2D" parent="QuanLySheet" unique_id=699831251]
-
 [node name="ThanhThongTin" type="Panel" parent="." unique_id=1484156686]
 layout_mode = 0
 offset_left = 20.0

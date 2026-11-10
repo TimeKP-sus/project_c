@@ -165,7 +165,7 @@ impl ChoiSheet {
         if let Some(mut np) = self.nhac_player.clone() {
             if !bat {
                 np.stop();
-            } else if self.co_stream_nhac && self.da_bat_dau_nhac {
+            } else if self.co_stream_nhac && self.da_bat_dau_nhac && vi_tri >= 0.0 {
                 np.play_ex().from_position(vi_tri).done();
                 np.set_stream_paused(dang_dung);
             }
@@ -185,7 +185,7 @@ impl ChoiSheet {
         if let Some(mut lp) = self.loi_player.clone() {
             if !bat {
                 lp.stop();
-            } else if self.co_stream_loi && self.da_bat_dau_loi {
+            } else if self.co_stream_loi && self.da_bat_dau_loi && vi_tri >= 0.0 {
                 lp.play_ex().from_position(vi_tri).done();
                 lp.set_stream_paused(dang_dung);
             }
@@ -620,10 +620,31 @@ impl IControl for ChoiSheet {
         let Some(qls) = self.quan_ly_sheet_node.as_ref() else {
             return;
         };
-        let (da_dung, tre_nhac_ms, tre_loi_ms) = {
+        let (tg, da_dung, tre_nhac_ms, tre_loi_ms) = {
             let b = qls.bind();
-            (b.get_da_dung(), b.get_do_tre_nhac_ms(), b.get_do_tre_loi_ms())
+            (
+                b.get_thoi_gian(),
+                b.get_da_dung(),
+                b.get_do_tre_nhac_ms(),
+                b.get_do_tre_loi_ms(),
+            )
         };
+
+        if tg < 0.0 {
+            if self.da_bat_dau_nhac {
+                self.da_bat_dau_nhac = false;
+                if let Some(mut np) = self.nhac_player.clone() {
+                    np.stop();
+                }
+            }
+            if self.da_bat_dau_loi {
+                self.da_bat_dau_loi = false;
+                if let Some(mut lp) = self.loi_player.clone() {
+                    lp.stop();
+                }
+            }
+            return;
+        }
 
         let vi_tri_nhac = self.tinh_vi_tri_audio(tre_nhac_ms);
         let vi_tri_loi = self.tinh_vi_tri_audio(tre_loi_ms);
