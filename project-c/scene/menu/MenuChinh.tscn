@@ -143,8 +143,8 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_nen_menu")
 
 [node name="110215" type="Sprite2D" parent="." unique_id=1849311134]
-position = Vector2(960, 537.50006)
-scale = Vector2(1.9159999, 1.6026988)
+position = Vector2(983.00006, 518)
+scale = Vector2(1.962, 1.6371813)
 texture = ExtResource("1_4nvyv")
 
 [node name="CumTieuDe" type="VBoxContainer" parent="." unique_id=347353530]

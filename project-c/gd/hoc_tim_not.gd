@@ -14,6 +14,7 @@ func them_not_tim(chuoi_id: String) -> void:
 
 func xoa_cac_not_tim() -> void:
 	for i in danh_sach.get_children():
+		danh_sach.remove_child(i)
 		i.queue_free()
 
 func hien_thi_not_tim_dung(vi_tri: int) -> void:

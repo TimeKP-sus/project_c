@@ -375,26 +375,40 @@ impl TaoNgheNot {
             self._khi_bam_them_cau();
         }
         if self.danh_sach_bai.is_empty() {
+            self.hien_thong_bao("Vui lòng thêm ít nhất 1 câu trước khi chơi thử!", "canh_bao");
             return;
         }
         let temp_path = GString::from("user://temp_nghe_not_test.json");
         self.luu_bai_hoc_json(temp_path.clone());
 
         let scene_mau = load::<PackedScene>("res://scene/phanchoi/HocNgheNot.tscn");
-        {
-            if let Some(mut node_moi) = scene_mau.instantiate() {
-                node_moi.set("duong_dan_bai_hoc", &Variant::from(temp_path));
-                if let Some(mut tree) = self.base().get_tree() {
-                    if let Some(mut root) = tree.get_root() {
-                        let cur = tree.get_current_scene();
-                        root.add_child(&node_moi);
-                        tree.set_current_scene(&node_moi);
-                        if let Some(mut c) = cur {
-                            c.queue_free();
-                        }
-                    }
+        if let Some(mut node_moi) = scene_mau.instantiate() {
+            node_moi.set("duong_dan_bai_hoc", &Variant::from(temp_path));
+            node_moi.set("che_do_choi_thu", &Variant::from(true));
+            if let Ok(mut ctrl_moi) = node_moi.clone().try_cast::<Control>() {
+                ctrl_moi.set_z_index(100);
+            }
+
+            let obj = self.to_gd();
+            node_moi.connect(
+                "tree_exited",
+                &Callable::from_object_method(&obj, "_khi_dong_choi_thu"),
+            );
+
+            if let Some(tree) = self.base().get_tree() {
+                if let Some(mut root) = tree.get_root() {
+                    root.add_child(&node_moi);
                 }
             }
+            self.base_mut().set_visible(false);
+        }
+    }
+
+    #[func]
+    fn _khi_dong_choi_thu(&mut self) {
+        self.base_mut().set_visible(true);
+        if let Some(mut bp) = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
+            bp.bind_mut().kiem_tra_dau_vao();
         }
     }
 

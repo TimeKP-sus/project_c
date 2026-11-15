@@ -18,6 +18,7 @@ func them_not_doan(chuoi_id: String) -> void:
 
 func xoa_cac_not_doan() -> void:
 	for i in danh_sach.get_children():
+		danh_sach.remove_child(i)
 		i.queue_free()
 
 func hien_thi_not_doan_dung(vi_tri: int) -> void:

@@ -1229,32 +1229,7 @@ impl TaoSheet {
         }
         self.cap_nhat_mien_theo_vi_tri_nhip();
 
-        if self.dang_nghe_thu {
-            let bpm = self.bpm_spin
-                .as_ref()
-                .map(|s| s.get_value() as f32)
-                .unwrap_or(120.0);
-            let giay_ht = if self.nhip_hien_tai > 0.0 {
-                (self.nhip_hien_tai * 60.0) / bpm
-            } else {
-                0.0
-            };
-
-            if let Some(mut np) = self.nhac_player.clone() {
-                if self.nhip_hien_tai >= 0.0 {
-                    np.play_ex().from_position(giay_ht).done();
-                } else {
-                    np.stop();
-                }
-            }
-            if let Some(mut lp) = self.loi_player.clone() {
-                if self.nhip_hien_tai >= 0.0 {
-                    lp.play_ex().from_position(giay_ht).done();
-                } else {
-                    lp.stop();
-                }
-            }
-        }
+        self.dong_bo_phat_thu_am_thanh();
     }
 
     #[func]
@@ -1437,6 +1412,11 @@ impl TaoSheet {
             .map(|i| i.get_text().to_string().trim().replace(" ", "_").to_lowercase())
             .unwrap_or_default();
 
+        let id_ngau_nhien = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap_or_default()
+            .as_secs();
+
         if let Some(mut dialog) = self.hop_thoai_luu.clone() {
             dialog.set_current_dir(&GString::from(format!(
                 "{}bai_hoc/choi_sheet",
@@ -1444,9 +1424,9 @@ impl TaoSheet {
             )));
 
             let ten_file_moi = if ten_bai.is_empty() {
-                String::from("bai_hat_moi.json")
+                format!("bai_hat_moi_{}.json", id_ngau_nhien)
             } else {
-                format!("{}.json", ten_bai)
+                format!("{}_{}.json", ten_bai, id_ngau_nhien)
             };
 
             dialog.set_current_file(&GString::from(&ten_file_moi));
@@ -1728,22 +1708,7 @@ impl TaoSheet {
             khuong_2,
         };
 
-        let id_ngau_nhien = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)
-            .unwrap_or_default()
-            .as_secs();
-        let duong_dan_goc: String = duong_dan.to_string();
-        let duong_dan_cuoi: String = if duong_dan_goc.ends_with(".json") {
-            format!(
-                "{}_{}.json",
-                &duong_dan_goc[..duong_dan_goc.len() - 5],
-                id_ngau_nhien
-            )
-        } else {
-            format!("{}_{}.json", duong_dan_goc, id_ngau_nhien)
-        };
-
-        if luu_file_json(&duong_dan_cuoi, &bai_hat) {
+        if luu_file_json(&duong_dan.to_string(), &bai_hat) {
             let mut thong_bao_text = String::from("Đã lưu bài nhạc thành công!");
             if !duong_dan_nhac.is_empty() || !duong_dan_loi.is_empty() {
                 thong_bao_text.push_str("\n(Bao gồm file âm thanh đính kèm)");

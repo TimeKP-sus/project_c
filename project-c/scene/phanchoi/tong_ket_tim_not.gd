@@ -12,18 +12,30 @@ extends Panel
 @onready var so_lan_doan: Label = $so_lan_doan
 @onready var do_chinh_xac: Label = $do_chinh_xac
 @onready var nen_tong_ket: Panel = $".."
+@onready var ve_ds_btn: Button = $ve_ds
 
 func _ready() -> void:
 	# Ẩn panel tổng kết lúc mới vào game
 	nen_tong_ket.hide()
 
 func _on_ve_ds_button_down() -> void:
-	get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
+	if hoc_tim_not.che_do_choi_thu:
+		hoc_tim_not.thoat_choi_thu()
+	else:
+		get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
 
 func _on_choi_lai_button_down() -> void:
 	# Lưu lại cây thư mục gốc trước khi bị gỡ
 	var cay_thu_muc = get_tree()
 	var goc = cay_thu_muc.root
+	if hoc_tim_not.che_do_choi_thu:
+		var tao_bai_scene = cay_thu_muc.current_scene
+		goc.remove_child(hoc_tim_not)
+		hoc_tim_not.queue_free()
+		if tao_bai_scene and tao_bai_scene.has_method("choi_thu_bai_hoc"):
+			tao_bai_scene.call_deferred("choi_thu_bai_hoc")
+		return
+
 	var scene_hien_tai = cay_thu_muc.current_scene
 
 	var duong_dan_da_luu = scene_hien_tai.duong_dan_bai_hoc
@@ -43,6 +55,8 @@ func _on_choi_lai_button_down() -> void:
 
 func _on_hoc_tim_not_xong_het_bai() -> void:
 	nen_tong_ket.show()
+	if hoc_tim_not.che_do_choi_thu and ve_ds_btn:
+		ve_ds_btn.text = "⬅ Về tạo bài"
 
 	# Lấy thông tin cơ bản
 	ten.text = "Bài học: " + str(hoc_tim_not.get_ten_bai_hoc())

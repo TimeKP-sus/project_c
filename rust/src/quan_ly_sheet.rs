@@ -275,6 +275,8 @@ impl QuanLySheet {
             self.cat_nhat_nhip_label(self.loai_vach_nhip.clone().as_str().into());
             self.bpm = bai_hat.bpm;
             self.bpm_goc = bai_hat.bpm;
+            self.duong_dan_nhac = bai_hat.duong_dan_nhac;
+            self.duong_dan_loi = bai_hat.duong_dan_loi;
             self.do_tre_nhac_ms = bai_hat.do_tre_nhac_ms;
             self.do_tre_loi_ms = bai_hat.do_tre_loi_ms;
             let khoang_cach_nhip = self.toc_do;

@@ -42,7 +42,7 @@ func _on_btn_tao_danh_sach_button_down() -> void:
 	pass # Replace with function body.
 
 
-func _on_btn_dong_panel_button_down() -> void:	
+func _on_btn_dong_panel_button_down() -> void:
 	panel_chon_loai_bai_hoc.visible = false
 	pass # Replace with function body.
 

@@ -1,5 +1,5 @@
 use godot::builtin::{ Color, GString };
-use godot::classes::{ Control, FileAccess, IControl, Label };
+use godot::classes::{ Button, Control, FileAccess, IControl, Label };
 use godot::global::godot_print;
 use godot::obj::{ Gd, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, ToGodot, godot_api } };
@@ -29,6 +29,8 @@ pub struct HocTimNot {
 
     #[export]
     pub cho_phep_to_mau_goi_y: bool, // Biến bật/tắt tính năng gợi ý
+    #[export]
+    pub che_do_choi_thu: bool,
 
     ten_bai_hoc: GString,
     nguoi_tao: GString,
@@ -388,7 +390,7 @@ impl HocTimNot {
     }
 
     pub fn luu_ket_qua_tim_not(&self) {
-        if self.duong_dan_bai_hoc.is_empty() {
+        if self.duong_dan_bai_hoc.is_empty() || self.che_do_choi_thu {
             return;
         }
         let ti_le: f32 = self.lay_ti_le_hoan_thanh();
@@ -408,6 +410,11 @@ impl HocTimNot {
         }
         self.chay_bai_tim();
     }
+
+    #[func]
+    pub fn thoat_choi_thu(&mut self) {
+        self.base_mut().queue_free();
+    }
 }
 
 #[godot_api]
@@ -416,12 +423,18 @@ impl IControl for HocTimNot {
         self.dang_o_bai_so = 0;
         self.cho_phep_to_mau_goi_y = true; // Mặc định bật tô màu khi mới vào
 
-        if let Some(mut ban_phim) = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
-            // Lắng nghe tín hiệu nhả phím để tô màu lại nếu lỡ tay
-            let callable = self.base().callable("xu_ly_phim_nha");
-            ban_phim.connect("phim_vua_duoc_nha", &callable);
-
+        if let Some(ban_phim) = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
             self.ban_phim_midi = Some(ban_phim);
+        }
+        if let Some(mut btn_thoat) = self.base().try_get_node_as::<Button>("thoat_choi_thu") {
+            btn_thoat.set_visible(self.che_do_choi_thu);
+            let callable_thoat = self.base().callable("thoat_choi_thu");
+            if !btn_thoat.is_connected("button_down", &callable_thoat) {
+                btn_thoat.connect("button_down", &callable_thoat);
+            }
+        }
+        if let Some(mut btn_quay_lai) = self.base().try_get_node_as::<Button>("NutMenu/Menu/quay_lai") {
+            btn_quay_lai.set_visible(!self.che_do_choi_thu);
         }
     }
 }

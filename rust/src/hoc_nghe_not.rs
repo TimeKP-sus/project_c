@@ -1,4 +1,4 @@
-use godot::builtin::{ GString };
+use godot::builtin::GString;
 use godot::classes::{ Button, Control, FileAccess, IControl, Label };
 use godot::global::godot_print;
 use godot::obj::{ Gd, WithBaseField };
@@ -19,6 +19,7 @@ pub struct BaiNgheJson {
     pub ten_bai_hoc: String,
     pub nguoi_tao: String,
     pub danh_sach_bai: Vec<String>,
+    pub cac_ghi_chu: Option<Vec<String>>,
 }
 
 #[derive(GodotClass)]
@@ -32,6 +33,10 @@ pub struct HocNgheNot {
     ten_bai_hoc: GString,
     nguoi_tao: GString,
     cac_bai_nghe: Vec<String>,
+    cac_ghi_chu: Vec<String>,
+
+    #[export]
+    pub che_do_choi_thu: bool,
 
     dang_o_bai_so: usize,
 
@@ -115,6 +120,15 @@ impl HocNgheNot {
         self.phim_da_doan_dung.clear();
 
         self.base_mut().call("xoa_cac_not_doan", &[]);
+
+        let noi_dung_ghi_chu = self.cac_ghi_chu.get(self.dang_o_bai_so).cloned().unwrap_or_default();
+        if let Some(mut label) = self.base().try_get_node_as::<Label>("ghi_chu") {
+            if !noi_dung_ghi_chu.trim().is_empty() {
+                label.set_text(&noi_dung_ghi_chu);
+            } else {
+                label.set_text("Hãy lắng nghe âm thanh mẫu và bấm phím tương ứng trên đàn");
+            }
+        }
 
         let muc_tieu_hien_tai = self.muc_tieu_hien_tai.clone();
         for hop_am in muc_tieu_hien_tai {
@@ -294,6 +308,7 @@ impl HocNgheNot {
             self.ten_bai_hoc = GString::from(du_lieu.ten_bai_hoc);
             self.nguoi_tao = GString::from(du_lieu.nguoi_tao);
             self.cac_bai_nghe = du_lieu.danh_sach_bai;
+            self.cac_ghi_chu = du_lieu.cac_ghi_chu.unwrap_or_default();
         } else {
             godot_print!("Lỗi JSON bài nghe: {}", duong_dan);
         }
@@ -342,7 +357,7 @@ impl HocNgheNot {
     }
 
     pub fn luu_ket_qua_nghe_not(&self) {
-        if self.duong_dan_bai_hoc.is_empty() {
+        if self.duong_dan_bai_hoc.is_empty() || self.che_do_choi_thu {
             return;
         }
         let ti_le: f32 = self.lay_ti_le_hoan_thanh();
@@ -368,6 +383,11 @@ impl HocNgheNot {
         }
         self.chay_bai_nghe();
     }
+
+    #[func]
+    pub fn thoat_choi_thu(&mut self) {
+        self.base_mut().queue_free();
+    }
 }
 
 #[godot_api]
@@ -376,5 +396,15 @@ impl IControl for HocNgheNot {
         self.dang_o_bai_so = 0;
         self.ban_phim_midi = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
         self.nghe_lai_button = self.base().try_get_node_as::<Button>("nghe_lai");
+        if let Some(mut btn_thoat) = self.base().try_get_node_as::<Button>("thoat_choi_thu") {
+            btn_thoat.set_visible(self.che_do_choi_thu);
+            let callable_thoat = self.base().callable("thoat_choi_thu");
+            if !btn_thoat.is_connected("button_down", &callable_thoat) {
+                btn_thoat.connect("button_down", &callable_thoat);
+            }
+        }
+        if let Some(mut btn_quay_lai) = self.base().try_get_node_as::<Button>("NutMenu/Menu/quay_lai") {
+            btn_quay_lai.set_visible(!self.che_do_choi_thu);
+        }
     }
 }

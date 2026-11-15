@@ -1,3 +1,5 @@
+use std::time::SystemTime;
+
 use godot::{
     builtin::{Callable, Color, GString, Variant},
     classes::{
@@ -303,7 +305,7 @@ impl TaoTimNot {
         }
     }
 
-    // ==================== NGHE THỬ & CHƠI THỬ ====================
+    // ==================== NGHE THỬ====================
     fn phat_chuoi_not(mut ban_phim: Gd<BanPhimMidi>, chuoi: &str) {
         let mau_to = Color::from_rgba(0.2, 0.95, 0.45, 0.85);
         for buoc in chuoi.split_whitespace() {
@@ -373,32 +375,65 @@ impl TaoTimNot {
             self._khi_bam_them_buoc();
         }
         if self.danh_sach_bai.is_empty() {
+            self.hien_thong_bao("Vui lòng thêm ít nhất 1 bước trước khi chơi thử!", "canh_bao");
             return;
         }
         let temp_path = GString::from("user://temp_tim_not_test.json");
         self.luu_bai_hoc_json(temp_path.clone());
 
         let scene_mau = load::<PackedScene>("res://scene/phanchoi/HocTimNot.tscn");
-        {
-            if let Some(mut node_moi) = scene_mau.instantiate() {
-                node_moi.set("duong_dan_bai_hoc", &Variant::from(temp_path));
-                if let Some(mut tree) = self.base().get_tree() {
-                    if let Some(mut root) = tree.get_root() {
-                        let cur = tree.get_current_scene();
-                        root.add_child(&node_moi);
-                        tree.set_current_scene(&node_moi);
-                        if let Some(mut c) = cur {
-                            c.queue_free();
-                        }
-                    }
+        if let Some(mut node_moi) = scene_mau.instantiate() {
+            node_moi.set("duong_dan_bai_hoc", &Variant::from(temp_path));
+            node_moi.set("che_do_choi_thu", &Variant::from(true));
+            if let Ok(mut ctrl_moi) = node_moi.clone().try_cast::<Control>() {
+                ctrl_moi.set_z_index(100);
+            }
+
+            let obj = self.to_gd();
+            node_moi.connect(
+                "tree_exited",
+                &Callable::from_object_method(&obj, "_khi_dong_choi_thu"),
+            );
+
+            if let Some(tree) = self.base().get_tree() {
+                if let Some(mut root) = tree.get_root() {
+                    root.add_child(&node_moi);
                 }
             }
+            self.base_mut().set_visible(false);
+        }
+    }
+
+    #[func]
+    fn _khi_dong_choi_thu(&mut self) {
+        self.base_mut().set_visible(true);
+        if let Some(mut bp) = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
+            bp.bind_mut().kiem_tra_dau_vao();
         }
     }
 
     #[func]
     fn _mo_popup_luu(&mut self) {
+        let ten_bai = self.get_ten_bai_hoc().to_string().trim().replace(" ", "_").to_lowercase();
+
         if let Some(mut d) = self.base_mut().try_get_node_as::<FileDialog>("HopThoaiLuuJson") {
+            d.set_current_dir(&GString::from(format!(
+                "{}bai_hoc/tim_not",
+                crate::ham_phu::lay_duong_dan_goc()
+            )));
+
+            let id_ngau_nhien = SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap_or_default()
+                .as_secs();
+
+            let ten_file_moi = if ten_bai.is_empty() {
+                format!("tim_not_{}.json", id_ngau_nhien)
+            } else {
+                format!("{}_{}.json", ten_bai, id_ngau_nhien)
+            };
+
+            d.set_current_file(&GString::from(&ten_file_moi));
             d.popup_centered();
         }
     }
