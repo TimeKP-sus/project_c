@@ -26,17 +26,14 @@ func _on_ve_ds_button_down() -> void:
 		get_tree().change_scene_to_file("res://scene/menu/DanhSachBaiHoc.tscn")
 
 func _on_choi_lai_button_down() -> void:
-	# Lưu lại cây thư mục gốc trước khi bị gỡ
-	var cay_thu_muc = get_tree()
-	var goc = cay_thu_muc.root
 	if hoc_nghe_not.che_do_choi_thu:
-		var tao_bai_scene = cay_thu_muc.current_scene
-		goc.remove_child(hoc_nghe_not)
-		hoc_nghe_not.queue_free()
-		if tao_bai_scene and tao_bai_scene.has_method("choi_thu_bai_hoc"):
-			tao_bai_scene.call_deferred("choi_thu_bai_hoc")
+		nen_tong_ket.hide()
+		hoc_nghe_not.khoi_dong_bai_hoc()
+		hoc_nghe_not.cap_nhat_diem()
 		return
 
+	var cay_thu_muc = get_tree()
+	var goc = cay_thu_muc.root
 	var scene_hien_tai = cay_thu_muc.current_scene
 
 	var duong_dan_da_luu = scene_hien_tai.duong_dan_bai_hoc

@@ -239,3 +239,48 @@ pub fn chuyen_id_thanh_ten(id: i32, dung_giang: bool) -> &'static str {
         ""
     }
 }
+
+/// Dịch chuỗi ID thành chuỗi tên nốt và hợp âm dễ đọc.
+pub fn dich_chuoi_so_thanh_ten_not(chuoi: &str) -> String {
+    let mut ket_qua_cac_buoc = Vec::new();
+
+    for cum in chuoi.split_whitespace() {
+        let mut ds_id = Vec::new();
+        let mut tap_hop_id = std::collections::HashSet::new();
+
+        for s in cum.split('_') {
+            if let Ok(id) = s.trim().parse::<i32>() {
+                ds_id.push(id);
+                tap_hop_id.insert(id);
+            }
+        }
+
+        if ds_id.is_empty() {
+            ket_qua_cac_buoc.push(String::from("?"));
+            continue;
+        }
+
+        let ten_cac_not: Vec<&str> = ds_id
+            .iter()
+            .map(|&id| {
+                let dung_giang = tu_dong_xac_dinh_giang(id, None, None, &ds_id);
+                let ten = chuyen_id_thanh_ten(id, dung_giang);
+                if ten.is_empty() { "?" } else { ten }
+            })
+            .collect();
+
+        let chuoi_ten = ten_cac_not.join("_");
+
+        if tap_hop_id.len() >= 2 {
+            let ten_hop_am = crate::hop_am::HopAm::kiem_tra(&tap_hop_id);
+            if !ten_hop_am.is_empty() {
+                ket_qua_cac_buoc.push(format!("{} ({})", chuoi_ten, ten_hop_am));
+                continue;
+            }
+        }
+
+        ket_qua_cac_buoc.push(chuoi_ten);
+    }
+
+    ket_qua_cac_buoc.join("   •   ")
+}

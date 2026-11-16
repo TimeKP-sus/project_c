@@ -3,9 +3,10 @@ use std::time::SystemTime;
 use godot::{
     builtin::{Callable, Color, GString, Variant},
     classes::{
-        Button, CheckButton, Control, FileDialog, IControl, ItemList, LineEdit, PackedScene,
+        Button, CheckButton, Control, FileDialog, IControl, ItemList, Label, LineEdit,
+        PackedScene, VBoxContainer,
     },
-    obj::{Base, Gd, WithBaseField},
+    obj::{Base, Gd, NewAlloc, WithBaseField},
     prelude::{godot_api, GodotClass},
     tools::load,
 };
@@ -140,6 +141,10 @@ impl TaoNgheNot {
     // ==================== NHẬN PHÍM MIDI & SOẠN CÂU HỎI ====================
     #[func]
     fn _khi_bam_midi(&mut self, so_phim: i32) {
+        if !self.base().is_visible_in_tree() {
+            return;
+        }
+
         let gop_hop_am = self
             .base()
             .try_get_node_as::<CheckButton>("KhungSoan/VBox/HangSoanCau/GopHopAm_Check")
@@ -164,10 +169,15 @@ impl TaoNgheNot {
         if !self.phim_dang_giu.contains(&so_phim) {
             self.phim_dang_giu.push(so_phim);
         }
+        self.cap_nhat_xem_truoc_ten_not();
     }
 
     #[func]
     fn _khi_nha_midi(&mut self, so_phim: i32) {
+        if !self.base().is_visible_in_tree() {
+            return;
+        }
+
         self.phim_dang_giu.retain(|&x| x != so_phim);
     }
 
@@ -181,6 +191,41 @@ impl TaoNgheNot {
             let mut parts: Vec<&str> = txt.split_whitespace().collect();
             parts.pop();
             input.set_text(&parts.join(" "));
+        }
+        self.cap_nhat_xem_truoc_ten_not();
+    }
+
+    #[func]
+    fn _khi_doi_chuoi_not(&mut self, _text_moi: GString) {
+        self.cap_nhat_xem_truoc_ten_not();
+    }
+
+    fn cap_nhat_xem_truoc_ten_not(&mut self) {
+        let chuoi = self
+            .base()
+            .try_get_node_as::<LineEdit>("KhungSoan/VBox/HangSoanCau/ChuoiNot_Input")
+            .map(|l| l.get_text().to_string())
+            .unwrap_or_default();
+
+        let ten_dich = crate::check_ten_not::dich_chuoi_so_thanh_ten_not(&chuoi);
+        let hien_thi = if ten_dich.is_empty() {
+            String::from("🎹 Tên nốt tương ứng: (Trống — Hãy gõ số ID 0..83 hoặc bấm phím đàn)")
+        } else {
+            format!("🎹 Tên nốt:  {}", ten_dich)
+        };
+
+        if let Some(mut lbl) = self
+            .base_mut()
+            .try_get_node_as::<Label>("KhungSoan/VBox/NhanXemTruocNot")
+        {
+            lbl.set_text(&hien_thi);
+        }
+
+        if let Some(mut input) = self
+            .base_mut()
+            .try_get_node_as::<LineEdit>("KhungSoan/VBox/HangSoanCau/ChuoiNot_Input")
+        {
+            input.set_tooltip_text(&hien_thi);
         }
     }
 
@@ -237,6 +282,7 @@ impl TaoNgheNot {
         {
             l2.set_text("");
         }
+        self.cap_nhat_xem_truoc_ten_not();
     }
 
     #[func]
@@ -259,6 +305,7 @@ impl TaoNgheNot {
             {
                 l2.set_text(&gc);
             }
+            self.cap_nhat_xem_truoc_ten_not();
         }
     }
 
@@ -300,7 +347,14 @@ impl TaoNgheNot {
             list.clear();
             for (i, cn) in danh_sach_bai.iter().enumerate() {
                 let gc = cac_ghi_chu.get(i).map(|s| s.as_str()).unwrap_or("");
-                list.add_item(&format!("Câu {}:  [{}]   —   Ghi chú: {}", i + 1, cn, gc));
+                let ten_not = crate::check_ten_not::dich_chuoi_so_thanh_ten_not(cn);
+                list.add_item(&format!(
+                    "Câu {}:  [{}]  ➔  🎵 {}   —   Ghi chú: {}",
+                    i + 1,
+                    cn,
+                    ten_not,
+                    gc
+                ));
             }
         }
     }
@@ -400,6 +454,7 @@ impl TaoNgheNot {
                     root.add_child(&node_moi);
                 }
             }
+            self.phim_dang_giu.clear();
             self.base_mut().set_visible(false);
         }
     }
@@ -462,6 +517,34 @@ impl IControl for TaoNgheNot {
 
     fn ready(&mut self) {
         let obj = self.to_gd();
+        if let Some(mut input) = self
+            .base_mut()
+            .try_get_node_as::<LineEdit>("KhungSoan/VBox/HangSoanCau/ChuoiNot_Input")
+        {
+            input.connect(
+                "text_changed",
+                &Callable::from_object_method(&obj, "_khi_doi_chuoi_not"),
+            );
+        }
+        if self
+            .base()
+            .try_get_node_as::<Label>("KhungSoan/VBox/NhanXemTruocNot")
+            .is_none()
+        {
+            if let Some(mut vbox) = self.base_mut().try_get_node_as::<VBoxContainer>("KhungSoan/VBox") {
+                let mut lbl = Label::new_alloc();
+                lbl.set_name("NhanXemTruocNot");
+                lbl.set_text("🎹 Tên nốt tương ứng: (Trống — Hãy gõ số ID 0..83 hoặc bấm phím đàn)");
+                lbl.add_theme_color_override("font_color", Color::from_rgba(0.45, 0.9, 1.0, 1.0));
+                lbl.add_theme_font_size_override("font_size", 20);
+                vbox.add_child(&lbl);
+
+                if let Some(hang_soan) = vbox.try_get_node_as::<Control>("HangSoanCau") {
+                    let idx = hang_soan.get_index();
+                    vbox.move_child(&lbl, idx + 1);
+                }
+            }
+        }
         if let Some(mut bp) = self.base_mut().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano") {
             bp.connect("phim_vua_duoc_bam", &Callable::from_object_method(&obj, "_khi_bam_midi"));
             bp.connect("phim_vua_duoc_nha", &Callable::from_object_method(&obj, "_khi_nha_midi"));

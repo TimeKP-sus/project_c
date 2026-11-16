@@ -1,5 +1,5 @@
-use godot::builtin::GString;
-use godot::classes::{ Button, Control, FileAccess, IControl, Label };
+use godot::builtin::{ Callable, GString };
+use godot::classes::{ Button, Control, FileAccess, Label };
 use godot::global::godot_print;
 use godot::obj::{ Gd, WithBaseField };
 use godot::{ obj::Base, prelude::{ GodotClass, ToGodot, godot_api } };
@@ -324,16 +324,39 @@ impl HocNgheNot {
     // } 
     #[func]
     pub fn khoi_dong_bai_hoc(&mut self) {
+        self.dang_o_bai_so = 0;
         self.diem = 0;
         self.so_lan_doan = 0;
         self.so_lan_dung = 0;
         self.so_lan_sai = 0;
+        self.ban_phim_midi = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
+        self.nghe_lai_button = self.base().try_get_node_as::<Button>("nghe_lai");
+
+        let btn_thoat_opt = self
+            .base()
+            .try_get_node_as::<Button>("NutMenu/Menu/thoat_choi_thu")
+            .or_else(|| self.base().try_get_node_as::<Button>("thoat_choi_thu"));
+        if let Some(mut btn_thoat) = btn_thoat_opt {
+            btn_thoat.set_visible(self.che_do_choi_thu);
+            let callable_thoat: Callable = self.base().callable("thoat_choi_thu");
+            if !btn_thoat.is_connected("button_down", &callable_thoat) {
+                btn_thoat.connect("button_down", &callable_thoat);
+            }
+        }
+
+        if let Some(mut btn_quay_lai) = self.base().try_get_node_as::<Button>("NutMenu/Menu/quay_lai") {
+            btn_quay_lai.set_visible(!self.che_do_choi_thu);
+        }
 
         let path = self.duong_dan_bai_hoc.clone();
         if !path.is_empty() {
-            let ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
-            if let Some(kq) = ls.lay_ket_qua("nghe_va_doan_not", &path.to_string()) {
-                self.diem_ky_luc = kq.diem_cao_nhat;
+            if !self.che_do_choi_thu {
+                let ls: DuLieuLichSu = DuLieuLichSu::doc_lich_su();
+                if let Some(kq) = ls.lay_ket_qua("nghe_va_doan_not", &path.to_string()) {
+                    self.diem_ky_luc = kq.diem_cao_nhat;
+                } else {
+                    self.diem_ky_luc = 0;
+                }
             } else {
                 self.diem_ky_luc = 0;
             }
@@ -387,24 +410,5 @@ impl HocNgheNot {
     #[func]
     pub fn thoat_choi_thu(&mut self) {
         self.base_mut().queue_free();
-    }
-}
-
-#[godot_api]
-impl IControl for HocNgheNot {
-    fn ready(&mut self) {
-        self.dang_o_bai_so = 0;
-        self.ban_phim_midi = self.base().try_get_node_as::<BanPhimMidi>("MIDI/BanPhimPiano");
-        self.nghe_lai_button = self.base().try_get_node_as::<Button>("nghe_lai");
-        if let Some(mut btn_thoat) = self.base().try_get_node_as::<Button>("thoat_choi_thu") {
-            btn_thoat.set_visible(self.che_do_choi_thu);
-            let callable_thoat = self.base().callable("thoat_choi_thu");
-            if !btn_thoat.is_connected("button_down", &callable_thoat) {
-                btn_thoat.connect("button_down", &callable_thoat);
-            }
-        }
-        if let Some(mut btn_quay_lai) = self.base().try_get_node_as::<Button>("NutMenu/Menu/quay_lai") {
-            btn_quay_lai.set_visible(!self.che_do_choi_thu);
-        }
     }
 }

@@ -514,22 +514,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_green")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_green")
 text = "↻ Chơi lại"
 
-[node name="thoat_choi_thu" type="Button" parent="." unique_id=1998877666]
-visible = false
-z_index = 42
-layout_mode = 0
-offset_left = 88.0
-offset_top = 14.0
-offset_right = 290.0
-offset_bottom = 64.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_fonts/font = ExtResource("5_0tk1u")
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
-text = "⬅ Về tạo bài"
-
 [node name="NutMenu" type="Control" parent="." unique_id=52198437]
 z_index = 40
 layout_mode = 1
@@ -552,7 +536,7 @@ mouse_filter = 2
 layout_mode = 0
 offset_left = 72.0
 offset_top = 4.0
-offset_right = 835.0
+offset_right = 1060.0
 offset_bottom = 74.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_thanh_menu")
 
@@ -602,6 +586,21 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
 text = "🔊 Nghe lại mẫu"
+
+[node name="thoat_choi_thu" type="Button" parent="NutMenu/Menu" unique_id=1998877666]
+visible = false
+layout_mode = 0
+offset_left = 831.0
+offset_top = 14.0
+offset_right = 1040.0
+offset_bottom = 64.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_0tk1u")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_item_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_item_pressed")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_item_hover")
+text = "⬅ Về tạo bài"
 
 [node name="nut_menu" type="Button" parent="NutMenu" unique_id=680074442]
 layout_mode = 0
