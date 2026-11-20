@@ -18,8 +18,9 @@ use godot::classes::{
     SpinBox,
     VBoxContainer,
 };
+use godot::classes::object::ConnectFlags;
 use godot::global::godot_print;
-use godot::obj::{ Base, Gd, NewGd, WithBaseField };
+use godot::obj::{ Base, EngineEnum, Gd, NewGd, WithBaseField };
 use godot::prelude::{ godot_api, GodotClass };
 
 use crate::ban_phim_midi::BanPhimMidi;
@@ -1075,7 +1076,10 @@ impl TaoSheet {
     #[func]
     pub fn bo_chon_tat_ca(&mut self) {
         if let Some(mut ql) = self.quan_ly_tao_sheet.clone() {
-            ql.bind_mut().lam_trong_mang_da_chon();
+            ql.bind_mut().lam_trong_mang_da_chon_noi_bo();
+        }
+        if let Some(mut panel) = self.panel_sua_not.clone() {
+            panel.set_visible(false);
         }
     }
 
@@ -2047,10 +2051,12 @@ impl IControl for TaoSheet {
         self.hop_thoai_chon_nhac = self.base().try_get_node_as::<FileDialog>("HopThoaiChonNhac");
         self.hop_thoai_chon_loi = self.base().try_get_node_as::<FileDialog>("HopThoaiChonLoi");
 
-        // Kết nối tín hiệu thay đổi chọn nốt từ QuanLyTaoSheet
+        // Hoãn callback sang cuối khung hình để không callback ngược khi TaoSheet đang giữ &mut self.
         let call_chon: Callable = self.base().callable("khi_thay_doi_chon_not");
         if let Some(mut ql) = self.quan_ly_tao_sheet.clone() {
-            ql.connect("thay_doi_chon_not", &call_chon);
+            ql.connect_ex("thay_doi_chon_not", &call_chon)
+                .flags(ConnectFlags::DEFERRED.ord() as u32)
+                .done();
         }
 
         // Kết nối sự kiện đổi ID nốt trên SpinBox để cập nhật tên nốt (C4, D4...)

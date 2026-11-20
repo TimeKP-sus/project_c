@@ -262,6 +262,8 @@ vertical_alignment = 1
 toc_do = 80.0
 hien_thi_thoi_gian = true
 layout_mode = 1
+offset_right = 236.0
+offset_bottom = 26.0
 
 [node name="MIDI" parent="." unique_id=1744579116 instance=ExtResource("1_vt317")]
 layout_mode = 1
@@ -295,7 +297,7 @@ layout_mode = 0
 offset_left = 160.0
 offset_top = 858.0
 offset_right = 1760.0
-offset_bottom = 958.0
+offset_bottom = 966.0
 label_settings = SubResource("LabelSettings_k3srt")
 horizontal_alignment = 1
 vertical_alignment = 1
