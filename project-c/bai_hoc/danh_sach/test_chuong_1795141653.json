@@ -1,0 +1,30 @@
+{
+  "ten_chuong": "test chuong",
+  "bai_hoc": [
+    {
+      "ten_bai_hoc": "test choi sheet",
+      "loai_bai_hoc": "choi_sheet",
+      "duong_dan": "res://bai_hoc/choi_sheet/test_choi_sheet_1795141387.json"
+    },
+    {
+      "ten_bai_hoc": "test_tap_sheet",
+      "loai_bai_hoc": "tap_luyen_sheet",
+      "duong_dan": "res://bai_hoc/luyen_tap_sheet/test_tap_sheet_1795141451.json"
+    },
+    {
+      "ten_bai_hoc": "test_nghe_not",
+      "loai_bai_hoc": "nghe_va_doan_not",
+      "duong_dan": "res://bai_hoc/nghe_va_doan_not/test_nghe_not_1795141542.json"
+    },
+    {
+      "ten_bai_hoc": "test_tim_not",
+      "loai_bai_hoc": "tim_not",
+      "duong_dan": "res://bai_hoc/tim_not/test_tim_not_1795141572.json"
+    },
+    {
+      "ten_bai_hoc": "test_video",
+      "loai_bai_hoc": "xem_video",
+      "duong_dan": "res://bai_hoc/xem_video/test_video_1795141628.json"
+    }
+  ]
+}

@@ -1,10 +1,12 @@
 use godot::{
-    builtin::{Callable, GString, StringName, Variant, Vector2i},
+    builtin::{varray, Callable, GString, StringName, Variant, Vector2i},
     classes::{
         AudioServer, Button, CheckButton, Control, DisplayServer, Engine, HSlider, IControl,
-        Label, OptionButton,
+        InputEvent, InputEventKey, Label, OptionButton, Os, Panel, VBoxContainer, HBoxContainer,
+        control::SizeFlags,
     },
-    obj::{Base, Gd, WithBaseField},
+    global::Key,
+    obj::{Base, EngineEnum, Gd, NewAlloc, WithBaseField},
     prelude::{godot_api, GodotClass},
 };
 
@@ -18,6 +20,7 @@ pub struct ManHinhCaiDat {
     #[base]
     base: Base<Control>,
     cai_dat: CaiDatGameJson,
+    not_dang_cho_gan: Option<i32>,
 }
 
 #[godot_api]
@@ -396,6 +399,118 @@ impl ManHinhCaiDat {
             tree.change_scene_to_file("res://scene/menu/MenuChinh.tscn");
         }
     }
+
+    fn ten_not_tu_id(so_phim: i32) -> String {
+        const TEN: [&str; 12] = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        format!("{}{} (ID: {})", TEN[(so_phim % 12) as usize], so_phim / 12 + 1, so_phim)
+    }
+
+    fn tao_danh_sach_gan_phim(&mut self) {
+        let obj = self.to_gd();
+        let ban_do = self.cai_dat.gan_phim_midi.clone();
+        let dang_cho = self.not_dang_cho_gan;
+        let Some(mut vbox) = self.base_mut().try_get_node_as::<VBoxContainer>(
+            "PanelGanPhim/VBox/Scroll/DanhSachPhim_VBox",
+        ) else {
+            return;
+        };
+        for mut child in vbox.get_children().iter_shared() {
+            vbox.remove_child(&child);
+            child.queue_free();
+        }
+        for so_phim in 0..84 {
+            let mut hang = HBoxContainer::new_alloc();
+            hang.add_theme_constant_override("separation", 12);
+            let mut lbl = Label::new_alloc();
+            lbl.set_text(&Self::ten_not_tu_id(so_phim));
+            lbl.set_h_size_flags(SizeFlags::EXPAND_FILL);
+            lbl.add_theme_font_size_override("font_size", 18);
+            hang.add_child(&lbl);
+
+            let mut nut_gan = Button::new_alloc();
+            nut_gan.set_custom_minimum_size(godot::builtin::Vector2::new(200.0, 38.0));
+            let text_nut = if dang_cho == Some(so_phim) {
+                "Nhấn phím bất kỳ...".to_string()
+            } else if let Some(&keycode) = ban_do.get(&so_phim) {
+                Os::singleton().get_keycode_string(Key::from_ord(keycode as i32)).to_string()
+            } else {
+                "— Chưa gắn —".to_string()
+            };
+            nut_gan.set_text(&text_nut);
+            nut_gan.connect(
+                "pressed",
+                &Callable::from_object_method(&obj, "_khi_bam_gan_not")
+                    .bindv(&varray![so_phim]),
+            );
+            hang.add_child(&nut_gan);
+
+            let mut nut_xoa = Button::new_alloc();
+            nut_xoa.set_custom_minimum_size(godot::builtin::Vector2::new(46.0, 38.0));
+            nut_xoa.set_text("X");
+            nut_xoa.connect(
+                "pressed",
+                &Callable::from_object_method(&obj, "_khi_xoa_gan_not")
+                    .bindv(&varray![so_phim]),
+            );
+            hang.add_child(&nut_xoa);
+            vbox.add_child(&hang);
+        }
+    }
+
+    #[func]
+    fn _mo_panel_gan_phim(&mut self) {
+        self.not_dang_cho_gan = None;
+        let bat_ban_phim = self.cai_dat.bam_bang_ban_phim;
+        if let Some(mut chk) = self.base_mut().try_get_node_as::<CheckButton>(
+            "PanelGanPhim/VBox/BatBanPhim_Check",
+        ) {
+            chk.set_pressed_no_signal(bat_ban_phim);
+        }
+        self.tao_danh_sach_gan_phim();
+        if let Some(mut panel) = self.base_mut().try_get_node_as::<Panel>("PanelGanPhim") {
+            panel.set_visible(true);
+        }
+    }
+
+    #[func]
+    fn _dong_panel_gan_phim(&mut self) {
+        self.not_dang_cho_gan = None;
+        if let Some(mut panel) = self.base_mut().try_get_node_as::<Panel>("PanelGanPhim") {
+            panel.set_visible(false);
+        }
+    }
+
+    #[func]
+    fn _khi_bat_tat_ban_phim(&mut self, pressed: bool) {
+        self.cai_dat.bam_bang_ban_phim = pressed;
+    }
+
+    #[func]
+    fn _khi_bam_gan_not(&mut self, so_phim: i32) {
+        self.not_dang_cho_gan = Some(so_phim);
+        self.tao_danh_sach_gan_phim();
+    }
+
+    #[func]
+    fn _khi_xoa_gan_not(&mut self, so_phim: i32) {
+        self.cai_dat.gan_phim_midi.remove(&so_phim);
+        self.not_dang_cho_gan = None;
+        self.tao_danh_sach_gan_phim();
+    }
+
+    #[func]
+    fn _khi_dat_lai_phim_mac_dinh(&mut self) {
+        self.cai_dat.gan_phim_midi = CaiDatGameJson::default().gan_phim_midi;
+        self.not_dang_cho_gan = None;
+        self.tao_danh_sach_gan_phim();
+    }
+
+    #[func]
+    fn _khi_xoa_het_phim(&mut self) {
+        self.cai_dat.gan_phim_midi.clear();
+        self.not_dang_cho_gan = None;
+        self.tao_danh_sach_gan_phim();
+    }
 }
 
 #[godot_api]
@@ -404,6 +519,7 @@ impl IControl for ManHinhCaiDat {
         Self {
             base,
             cai_dat: CaiDatGameJson::default(),
+            not_dang_cho_gan: None,
         }
     }
 
@@ -520,6 +636,50 @@ impl IControl for ManHinhCaiDat {
                 "item_selected",
                 &Callable::from_object_method(&obj, "_khi_chon_fps"),
             );
+        }
+
+        for (path, method) in [
+            ("KhungChinh/HBox/CotChoiNhac/VBox/GanPhimMidi_Btn", "_mo_panel_gan_phim"),
+            ("PanelGanPhim/VBox/HangNut/DongPanelPhim_Btn", "_dong_panel_gan_phim"),
+            ("PanelGanPhim/VBox/HangNut/MacDinhPhim_Btn", "_khi_dat_lai_phim_mac_dinh"),
+            ("PanelGanPhim/VBox/HangNut/XoaHetPhim_Btn", "_khi_xoa_het_phim"),
+        ] {
+            if let Some(mut button) = self.base_mut().try_get_node_as::<Button>(path) {
+                button.connect("pressed", &Callable::from_object_method(&obj, method));
+            }
+        }
+        if let Some(mut check) = self.base_mut().try_get_node_as::<CheckButton>(
+            "PanelGanPhim/VBox/BatBanPhim_Check",
+        ) {
+            check.connect(
+                "toggled",
+                &Callable::from_object_method(&obj, "_khi_bat_tat_ban_phim"),
+            );
+        }
+    }
+
+    fn input(&mut self, event: Gd<InputEvent>) {
+        let Some(so_phim) = self.not_dang_cho_gan else {
+            return;
+        };
+        if let Ok(key_event) = event.try_cast::<InputEventKey>() {
+            if !key_event.is_pressed() || key_event.is_echo() {
+                return;
+            }
+            let key = key_event.get_physical_keycode();
+            if key == Key::ESCAPE {
+                self.not_dang_cho_gan = None;
+                self.tao_danh_sach_gan_phim();
+            } else if key != Key::NONE {
+                let code = key.ord() as i64;
+                self.cai_dat.gan_phim_midi.retain(|_, value| *value != code);
+                self.cai_dat.gan_phim_midi.insert(so_phim, code);
+                self.not_dang_cho_gan = None;
+                self.tao_danh_sach_gan_phim();
+            }
+            if let Some(mut viewport) = self.base().get_viewport() {
+                viewport.set_input_as_handled();
+            }
         }
     }
 }

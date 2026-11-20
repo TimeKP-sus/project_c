@@ -150,13 +150,13 @@ impl KhuongNhac {
         let hang_mien_bat_dau = check_ten_not::id_sang_hang_phim_trang(mien_bat_dau, false);
         let vi_tri_so = (16 - (hang_not - hang_mien_bat_dau)).clamp(0, 16);
 
-        let toa_do_y_goc = match vi_tri_so {
+        let toa_do_y_goc: f32 = match vi_tri_so {
             0 => -10.0,
             1 => 2.0,
             2 => 14.0,
             3 => 28.0,
             4 => 40.0,
-            5 => 53.0,
+            5 => 52.0,
             6 => 65.0,
             7 => 79.0,
             8 => 90.0,

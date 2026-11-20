@@ -129,6 +129,22 @@ pub struct CaiDatGameJson {
     #[serde(default = "macdinh_am_luong_100")]
     pub am_luong_loi: f32,
 
+    // --- Cài đặt bàn phím ---
+    #[serde(default = "macdinh_true")]
+    pub hien_thi_ten_not_c: bool,
+    #[serde(default = "macdinh_false")]
+    pub hien_thi_ten_not_all: bool,
+    #[serde(default = "macdinh_true")]
+    pub kiem_tra_hop_am: bool,
+    #[serde(default = "macdinh_true")]
+    pub hien_thi_phim_bam: bool,
+    #[serde(default = "macdinh_true")]
+    pub bam_bang_chuot: bool,
+    #[serde(default = "macdinh_true")]
+    pub bam_bang_ban_phim: bool,
+    #[serde(default = "macdinh_gan_phim_midi")]
+    pub gan_phim_midi: HashMap<i32, i64>,
+
     // --- Cài đặt đồ họa ---
     pub toan_man_hinh: bool,
     pub bat_vsync: bool,
@@ -139,6 +155,14 @@ pub struct CaiDatGameJson {
     pub hien_thi_fps: bool,
 }
 fn macdinh_am_luong_100() -> f32 { 100.0 }
+fn macdinh_true() -> bool { true }
+fn macdinh_false() -> bool { false }
+fn macdinh_gan_phim_midi() -> HashMap<i32, i64> {
+    HashMap::from([
+        (36, 65), (37, 87), (38, 83), (39, 69), (40, 68), (41, 70), (42, 84),
+        (43, 71), (44, 89), (45, 72), (46, 85), (47, 74), (48, 75),
+    ])
+}
 
 impl Default for CaiDatGameJson {
     fn default() -> Self {
@@ -149,6 +173,13 @@ impl Default for CaiDatGameJson {
             am_luong_piano: 100.0,
             am_luong_nhac: 100.0,  
             am_luong_loi: 100.0,
+            hien_thi_ten_not_c: true,
+            hien_thi_ten_not_all: false,
+            kiem_tra_hop_am: true,
+            hien_thi_phim_bam: true,
+            bam_bang_chuot: true,
+            bam_bang_ban_phim: true,
+            gan_phim_midi: macdinh_gan_phim_midi(),
             toan_man_hinh: false,
             bat_vsync: true,
             gioi_han_fps: 60,

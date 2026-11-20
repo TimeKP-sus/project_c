@@ -344,6 +344,14 @@ text = "💡 Gợi ý: Nếu bấm đàn bị nhận trễ hơn nhạc, hãy ch�
 label_settings = SubResource("LabelSettings_lbl")
 autowrap_mode = 2
 
+[node name="GanPhimMidi_Btn" type="Button" parent="KhungChinh/HBox/CotChoiNhac/VBox" unique_id=2046285425]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "Gắn phím"
+
 [node name="CotDoHoa" type="Panel" parent="KhungChinh/HBox" unique_id=801978375]
 layout_mode = 2
 size_flags_horizontal = 3
@@ -449,3 +457,83 @@ offset_right = -30.0
 text = "📂 File cấu hình thử nghiệm: res://du_lieu_nguoi_dung/cai_dat.json"
 label_settings = SubResource("LabelSettings_lbl")
 vertical_alignment = 1
+
+[node name="PanelGanPhim" type="Panel" parent="." unique_id=1288734831]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.9
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="PanelGanPhim" unique_id=1184850062]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 20.0
+offset_right = -24.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="TieuDe" type="Label" parent="PanelGanPhim/VBox" unique_id=1897225606]
+layout_mode = 2
+text = "GẮN PHÍM MÁY TÍNH CHO ĐÀN MIDI"
+label_settings = SubResource("LabelSettings_section")
+horizontal_alignment = 1
+
+[node name="BatBanPhim_Check" type="CheckButton" parent="PanelGanPhim/VBox" unique_id=1792890841]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+button_pressed = true
+text = "Cho phép chơi đàn bằng bàn phím máy tính"
+
+[node name="HuongDan_Label" type="Label" parent="PanelGanPhim/VBox" unique_id=1569194778]
+layout_mode = 2
+text = "Bấm vào nút của nốt muốn đổi, sau đó nhấn 1 phím trên bàn phím (ESC để hủy)."
+label_settings = SubResource("LabelSettings_lbl")
+
+[node name="Scroll" type="ScrollContainer" parent="PanelGanPhim/VBox" unique_id=1879614530]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="DanhSachPhim_VBox" type="VBoxContainer" parent="PanelGanPhim/VBox/Scroll" unique_id=1979068813]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="HangNut" type="HBoxContainer" parent="PanelGanPhim/VBox" unique_id=1963432115]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 2
+
+[node name="MacDinhPhim_Btn" type="Button" parent="PanelGanPhim/VBox/HangNut" unique_id=1772688977]
+custom_minimum_size = Vector2(180, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "Phím mặc định"
+
+[node name="XoaHetPhim_Btn" type="Button" parent="PanelGanPhim/VBox/HangNut" unique_id=1295414582]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
+text = "Xóa hết"
+
+[node name="DongPanelPhim_Btn" type="Button" parent="PanelGanPhim/VBox/HangNut" unique_id=1750822936]
+custom_minimum_size = Vector2(140, 44)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_green")
+text = "Xong"

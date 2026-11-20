@@ -1,0 +1,17 @@
+{
+  "ten_bai_hoc": "test_tap_sheet",
+  "duong_dan_sheet": "res://bai_hoc/choi_sheet/test_choi_sheet_1795141387.json",
+  "khuong": "12",
+  "cho_phep_cho": false,
+  "cho_phep_am_thanh_nhip": true,
+  "hien_thi_ten_khac": true,
+  "to_mau_phim": true,
+  "phat_nhac": true,
+  "phat_loi": true,
+  "do_tre_nhac_ms": 0.0,
+  "phan_thoi_gian": "0-5",
+  "bpm_tuy_chinh": 120.0,
+  "cac_ghi_chu": {
+    "0.75": "dsaddsad"
+  }
+}

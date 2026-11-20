@@ -1,0 +1,18 @@
+{
+  "ten_bai_hoc": "Bài 2: Luyện tai nghe 5 nốt cơ bản",
+  "nguoi_tao": "timekp",
+  "danh_sach_bai": [
+    "36 38 40",
+    "40 38 36",
+    "36 40 43",
+    "36 43 41 40",
+    "36_40_43"
+  ],
+  "cac_ghi_chu": [
+    "Gợi ý: 3 nốt đi lên liền bậc, bắt đầu từ Đô giữa (C4).",
+    "Gợi ý: 3 nốt đi xuống liền bậc, kết thúc tại Đô giữa (C4).",
+    "Gợi ý: Giai điệu nhảy cách quãng 3 (C4 - E4 - G4).",
+    "Gợi ý: Bắt đầu bằng Đô (C4), nhảy lên cao rồi đi xuống dần.",
+    "Gợi ý: Hãy bấm cùng lúc 3 nốt của hợp âm Đô trưởng."
+  ]
+}

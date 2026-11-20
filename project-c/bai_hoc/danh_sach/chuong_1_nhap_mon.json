@@ -1,0 +1,25 @@
+{
+  "ten_chuong": "Chương 1: Nhập Môn Piano Cơ Bản",
+  "bai_hoc": [
+    {
+      "ten_bai_hoc": "Bài 1: Làm quen 5 nốt cơ bản (C4 - G4)",
+      "loai_bai_hoc": "tim_not",
+      "duong_dan": "res://bai_hoc/tim_not/nhap_mon_tim_not_01.json"
+    },
+    {
+      "ten_bai_hoc": "Bài 2: Luyện tai nghe 5 nốt cơ bản",
+      "loai_bai_hoc": "nghe_va_doan_not",
+      "duong_dan": "res://bai_hoc/nghe_va_doan_not/nhap_mon_nghe_not_01.json"
+    },
+    {
+      "ten_bai_hoc": "Bài 3: Tập tay phải - Twinkle Twinkle (Chậm)",
+      "loai_bai_hoc": "tap_luyen_sheet",
+      "duong_dan": "res://bai_hoc/luyen_tap_sheet/nhap_mon_tap_twinkle_01.json"
+    },
+    {
+      "ten_bai_hoc": "Bài 4: Thực hành 2 tay - Twinkle Twinkle Little Star",
+      "loai_bai_hoc": "choi_sheet",
+      "duong_dan": "res://bai_hoc/choi_sheet/nhap_mon_twinkle_star_01.json"
+    }
+  ]
+}

@@ -1,11 +1,11 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 use crate::ham_phu::lay_duong_dan_goc;
 use std::thread;
 use std::time::Duration;
 
 use crate::{ hop_am::HopAm, sf2_read };
 use crate::cum_phim_dan::CumPhimDan;
-use godot::builtin::Color;
+use godot::builtin::{ Color, Variant };
 use godot::global::MidiMessage;
 use godot::meta::ToGodot;
 use godot::{
@@ -14,13 +14,14 @@ use godot::{
         HBoxContainer,
         IHBoxContainer,
         InputEvent,
+        InputEventKey,
         InputEventMidi,
         Label,
         Os,
         ProjectSettings,
     },
     global::godot_print,
-    obj::{ Base, Gd, WithBaseField },
+    obj::{ Base, EngineEnum, Gd, WithBaseField },
     register::{ GodotClass, godot_api },
 };
 
@@ -46,6 +47,8 @@ pub struct BanPhimMidi {
     #[export]
     hop_am: GString,
     danh_sach_phim_bam: HashSet<i32>,
+    cho_phep_bam_ban_phim: bool,
+    ban_do_phim_may_tinh: HashMap<i64, i32>,
 
     #[export]
     cho_phep_kiem_tra_hop_am: bool,
@@ -55,6 +58,8 @@ pub struct BanPhimMidi {
     hien_thi_ten_not_c: bool,
     #[export]
     hien_thi_ten_not_all: bool,
+    #[export]
+    pub cho_phep_bam_chuot: bool,
 }
 
 #[godot_api]
@@ -98,6 +103,7 @@ impl BanPhimMidi {
                     self.bam_phim(nut - 24);
                     sf2_read::bat_not_nhac(nut, luc);
                 }
+
                 MidiMessage::NOTE_ON if luc <= 0 => {
                     self.tha_phim(nut - 24);
                     sf2_read::tat_not_nhac(nut);
@@ -119,11 +125,86 @@ impl BanPhimMidi {
             }
         }
     }
+
+    fn kiem_tra_phim_may_tinh(&mut self, event: Gd<InputEvent>) {
+        if !self.cho_phep_bam_ban_phim {
+            return;
+        }
+        if let Some(viewport) = self.base().get_viewport() {
+            if let Some(focus) = viewport.gui_get_focus_owner() {
+                if focus.is_class("LineEdit") || focus.is_class("TextEdit") {
+                    return;
+                }
+            }
+        }
+        if let Ok(key_event) = event.try_cast::<InputEventKey>() {
+            if key_event.is_echo() {
+                return;
+            }
+            let code = key_event.get_physical_keycode().ord() as i64;
+            if let Some(&so_phim) = self.ban_do_phim_may_tinh.get(&code) {
+                if key_event.is_pressed() {
+                    if !self.danh_sach_phim_bam.contains(&so_phim) {
+                        self.bam_phim_tu_chuot(so_phim);
+                    }
+                } else {
+                    self.tha_phim_tu_chuot(so_phim);
+                }
+            }
+        }
+    }
+    #[func]
+    pub fn bat_tat_bam_bang_chuot(&mut self, bat: bool) {
+        self.cho_phep_bam_chuot = bat;
+        if !bat {
+            for cum in [
+                &mut self.cum_1,
+                &mut self.cum_2,
+                &mut self.cum_3,
+                &mut self.cum_4,
+                &mut self.cum_5,
+                &mut self.cum_6,
+                &mut self.cum_7,
+            ] {
+                if let Some(cum) = cum {
+                    cum.call_deferred("nha_phim_chuot_hien_tai", &[]);
+                }
+            }
+        }
+    }
+
+    #[func]
+    pub fn luu_cai_dat_ban_phim(
+        &mut self,
+        hien_c: bool,
+        hien_all: bool,
+        hop_am: bool,
+        hien_phim: bool,
+        bam_chuot: bool,
+    ) {
+        self.hien_thi_ten_not_c = hien_c;
+        self.hien_thi_ten_not_all = hien_all;
+        self.cho_phep_kiem_tra_hop_am = hop_am;
+        self.cho_phep_hien_thi_phim = hien_phim;
+        self.cho_phep_bam_chuot = bam_chuot;
+
+        if !bam_chuot {
+            self.bat_tat_bam_bang_chuot(false);
+        }
+
+        let mut cai_dat = crate::du_lieu_nguoi_dung::CaiDatGameJson::doc_cai_dat();
+        cai_dat.hien_thi_ten_not_c = hien_c;
+        cai_dat.hien_thi_ten_not_all = hien_all;
+        cai_dat.kiem_tra_hop_am = hop_am;
+        cai_dat.hien_thi_phim_bam = hien_phim;
+        cai_dat.bam_bang_chuot = bam_chuot;
+        cai_dat.luu_cai_dat();
+    }
     #[func]
     pub fn hien_thi_ten_not(&mut self) {
         // Lấy giá trị lưu vào biến tạm trước
-        let hien_c = self.hien_thi_ten_not_c;
-        let hien_all = self.hien_thi_ten_not_all;
+        let hien_c: bool = self.hien_thi_ten_not_c;
+        let hien_all: bool = self.hien_thi_ten_not_all;
 
         if let Some(cum) = &mut self.cum_1 {
             cum.bind_mut().kiem_tra_hien_thi(hien_c, hien_all);
@@ -167,94 +248,52 @@ impl BanPhimMidi {
         }
         self.cat_nhat_hop_am();
     }
-    #[func]
-    pub fn to_phim(&mut self, so_phim: i32, mau: Color) {
-        let id_cum: i32 = so_phim / 12 + 1;
-        let so_phim_trong_cum: i32 = (so_phim % 12) + 1;
 
+    // HÀM HỖ TRỢ ĐỂ CHUYỂN TÍN HIỆU ĐỔI MÀU THÀNH HÀNG ĐỢI (DEFERRED)
+    fn goi_cum_phim_deferred(&mut self, id_cum: i32, ten_ham: &str, tham_so: &[Variant]) {
         match id_cum {
-            1 => {
-                if let Some(cum) = &mut self.cum_1 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            1 => if let Some(cum) = &mut self.cum_1 {
+                cum.call_deferred(ten_ham, tham_so);
             }
-            2 => {
-                if let Some(cum) = &mut self.cum_2 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            2 => if let Some(cum) = &mut self.cum_2 {
+                cum.call_deferred(ten_ham, tham_so);
             }
-            3 => {
-                if let Some(cum) = &mut self.cum_3 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            3 => if let Some(cum) = &mut self.cum_3 {
+                cum.call_deferred(ten_ham, tham_so);
             }
-            4 => {
-                if let Some(cum) = &mut self.cum_4 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            4 => if let Some(cum) = &mut self.cum_4 {
+                cum.call_deferred(ten_ham, tham_so);
             }
-            5 => {
-                if let Some(cum) = &mut self.cum_5 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            5 => if let Some(cum) = &mut self.cum_5 {
+                cum.call_deferred(ten_ham, tham_so);
             }
-            6 => {
-                if let Some(cum) = &mut self.cum_6 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            6 => if let Some(cum) = &mut self.cum_6 {
+                cum.call_deferred(ten_ham, tham_so);
             }
-            7 => {
-                if let Some(cum) = &mut self.cum_7 {
-                    cum.bind_mut().to_mau_phim(so_phim_trong_cum, mau);
-                }
+            7 => if let Some(cum) = &mut self.cum_7 {
+                cum.call_deferred(ten_ham, tham_so);
             }
             _ => {}
         }
     }
 
     #[func]
+    pub fn to_phim(&mut self, so_phim: i32, mau: Color) {
+        let id_cum: i32 = so_phim / 12 + 1;
+        let so_phim_trong_cum: i32 = (so_phim % 12) + 1;
+        // Chuyển toàn bộ 40 dòng lệnh match rườm rà thành 1 dòng duy nhất
+        self.goi_cum_phim_deferred(
+            id_cum,
+            "to_mau_phim",
+            &[so_phim_trong_cum.to_variant(), mau.to_variant()]
+        );
+    }
+
+    #[func]
     pub fn dung_to_phim(&mut self, so_phim: i32) {
         let id_cum: i32 = so_phim / 12 + 1;
         let so_phim_trong_cum = (so_phim % 12) + 1;
-
-        match id_cum {
-            1 => {
-                if let Some(cum) = &mut self.cum_1 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            2 => {
-                if let Some(cum) = &mut self.cum_2 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            3 => {
-                if let Some(cum) = &mut self.cum_3 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            4 => {
-                if let Some(cum) = &mut self.cum_4 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            5 => {
-                if let Some(cum) = &mut self.cum_5 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            6 => {
-                if let Some(cum) = &mut self.cum_6 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            7 => {
-                if let Some(cum) = &mut self.cum_7 {
-                    cum.bind_mut().dung_to_mau_phim(so_phim_trong_cum);
-                }
-            }
-            _ => {}
-        }
+        self.goi_cum_phim_deferred(id_cum, "dung_to_mau_phim", &[so_phim_trong_cum.to_variant()]);
     }
 
     pub fn bam_phim(&mut self, so_phim: i32) {
@@ -264,44 +303,12 @@ impl BanPhimMidi {
 
         let id_cum: i32 = so_phim / 12 + 1;
         let so_phim_trong_cum = (so_phim % 12) + 1;
-        match id_cum {
-            1 => {
-                if let Some(cum) = &mut self.cum_1 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            2 => {
-                if let Some(cum) = &mut self.cum_2 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            3 => {
-                if let Some(cum) = &mut self.cum_3 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            4 => {
-                if let Some(cum) = &mut self.cum_4 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            5 => {
-                if let Some(cum) = &mut self.cum_5 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            6 => {
-                if let Some(cum) = &mut self.cum_6 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            7 => {
-                if let Some(cum) = &mut self.cum_7 {
-                    cum.bind_mut().bam_phim_thu(so_phim_trong_cum);
-                }
-            }
-            _ => {}
-        }
+        self.goi_cum_phim_deferred(id_cum, "bam_phim_thu", &[so_phim_trong_cum.to_variant()]);
+    }
+
+    pub fn bam_phim_tu_chuot(&mut self, so_phim: i32) {
+        sf2_read::bat_not_nhac(so_phim + 24, 100);
+        self.bam_phim(so_phim);
     }
 
     pub fn tha_phim(&mut self, so_phim: i32) {
@@ -311,44 +318,12 @@ impl BanPhimMidi {
 
         let id_cum: i32 = so_phim / 12 + 1;
         let so_phim_trong_cum = (so_phim % 12) + 1;
-        match id_cum {
-            1 => {
-                if let Some(cum) = &mut self.cum_1 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            2 => {
-                if let Some(cum) = &mut self.cum_2 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            3 => {
-                if let Some(cum) = &mut self.cum_3 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            4 => {
-                if let Some(cum) = &mut self.cum_4 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            5 => {
-                if let Some(cum) = &mut self.cum_5 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            6 => {
-                if let Some(cum) = &mut self.cum_6 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            7 => {
-                if let Some(cum) = &mut self.cum_7 {
-                    cum.bind_mut().tha_phim_thu(so_phim_trong_cum);
-                }
-            }
-            _ => {}
-        }
+        self.goi_cum_phim_deferred(id_cum, "tha_phim_thu", &[so_phim_trong_cum.to_variant()]);
+    }
+
+    pub fn tha_phim_tu_chuot(&mut self, so_phim: i32) {
+        sf2_read::tat_not_nhac(so_phim + 24);
+        self.tha_phim(so_phim);
     }
 
     #[func]
@@ -426,22 +401,38 @@ impl IHBoxContainer for BanPhimMidi {
             cum_5: None,
             cum_6: None,
             cum_7: None,
-            path_sf2: GString::from(format!("{}sf2/Florestan_Basic_GM_GS_Plus.sf2", lay_duong_dan_goc())),
+            path_sf2: GString::from(
+                format!("{}sf2/Florestan_Basic_GM_GS_Plus.sf2", lay_duong_dan_goc())
+            ),
             hop_am: GString::from(""),
             danh_sach_phim_bam: HashSet::new(),
+            cho_phep_bam_ban_phim: true,
+            ban_do_phim_may_tinh: HashMap::new(),
 
             cho_phep_kiem_tra_hop_am: true,
             cho_phep_hien_thi_phim: true,
             hien_thi_ten_not_c: false,
             hien_thi_ten_not_all: false,
+            cho_phep_bam_chuot: true,
         }
     }
 
     fn ready(&mut self) {
         godot_print!("BanPhimMidi is ready!");
-        sf2_read::cap_nhat_am_luong_piano(
-            crate::du_lieu_nguoi_dung::CaiDatGameJson::doc_cai_dat().am_luong_piano,
-        );
+        let cai_dat = crate::du_lieu_nguoi_dung::CaiDatGameJson::doc_cai_dat();
+        sf2_read::cap_nhat_am_luong_piano(cai_dat.am_luong_piano);
+
+        self.hien_thi_ten_not_c = cai_dat.hien_thi_ten_not_c;
+        self.hien_thi_ten_not_all = cai_dat.hien_thi_ten_not_all;
+        self.cho_phep_kiem_tra_hop_am = cai_dat.kiem_tra_hop_am;
+        self.cho_phep_hien_thi_phim = cai_dat.hien_thi_phim_bam;
+        self.cho_phep_bam_chuot = cai_dat.bam_bang_chuot;
+        self.cho_phep_bam_ban_phim = cai_dat.bam_bang_ban_phim;
+        self.ban_do_phim_may_tinh = cai_dat
+            .gan_phim_midi
+            .into_iter()
+            .map(|(so_phim, keycode)| (keycode, so_phim))
+            .collect();
         self.cum_1 = self.base().try_get_node_as::<CumPhimDan>("1");
         self.cum_2 = self.base().try_get_node_as::<CumPhimDan>("2");
         self.cum_3 = self.base().try_get_node_as::<CumPhimDan>("3");
@@ -460,7 +451,8 @@ impl IHBoxContainer for BanPhimMidi {
     }
 
     fn input(&mut self, event: Gd<InputEvent>) {
-        self.kiem_tra_phim_midi(event);
+        self.kiem_tra_phim_midi(event.clone());
+        self.kiem_tra_phim_may_tinh(event);
     }
 
     fn exit_tree(&mut self) {

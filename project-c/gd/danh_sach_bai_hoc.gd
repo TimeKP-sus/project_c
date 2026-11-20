@@ -2,6 +2,7 @@ extends DanhSachBaiHoc
 
 @onready var ds_bai_hoc: VBoxContainer = $menu_giua/ScrollContainer/DanhSachBaiHoc
 @onready var danh_sach_chuong: VBoxContainer = $menu_trai/ScrollContainer/DanhSachChuong
+@onready var tieu_de_chuong_giua: Label = $menu_giua/TieuDeChuongDangChon
 
 @onready var thong_tin: RichTextLabel = $menu_phai/thong_tin
 @onready var tim_kiem: TextEdit = $menu_tren/tim_kiem
@@ -58,6 +59,9 @@ func danh_dau_chuong_dang_chon(ten_file_chon: String) -> void:
 		if nut is ChuongButton:
 			var dang_chon = (ten_file_chon == "all" and nut.name == "all") or (nut.ten_file == ten_file_chon)
 			nut.modulate = Color(1.15, 1.15, 0.85, 1.0) if dang_chon else Color(1, 1, 1, 1)
+			if dang_chon and tieu_de_chuong_giua:
+				tieu_de_chuong_giua.text = nut.ten_chuong
+				tieu_de_chuong_giua.tooltip_text = nut.ten_chuong
 
 
 func xoa_danh_sach_bai_hoc() -> void:

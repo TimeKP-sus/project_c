@@ -362,6 +362,21 @@ anchor_right = 0.72
 anchor_bottom = 0.982
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel_khu_vuc")
 
+[node name="TieuDeChuongDangChon" type="Label" parent="menu_giua" unique_id=1141818911]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 18.0
+offset_top = 14.0
+offset_right = -18.0
+offset_bottom = 48.0
+grow_horizontal = 2
+text = "📚 Tất cả bài học"
+label_settings = SubResource("LabelSettings_tieu_de_cot")
+horizontal_alignment = 1
+vertical_alignment = 1
+text_overrun_behavior = 3
+
 [node name="ScrollContainer" type="ScrollContainer" parent="menu_giua" unique_id=1176077096]
 propagate_maximum_size = true
 layout_mode = 1
@@ -369,7 +384,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 18.0
-offset_top = 18.0
+offset_top = 58.0
 offset_right = -18.0
 offset_bottom = -18.0
 grow_horizontal = 2

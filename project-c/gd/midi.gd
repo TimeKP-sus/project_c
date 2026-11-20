@@ -19,17 +19,19 @@ extends Control
 @onready var check_phim_bam: CheckButton = $PanelCaiDatDan/VBox/CheckHienPhimBam
 @onready var check_nhac_cu: CheckButton = $PanelCaiDatDan/VBox/CheckChonNhacCu
 @onready var dong_panel_btn: Button = $PanelCaiDatDan/VBox/HangTieuDe/DongPanel_Btn
+@onready var check_bam_chuot: CheckButton = $PanelCaiDatDan/VBox/CheckBamBangChuot
 
 @export var hien_thi_c: bool = true
 @export var hien_thi_all: bool = false
 @export var hien_thi_midi: bool = true
 @export var chon_nhac_cu: bool = true
 @export var hien_ten_midi: bool = true
-
+@export var bam_bang_chuot: bool = true
 
 func _ready() -> void:
-	ban_phim_piano.hien_thi_ten_not_c = hien_thi_c
-	ban_phim_piano.hien_thi_ten_not_all = hien_thi_all
+	hien_thi_c = ban_phim_piano.hien_thi_ten_not_c
+	hien_thi_all = ban_phim_piano.hien_thi_ten_not_all
+	bam_bang_chuot = ban_phim_piano.cho_phep_bam_chuot
 	ban_phim_piano.hien_thi_ten_not()
 
 	thanh_chon_nhac_cu.visible = chon_nhac_cu and hien_thi_midi
@@ -59,6 +61,10 @@ func _ready() -> void:
 	if button:
 		button.pressed.connect(func(): ban_phim_piano.kiem_tra_dau_vao())
 
+	if check_bam_chuot:
+		check_bam_chuot.set_pressed_no_signal(bam_bang_chuot)
+		check_bam_chuot.toggled.connect(_khi_bat_tat_bam_bang_chuot)
+
 	# Áp dụng trạng thái ẩn/hiện ban đầu (ví dụ ở màn hình HocVideo khi hien_thi_midi = false)
 	_cap_nhat_trang_thai_an_hien()
 
@@ -72,12 +78,14 @@ func _khi_bat_tat_not_c(bat: bool) -> void:
 	hien_thi_c = bat
 	ban_phim_piano.hien_thi_ten_not_c = bat
 	ban_phim_piano.hien_thi_ten_not()
+	_goi_luu_cai_dat_dan()
 
 
 func _khi_bat_tat_tat_ca_not(bat: bool) -> void:
 	hien_thi_all = bat
 	ban_phim_piano.hien_thi_ten_not_all = bat
 	ban_phim_piano.hien_thi_ten_not()
+	_goi_luu_cai_dat_dan()
 
 
 func _khi_bat_tat_hop_am(bat: bool) -> void:
@@ -85,6 +93,7 @@ func _khi_bat_tat_hop_am(bat: bool) -> void:
 	hop_am.visible = bat and hien_thi_midi
 	if not bat:
 		hop_am.text = ""
+	_goi_luu_cai_dat_dan()
 
 
 func _khi_bat_tat_hien_phim_bam(bat: bool) -> void:
@@ -92,11 +101,30 @@ func _khi_bat_tat_hien_phim_bam(bat: bool) -> void:
 	cac_phim.visible = bat and hien_thi_midi
 	if not bat:
 		cac_phim.text = ""
+	_goi_luu_cai_dat_dan()
 
 
 func _khi_bat_tat_chon_nhac_cu(bat: bool) -> void:
 	chon_nhac_cu = bat
 	thanh_chon_nhac_cu.visible = bat and hien_thi_midi
+
+
+func _khi_bat_tat_bam_bang_chuot(bat: bool) -> void:
+	bam_bang_chuot = bat
+	if ban_phim_piano.has_method("bat_tat_bam_bang_chuot"):
+		ban_phim_piano.bat_tat_bam_bang_chuot(bat)
+	_goi_luu_cai_dat_dan()
+
+
+func _goi_luu_cai_dat_dan() -> void:
+	if ban_phim_piano.has_method("luu_cai_dat_ban_phim"):
+		ban_phim_piano.luu_cai_dat_ban_phim(
+			ban_phim_piano.hien_thi_ten_not_c,
+			ban_phim_piano.hien_thi_ten_not_all,
+			ban_phim_piano.cho_phep_kiem_tra_hop_am,
+			ban_phim_piano.cho_phep_hien_thi_phim,
+			bam_bang_chuot
+		)
 
 
 func _cap_nhat_trang_thai_an_hien() -> void:

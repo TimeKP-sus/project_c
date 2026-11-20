@@ -278,8 +278,7 @@ label_settings = SubResource("LabelSettings_lbl")
 custom_minimum_size = Vector2(0, 44)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "res://bai_hoc/video/v1.mp4"
-placeholder_text = "res://bai_hoc/video/..."
+placeholder_text = "Đường dẫn video..."
 
 [node name="ChonVideo_Btn" type="Button" parent="KhungChinh/VBox/HangVideo" unique_id=670315394]
 custom_minimum_size = Vector2(140, 44)

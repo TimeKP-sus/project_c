@@ -416,13 +416,23 @@ impl TaoDanhSach {
     }
 
     // ==================== LƯU & MỞ FILE CHƯƠNG JSON ====================
+    // ==================== LƯU & MỞ FILE CHƯƠNG JSON ====================
     #[func]
     pub fn luu_chuong_json(&mut self, path: GString) -> bool {
-        let data = ChuongJson {
+        let data: ChuongJson = ChuongJson {
             ten_chuong: self.get_ten_chuong().to_string().trim().to_string(),
             bai_hoc: self.bai_trong_chuong.clone(),
         };
-        luu_file_chuong_json(&path.to_string(), &data)
+        let ket_qua: bool = luu_file_chuong_json(&path.to_string(), &data);
+        self.hien_thong_bao(
+            if ket_qua {
+                "Đã lưu danh sách chương thành công."
+            } else {
+                "Không thể lưu danh sách chương."
+            },
+            if ket_qua { "thanh_cong" } else { "loi" },
+        );
+        ket_qua
     }
 
     #[func]
@@ -432,8 +442,10 @@ impl TaoDanhSach {
             self.bai_trong_chuong = data.bai_hoc;
             self.set_che_do_sua(false);
             self.cap_nhat_ui_chuong();
+            self.hien_thong_bao("Đã mở danh sách chương thành công.", "thanh_cong");
             return true;
         }
+        self.hien_thong_bao("Không thể mở file danh sách chương.", "loi");
         false
     }
 

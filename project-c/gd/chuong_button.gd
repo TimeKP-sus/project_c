@@ -8,6 +8,9 @@ var ten_file: String = ""
 
 func _ready() -> void:
 	self.text = ten_chuong
+	self.tooltip_text = ten_chuong
+	self.clip_text = true
+	self.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 
 func _on_button_down() -> void:
 	if self.name != "all":

@@ -1,0 +1,20 @@
+{
+  "ten_bai_hoc": "Bài 3: Tập tay phải - Twinkle Twinkle (Chậm)",
+  "duong_dan_sheet": "res://bai_hoc/choi_sheet/nhap_mon_twinkle_star_01.json",
+  "khuong": "1",
+  "cho_phep_cho": true,
+  "cho_phep_am_thanh_nhip": true,
+  "hien_thi_ten_khac": true,
+  "to_mau_phim": true,
+  "phat_nhac": false,
+  "phat_loi": false,
+  "do_tre_nhac_ms": 0.0,
+  "phan_thoi_gian": "0-16",
+  "bpm_tuy_chinh": 75.0,
+  "cac_ghi_chu": {
+    "0": "Chuẩn bị ngón 1 ở phím C4. Đánh C4 - C4 rồi vươn ngón 5 lên G4.",
+    "4": "Nhích nhẹ ngón 5 lên phím La (A4), sau đó giữ nốt Son (G4) trong 2 phách.",
+    "8": "Đưa tay về vị trí cũ: Pha (ngón 4) -> Mi (ngón 3).",
+    "12": "Kết câu bằng Rê (ngón 2) và giữ nốt Đô (ngón 1)."
+  }
+}
